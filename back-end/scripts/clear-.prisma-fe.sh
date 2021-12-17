@@ -1,0 +1,1 @@
+rm -rf ../front-end/node_modules/.prisma/

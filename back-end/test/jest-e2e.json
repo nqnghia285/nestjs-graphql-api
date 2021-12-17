@@ -1,0 +1,27 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@libs/auth-module/(.*)": "<rootDir>/../libs/auth-module/src/$1",
+    "@libs/auth-module": "<rootDir>/../libs/auth-module/src",
+    "@libs/auth/(.*)": "<rootDir>/../libs/auth/src/$1",
+    "@libs/auth": "<rootDir>/../libs/auth/src",
+    "@libs/prisma/(.*)": "<rootDir>/../libs/prisma/src/$1",
+    "@libs/prisma": "<rootDir>/../libs/prisma/src",
+    "@libs/interface/(.*)": "<rootDir>/../libs/interface/src/$1",
+    "@libs/interface": "<rootDir>/../libs/interface/src",
+    "@libs/api-config/(.*)": "<rootDir>/../libs/api-config/src/$1",
+    "@libs/api-config": "<rootDir>/../libs/api-config/src",
+    "@libs/casl/(.*)": "<rootDir>/../libs/casl/src/$1",
+    "@libs/casl": "<rootDir>/../libs/casl/src"
+  }
+}

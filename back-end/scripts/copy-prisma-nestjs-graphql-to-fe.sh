@@ -1,0 +1,1 @@
+cp -a src/generated/prisma-nestjs-graphql/ ../front-end/src/

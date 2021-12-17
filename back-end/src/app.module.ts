@@ -1,0 +1,28 @@
+import { ApiConfigModule } from '@libs/api-config'
+import { AuthModule } from '@libs/auth'
+import { CaslModule } from '@libs/casl'
+import { PrismaModule } from '@libs/prisma'
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { GraphQLModule } from '@nestjs/graphql'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import {
+   configModuleOptions,
+   gqlModuleAsyncOptions,
+   serveStaticModuleOptions,
+} from './config'
+import { GraphQLModules } from './graphql'
+
+@Module({
+   imports: [
+      ConfigModule.forRoot(configModuleOptions),
+      ServeStaticModule.forRootAsync(serveStaticModuleOptions),
+      GraphQLModule.forRootAsync(gqlModuleAsyncOptions),
+      ApiConfigModule,
+      AuthModule,
+      CaslModule,
+      PrismaModule,
+      GraphQLModules,
+   ],
+})
+export class AppModule {}

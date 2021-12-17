@@ -1,0 +1,1 @@
+rm -rf ../front-end/src/prisma-nestjs-graphql/
