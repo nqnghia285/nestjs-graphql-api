@@ -22,8 +22,7 @@ export async function handleResolver<
             response.data = data
          })
          .catch((errors) => {
-            console.error(errors)
-            response.errors.push(errors)
+            response.errors.push({ errors })
          })
    }
 

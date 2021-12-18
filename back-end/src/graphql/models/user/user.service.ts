@@ -1,6 +1,7 @@
 import { PrismaService } from '@libs/prisma'
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
+import bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
@@ -15,10 +16,18 @@ export class UserService {
    }
 
    create(args: Prisma.UserCreateArgs) {
+      args.data.password = bcrypt.hashSync(
+         args.data.password,
+         bcrypt.genSaltSync(10)
+      )
       return this.prisma.user.create(args)
    }
 
    createMany(args: Prisma.UserCreateManyArgs) {
+      ;(args.data as Prisma.UserCreateManyInput[]).forEach((user) => {
+         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10))
+      })
+
       return this.prisma.user.createMany(args)
    }
 

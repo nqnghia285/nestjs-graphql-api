@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { GraphQLJSON } from 'graphql-scalars'
+import { Json } from '~/interface'
 
 @ObjectType()
 export class Response {
@@ -10,11 +11,11 @@ export class Response {
    message?: string
 
    @Field(() => GraphQLJSON, { nullable: true })
-   data?: JSON
+   data?: Json
 
    @Field()
    action: string
 
    @Field(() => [GraphQLJSON])
-   errors: JSON[]
+   errors: Json[]
 }

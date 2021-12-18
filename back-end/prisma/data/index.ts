@@ -10,7 +10,7 @@ export async function createTemplate() {
             profile: {
                create: {
                   fullname: 'Admin',
-                  phone: '0987654321',
+                  phone: '+84987654321',
                   email: 'admin@gmail.com',
                   gender: 'MALE',
                },

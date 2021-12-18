@@ -1,9 +1,22 @@
 import { PrismaService } from '@libs/prisma'
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { Gender, Role } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import { isEmail, isPhoneNumber } from 'class-validator'
 import { IUserInfo } from '~/interface'
+
+interface Person {
+   email: string
+   fullname: string
+   gender: Gender
+   id: string
+   phone: string
+   user: {
+      password: string
+      role: Role
+   }
+}
 
 @Injectable()
 export class AuthService {
@@ -12,14 +25,8 @@ export class AuthService {
       private prismaService: PrismaService
    ) {}
 
-   async validateUser(
-      username: string,
-      password: string
-   ): Promise<IUserInfo | null> {
-      let person: any
-
-      console.log('username', username)
-      console.log('password', password)
+   async validateUser(username: string, password: string): Promise<IUserInfo> {
+      let person: Person
 
       if (isEmail(username)) {
          person = await this.prismaService.person.findUnique({
@@ -38,8 +45,7 @@ export class AuthService {
                },
             },
          })
-      } else if (isPhoneNumber(username, 'VN')) {
-         console.log('isPhoneNumber')
+      } else if (isPhoneNumber(username)) {
          person = await this.prismaService.person.findUnique({
             where: { phone: username },
             select: {
@@ -56,14 +62,9 @@ export class AuthService {
                },
             },
          })
-         console.log('person', person)
       }
 
-      if (
-         person &&
-         person.user &&
-         bcrypt.compareSync(password, person.user.password)
-      ) {
+      if (person?.user && bcrypt.compareSync(password, person.user.password)) {
          const { user, ...rest } = person
          rest.phone = rest.phone?.trim()
          const profile = { role: user.role, ...rest }
