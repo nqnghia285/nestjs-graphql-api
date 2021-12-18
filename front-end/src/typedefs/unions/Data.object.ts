@@ -1,7 +1,7 @@
 import { createUnionType } from '@nestjs/graphql'
-import { User } from '../../prisma-nestjs-graphql'
 
+// ObjectType
 export const Data = createUnionType({
    name: 'Data',
-   types: () => [String, User],
+   types: () => [String, Object],
 })

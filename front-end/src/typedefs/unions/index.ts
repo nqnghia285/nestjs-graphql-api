@@ -1,1 +1,1 @@
-export * from './Data.object'
+export * from './data.object'

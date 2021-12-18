@@ -70,7 +70,7 @@ export enum PriceMapScalarFieldEnum {
 export enum PostScalarFieldEnum {
     id = "id",
     title = "title",
-    userId = "userId",
+    authorId = "authorId",
     createdAt = "createdAt",
     updatedAt = "updatedAt"
 }
@@ -6827,7 +6827,7 @@ export class PassageCreateInput {
     @Field(() => String, {nullable:false})
     content!: string;
     @Field(() => PostCreateNestedOneWithoutPassagesInput, {nullable:false})
-    Post!: InstanceType<typeof PostCreateNestedOneWithoutPassagesInput>;
+    post!: InstanceType<typeof PostCreateNestedOneWithoutPassagesInput>;
 }
 
 @ArgsType()
@@ -6997,7 +6997,7 @@ export class PassageOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     content?: keyof typeof SortOrder;
     @Field(() => PostOrderByWithRelationInput, {nullable:true})
-    Post?: InstanceType<typeof PostOrderByWithRelationInput>;
+    post?: InstanceType<typeof PostOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
     postId?: keyof typeof SortOrder;
 }
@@ -7233,7 +7233,7 @@ export class PassageUpdateInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     content?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => PostUpdateOneRequiredWithoutPassagesInput, {nullable:true})
-    Post?: InstanceType<typeof PostUpdateOneRequiredWithoutPassagesInput>;
+    post?: InstanceType<typeof PostUpdateOneRequiredWithoutPassagesInput>;
 }
 
 @InputType()
@@ -7267,7 +7267,7 @@ export class PassageWhereInput {
     @Field(() => StringFilter, {nullable:true})
     content?: InstanceType<typeof StringFilter>;
     @Field(() => PostWhereInput, {nullable:true})
-    Post?: InstanceType<typeof PostWhereInput>;
+    post?: InstanceType<typeof PostWhereInput>;
     @Field(() => IntFilter, {nullable:true})
     postId?: InstanceType<typeof IntFilter>;
 }
@@ -7281,7 +7281,7 @@ export class Passage {
     @Field(() => String, {nullable:false})
     content!: string;
     @Field(() => Post, {nullable:false})
-    Post?: InstanceType<typeof Post>;
+    post?: InstanceType<typeof Post>;
     @Field(() => Int, {nullable:false})
     postId!: number;
 }
@@ -8553,7 +8553,7 @@ export class PostCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     title?: true;
     @Field(() => Boolean, {nullable:true})
-    userId?: true;
+    authorId?: true;
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;
     @Field(() => Boolean, {nullable:true})
@@ -8569,7 +8569,7 @@ export class PostCountAggregate {
     @Field(() => Int, {nullable:false})
     title!: number;
     @Field(() => Int, {nullable:false})
-    userId!: number;
+    authorId!: number;
     @Field(() => Int, {nullable:false})
     createdAt!: number;
     @Field(() => Int, {nullable:false})
@@ -8585,7 +8585,7 @@ export class PostCountOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     title?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    userId?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -8629,7 +8629,7 @@ export class PostCreateManyInput {
     @Validator.MaxLength(255)
     title!: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:false})
-    userId!: string;
+    authorId!: string;
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
     @Field(() => Date, {nullable:true})
@@ -8787,7 +8787,7 @@ export class PostGroupBy {
     @Field(() => String, {nullable:false})
     title!: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:false})
-    userId!: string;
+    authorId!: string;
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;
     @Field(() => Date, {nullable:false})
@@ -8821,7 +8821,7 @@ export class PostMaxAggregateInput {
     @Field(() => Boolean, {nullable:true})
     title?: true;
     @Field(() => Boolean, {nullable:true})
-    userId?: true;
+    authorId?: true;
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;
     @Field(() => Boolean, {nullable:true})
@@ -8835,7 +8835,7 @@ export class PostMaxAggregate {
     @Field(() => String, {nullable:true})
     title?: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:true})
-    userId?: string;
+    authorId?: string;
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
     @Field(() => Date, {nullable:true})
@@ -8849,7 +8849,7 @@ export class PostMaxOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     title?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    userId?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -8863,7 +8863,7 @@ export class PostMinAggregateInput {
     @Field(() => Boolean, {nullable:true})
     title?: true;
     @Field(() => Boolean, {nullable:true})
-    userId?: true;
+    authorId?: true;
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;
     @Field(() => Boolean, {nullable:true})
@@ -8877,7 +8877,7 @@ export class PostMinAggregate {
     @Field(() => String, {nullable:true})
     title?: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:true})
-    userId?: string;
+    authorId?: string;
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
     @Field(() => Date, {nullable:true})
@@ -8891,7 +8891,7 @@ export class PostMinOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     title?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    userId?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -8911,7 +8911,7 @@ export class PostOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     title?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
-    userId?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -8941,7 +8941,7 @@ export class PostOrderByWithRelationInput {
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
     author?: InstanceType<typeof UserOrderByWithRelationInput>;
     @Field(() => SortOrder, {nullable:true})
-    userId?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
     @Field(() => SortOrder, {nullable:true})
@@ -8969,7 +8969,7 @@ export class PostScalarWhereWithAggregatesInput {
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     title?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => StringWithAggregatesFilter, {nullable:true})
-    userId?: InstanceType<typeof StringWithAggregatesFilter>;
+    authorId?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeWithAggregatesFilter>;
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
@@ -8989,7 +8989,7 @@ export class PostScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     title?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
-    userId?: InstanceType<typeof StringFilter>;
+    authorId?: InstanceType<typeof StringFilter>;
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeFilter>;
     @Field(() => DateTimeFilter, {nullable:true})
@@ -9049,7 +9049,7 @@ export class PostUncheckedCreateWithoutLaptopsInput {
     @Validator.MaxLength(255)
     title!: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:false})
-    userId!: string;
+    authorId!: string;
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
     @Field(() => Date, {nullable:true})
@@ -9066,7 +9066,7 @@ export class PostUncheckedCreateWithoutPassagesInput {
     @Validator.MaxLength(255)
     title!: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:false})
-    userId!: string;
+    authorId!: string;
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
     @Field(() => Date, {nullable:true})
@@ -9081,7 +9081,7 @@ export class PostUncheckedCreateInput {
     @Validator.MaxLength(255)
     title!: string;
     @Field(() => Scalars.GraphQLUUID, {nullable:false})
-    userId!: string;
+    authorId!: string;
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
     @Field(() => Date, {nullable:true})
@@ -9135,7 +9135,7 @@ export class PostUncheckedUpdateManyInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     title?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    userId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    authorId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
@@ -9163,7 +9163,7 @@ export class PostUncheckedUpdateWithoutLaptopsInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     title?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    userId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    authorId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
@@ -9179,7 +9179,7 @@ export class PostUncheckedUpdateWithoutPassagesInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     title?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    userId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    authorId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
@@ -9193,7 +9193,7 @@ export class PostUncheckedUpdateInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     title?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    userId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    authorId?: InstanceType<typeof StringFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeFieldUpdateOperationsInput>;
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
@@ -9419,7 +9419,7 @@ export class PostWhereInput {
     @Field(() => UserWhereInput, {nullable:true})
     author?: InstanceType<typeof UserWhereInput>;
     @Field(() => StringFilter, {nullable:true})
-    userId?: InstanceType<typeof StringFilter>;
+    authorId?: InstanceType<typeof StringFilter>;
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: InstanceType<typeof DateTimeFilter>;
     @Field(() => DateTimeFilter, {nullable:true})
@@ -9439,7 +9439,7 @@ export class Post {
     @Field(() => User, {nullable:false})
     author?: InstanceType<typeof User>;
     @Field(() => Scalars.GraphQLUUID, {nullable:false})
-    userId!: string;
+    authorId!: string;
     @Field(() => Date, {nullable:false})
     createdAt!: Date;
     @Field(() => Date, {nullable:false})
