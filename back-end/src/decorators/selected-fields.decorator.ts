@@ -1,6 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { Info, parseSelectedFields } from 'prisma-parse-selected-fields'
+import { GraphQLResolveInfo as Info } from 'graphql'
+import { parseSelectedFields } from 'prisma-parse-selected-fields'
 
 export const SelectedFields = createParamDecorator(
    (data: unknown, context: ExecutionContext) => {

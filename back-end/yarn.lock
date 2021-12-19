@@ -5176,10 +5176,10 @@ prisma-nestjs-graphql@^14.6.1:
     pupa "2.X"
     ts-morph ">=11"
 
-prisma-parse-selected-fields@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/prisma-parse-selected-fields/-/prisma-parse-selected-fields-1.0.8.tgz#77f8246a4b194bc51612dbbf4e781d792e29f2ca"
-  integrity sha512-nA/4fJsxHGwL6BP6pXITSBpKXfw8QrLk+PtF7Tu2aDGujIg8sZi/QRV2n5wDFdadkjK6pTR1rIagUNhUrYK6kg==
+prisma-parse-selected-fields@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/prisma-parse-selected-fields/-/prisma-parse-selected-fields-1.0.9.tgz#566c858e7a982ab09fa206bf2bfe68844a76be61"
+  integrity sha512-7AiRZlhuyuRIC1CBG81Eqve9kRy1ss47k/7kGmNG7YMEoJzXGE53T/eRV0HhfAzDIlZ86PitrUJhlapiY1mtbA==
   dependencies:
     "@types/graphql" "^14.5.0"
     "@types/graphql-fields" "^1.3.4"
