@@ -15,7 +15,8 @@
       "start": "bash scripts/start.sh",
       "git": "bash scripts/git-push.sh",
       "open": "heroku open",
-      "cmd": "heroku ps:exec"
+      "cmd": "heroku ps:exec",
+      "log": "heroku logs -t"
    },
    "engines": {
       "node": "16.x",
