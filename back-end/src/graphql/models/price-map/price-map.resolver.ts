@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregatePriceMap,
    PriceMap,
    PriceMapAggregateArgs,
+   PriceMapGroupBy,
    PriceMapGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    PriceMapCountArgs,
    PriceMapCreateArgs,
    PriceMapCreateManyArgs,
@@ -23,7 +26,6 @@ import {
    PriceMapFindManyArgs,
    PriceMapFindUniqueArgs,
    PriceMapUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { PriceMapService } from './price-map.service'
 
@@ -31,41 +33,50 @@ import { PriceMapService } from './price-map.service'
 export class PriceMapResolver {
    constructor(private readonly priceMap: PriceMapService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregatePriceMap)
    @CheckPoliciesGuard(PriceMapReadAction)
    async aggregatePriceMap(
-      @Args(new ValidationPipe()) args: PriceMapAggregateArgs
+      @Args(new ValidationPipe()) args: PriceMapAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.priceMap, 'aggregate', args)
+      return handleResolver(this.priceMap, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(PriceMapReadAction)
    async countPriceMap(@Args(new ValidationPipe()) args: PriceMapCountArgs) {
       return handleResolver(this.priceMap, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => PriceMap)
    @CheckPoliciesGuard(PriceMapCreateAction)
-   async createPriceMap(@Args(new ValidationPipe()) args: PriceMapCreateArgs) {
-      return handleResolver(this.priceMap, 'create', args)
+   async createPriceMap(
+      @Args(new ValidationPipe()) args: PriceMapCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.priceMap, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [PriceMap])
    @CheckPoliciesGuard(PriceMapCreateAction)
    async createManyPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapCreateManyArgs
+      @Args(new ValidationPipe())
+      args: PriceMapCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.priceMap, 'createMany', args)
+      return handleResolver(this.priceMap, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => PriceMap)
    @CheckPoliciesGuard(PriceMapDeleteAction)
-   async deletePriceMap(@Args(new ValidationPipe()) args: PriceMapDeleteArgs) {
-      return handleResolver(this.priceMap, 'delete', args)
+   async deletePriceMap(
+      @Args(new ValidationPipe()) args: PriceMapDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.priceMap, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PriceMapDeleteAction)
    async deleteManyPriceMap(
       @Args(new ValidationPipe()) args: PriceMapDeleteManyArgs
@@ -73,41 +84,48 @@ export class PriceMapResolver {
       return handleResolver(this.priceMap, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => PriceMap, { nullable: true })
    @CheckPoliciesGuard(PriceMapReadAction)
    async findFirstPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapFindFirstArgs
+      @Args(new ValidationPipe()) args: PriceMapFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.priceMap, 'findFirst', args)
+      return handleResolver(this.priceMap, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [PriceMap])
    @CheckPoliciesGuard(PriceMapReadAction)
    async findManyPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapFindManyArgs
+      @Args(new ValidationPipe()) args: PriceMapFindManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.priceMap, 'findMany', args)
+      return handleResolver(this.priceMap, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => PriceMap, { nullable: true })
    @CheckPoliciesGuard(PriceMapReadAction)
    async findUniquePriceMap(
-      @Args(new ValidationPipe()) args: PriceMapFindUniqueArgs
+      @Args(new ValidationPipe()) args: PriceMapFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.priceMap, 'findUnique', args)
+      return handleResolver(this.priceMap, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => PriceMapGroupBy)
    @CheckPoliciesGuard(PriceMapReadAction)
    async groupByPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapGroupByArgs
+      @Args(new ValidationPipe()) args: PriceMapGroupByArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.priceMap, 'groupBy', args)
+      return handleResolver(this.priceMap, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => PriceMap)
    @CheckPoliciesGuard(PriceMapUpdateAction)
-   async updatePriceMap(@Args(new ValidationPipe()) args: PriceMapUpdateArgs) {
-      return handleResolver(this.priceMap, 'update', args)
+   async updatePriceMap(
+      @Args(new ValidationPipe()) args: PriceMapUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.priceMap, 'update', { ...args, select })
    }
 }

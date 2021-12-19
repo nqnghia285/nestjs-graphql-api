@@ -1,30 +1,12 @@
-import { Response } from '~/graphql/typedefs'
-
 export async function handleResolver<
    TService,
    TAction extends keyof TService,
    TArgs
->(service: TService, action: TAction, args: TArgs): Promise<Response> {
-   const response: Response = {
-      isSuccess: false,
-      message: `${action} fail!`,
-      data: null,
-      action: action,
-      errors: [],
-   }
-
+>(service: TService, action: TAction, args: TArgs) {
    if (typeof service[action] === 'function') {
       // @ts-expect-error: Unreachable code error
-      await service[action](args)
-         .then((data) => {
-            response.isSuccess = true
-            response.message = `${action} successfully!`
-            response.data = data
-         })
-         .catch((errors) => {
-            response.errors.push({ errors })
-         })
+      return service[action](args)
    }
 
-   return response
+   return null
 }

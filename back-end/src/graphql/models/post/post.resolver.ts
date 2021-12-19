@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregatePost,
    Post,
    PostAggregateArgs,
+   PostGroupBy,
    PostGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    PostCountArgs,
    PostCreateArgs,
    PostCreateManyArgs,
@@ -23,7 +26,6 @@ import {
    PostFindManyArgs,
    PostFindUniqueArgs,
    PostUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { PostService } from './post.service'
 
@@ -31,69 +33,97 @@ import { PostService } from './post.service'
 export class PostResolver {
    constructor(private readonly post: PostService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregatePost)
    @CheckPoliciesGuard(PostReadAction)
-   async aggregatePost(@Args(new ValidationPipe()) args: PostAggregateArgs) {
-      return handleResolver(this.post, 'aggregate', args)
+   async aggregatePost(
+      @Args(new ValidationPipe()) args: PostAggregateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(PostReadAction)
    async countPost(@Args(new ValidationPipe()) args: PostCountArgs) {
       return handleResolver(this.post, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Post)
    @CheckPoliciesGuard(PostCreateAction)
-   async createPost(@Args(new ValidationPipe()) args: PostCreateArgs) {
-      return handleResolver(this.post, 'create', args)
+   async createPost(
+      @Args(new ValidationPipe()) args: PostCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Post])
    @CheckPoliciesGuard(PostCreateAction)
-   async createManyPost(@Args(new ValidationPipe()) args: PostCreateManyArgs) {
-      return handleResolver(this.post, 'createMany', args)
+   async createManyPost(
+      @Args(new ValidationPipe())
+      args: PostCreateManyArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Post)
    @CheckPoliciesGuard(PostDeleteAction)
-   async deletePost(@Args(new ValidationPipe()) args: PostDeleteArgs) {
-      return handleResolver(this.post, 'delete', args)
+   async deletePost(
+      @Args(new ValidationPipe()) args: PostDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PostDeleteAction)
    async deleteManyPost(@Args(new ValidationPipe()) args: PostDeleteManyArgs) {
       return handleResolver(this.post, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Post, { nullable: true })
    @CheckPoliciesGuard(PostReadAction)
-   async findFirstPost(@Args(new ValidationPipe()) args: PostFindFirstArgs) {
-      return handleResolver(this.post, 'findFirst', args)
+   async findFirstPost(
+      @Args(new ValidationPipe()) args: PostFindFirstArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Post])
    @CheckPoliciesGuard(PostReadAction)
-   async findManyPost(@Args(new ValidationPipe()) args: PostFindManyArgs) {
-      return handleResolver(this.post, 'findMany', args)
+   async findManyPost(
+      @Args(new ValidationPipe()) args: PostFindManyArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Post, { nullable: true })
    @CheckPoliciesGuard(PostReadAction)
-   async findUniquePost(@Args(new ValidationPipe()) args: PostFindUniqueArgs) {
-      return handleResolver(this.post, 'findUnique', args)
+   async findUniquePost(
+      @Args(new ValidationPipe()) args: PostFindUniqueArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => PostGroupBy)
    @CheckPoliciesGuard(PostReadAction)
-   async groupByPost(@Args(new ValidationPipe()) args: PostGroupByArgs) {
-      return handleResolver(this.post, 'groupBy', args)
+   async groupByPost(
+      @Args(new ValidationPipe()) args: PostGroupByArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Post)
    @CheckPoliciesGuard(PostUpdateAction)
-   async updatePost(@Args(new ValidationPipe()) args: PostUpdateArgs) {
-      return handleResolver(this.post, 'update', args)
+   async updatePost(
+      @Args(new ValidationPipe()) args: PostUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.post, 'update', { ...args, select })
    }
 }

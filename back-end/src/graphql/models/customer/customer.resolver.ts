@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregateCustomer,
    Customer,
    CustomerAggregateArgs,
+   CustomerGroupBy,
    CustomerGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -23,7 +25,7 @@ import {
    CustomerFindManyArgs,
    CustomerFindUniqueArgs,
    CustomerUpdateArgs,
-   Response,
+   DeleteMany,
 } from '../../typedefs'
 import { CustomerService } from './customer.service'
 
@@ -31,41 +33,50 @@ import { CustomerService } from './customer.service'
 export class CustomerResolver {
    constructor(private readonly customer: CustomerService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregateCustomer)
    @CheckPoliciesGuard(CustomerReadAction)
    async aggregateCustomer(
-      @Args(new ValidationPipe()) args: CustomerAggregateArgs
+      @Args(new ValidationPipe()) args: CustomerAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.customer, 'aggregate', args)
+      return handleResolver(this.customer, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(CustomerReadAction)
    async countCustomer(@Args(new ValidationPipe()) args: CustomerCountArgs) {
       return handleResolver(this.customer, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Customer)
    @CheckPoliciesGuard(CustomerCreateAction)
-   async createCustomer(@Args(new ValidationPipe()) args: CustomerCreateArgs) {
-      return handleResolver(this.customer, 'create', args)
+   async createCustomer(
+      @Args(new ValidationPipe()) args: CustomerCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.customer, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Customer])
    @CheckPoliciesGuard(CustomerCreateAction)
    async createManyCustomer(
-      @Args(new ValidationPipe()) args: CustomerCreateManyArgs
+      @Args(new ValidationPipe())
+      args: CustomerCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.customer, 'createMany', args)
+      return handleResolver(this.customer, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Customer)
    @CheckPoliciesGuard(CustomerDeleteAction)
-   async deleteCustomer(@Args(new ValidationPipe()) args: CustomerDeleteArgs) {
-      return handleResolver(this.customer, 'delete', args)
+   async deleteCustomer(
+      @Args(new ValidationPipe()) args: CustomerDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.customer, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(CustomerDeleteAction)
    async deleteManyCustomer(
       @Args(new ValidationPipe()) args: CustomerDeleteManyArgs
@@ -73,41 +84,48 @@ export class CustomerResolver {
       return handleResolver(this.customer, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Customer, { nullable: true })
    @CheckPoliciesGuard(CustomerReadAction)
    async findFirstCustomer(
-      @Args(new ValidationPipe()) args: CustomerFindFirstArgs
+      @Args(new ValidationPipe()) args: CustomerFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.customer, 'findFirst', args)
+      return handleResolver(this.customer, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Customer])
    @CheckPoliciesGuard(CustomerReadAction)
    async findManyCustomer(
-      @Args(new ValidationPipe()) args: CustomerFindManyArgs
+      @Args(new ValidationPipe()) args: CustomerFindManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.customer, 'findMany', args)
+      return handleResolver(this.customer, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Customer, { nullable: true })
    @CheckPoliciesGuard(CustomerReadAction)
    async findUniqueCustomer(
-      @Args(new ValidationPipe()) args: CustomerFindUniqueArgs
+      @Args(new ValidationPipe()) args: CustomerFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.customer, 'findUnique', args)
+      return handleResolver(this.customer, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => CustomerGroupBy)
    @CheckPoliciesGuard(CustomerReadAction)
    async groupByCustomer(
-      @Args(new ValidationPipe()) args: CustomerGroupByArgs
+      @Args(new ValidationPipe()) args: CustomerGroupByArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.customer, 'groupBy', args)
+      return handleResolver(this.customer, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Customer)
    @CheckPoliciesGuard(CustomerUpdateAction)
-   async updateCustomer(@Args(new ValidationPipe()) args: CustomerUpdateArgs) {
-      return handleResolver(this.customer, 'update', args)
+   async updateCustomer(
+      @Args(new ValidationPipe()) args: CustomerUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.customer, 'update', { ...args, select })
    }
 }

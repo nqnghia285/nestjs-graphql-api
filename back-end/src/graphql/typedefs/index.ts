@@ -1,5 +1,6 @@
 export * from './args'
 export * from './inputs'
+export * from './models'
+export * from './objects'
 export * from './response.object'
 export * from './unions'
-export * from './models'

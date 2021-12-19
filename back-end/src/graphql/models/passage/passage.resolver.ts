@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregatePassage,
    Passage,
    PassageAggregateArgs,
+   PassageGroupBy,
    PassageGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    PassageCountArgs,
    PassageCreateArgs,
    PassageCreateManyArgs,
@@ -23,7 +26,6 @@ import {
    PassageFindManyArgs,
    PassageFindUniqueArgs,
    PassageUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { PassageService } from './passage.service'
 
@@ -31,41 +33,50 @@ import { PassageService } from './passage.service'
 export class PassageResolver {
    constructor(private readonly passage: PassageService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregatePassage)
    @CheckPoliciesGuard(PassageReadAction)
    async aggregatePassage(
-      @Args(new ValidationPipe()) args: PassageAggregateArgs
+      @Args(new ValidationPipe()) args: PassageAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.passage, 'aggregate', args)
+      return handleResolver(this.passage, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(PassageReadAction)
    async countPassage(@Args(new ValidationPipe()) args: PassageCountArgs) {
       return handleResolver(this.passage, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Passage)
    @CheckPoliciesGuard(PassageCreateAction)
-   async createPassage(@Args(new ValidationPipe()) args: PassageCreateArgs) {
-      return handleResolver(this.passage, 'create', args)
+   async createPassage(
+      @Args(new ValidationPipe()) args: PassageCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.passage, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Passage])
    @CheckPoliciesGuard(PassageCreateAction)
    async createManyPassage(
-      @Args(new ValidationPipe()) args: PassageCreateManyArgs
+      @Args(new ValidationPipe())
+      args: PassageCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.passage, 'createMany', args)
+      return handleResolver(this.passage, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Passage)
    @CheckPoliciesGuard(PassageDeleteAction)
-   async deletePassage(@Args(new ValidationPipe()) args: PassageDeleteArgs) {
-      return handleResolver(this.passage, 'delete', args)
+   async deletePassage(
+      @Args(new ValidationPipe()) args: PassageDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.passage, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PassageDeleteAction)
    async deleteManyPassage(
       @Args(new ValidationPipe()) args: PassageDeleteManyArgs
@@ -73,39 +84,48 @@ export class PassageResolver {
       return handleResolver(this.passage, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Passage, { nullable: true })
    @CheckPoliciesGuard(PassageReadAction)
    async findFirstPassage(
-      @Args(new ValidationPipe()) args: PassageFindFirstArgs
+      @Args(new ValidationPipe()) args: PassageFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.passage, 'findFirst', args)
+      return handleResolver(this.passage, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Passage])
    @CheckPoliciesGuard(PassageReadAction)
    async findManyPassage(
-      @Args(new ValidationPipe()) args: PassageFindManyArgs
+      @Args(new ValidationPipe()) args: PassageFindManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.passage, 'findMany', args)
+      return handleResolver(this.passage, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Passage, { nullable: true })
    @CheckPoliciesGuard(PassageReadAction)
    async findUniquePassage(
-      @Args(new ValidationPipe()) args: PassageFindUniqueArgs
+      @Args(new ValidationPipe()) args: PassageFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.passage, 'findUnique', args)
+      return handleResolver(this.passage, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => PassageGroupBy)
    @CheckPoliciesGuard(PassageReadAction)
-   async groupByPassage(@Args(new ValidationPipe()) args: PassageGroupByArgs) {
-      return handleResolver(this.passage, 'groupBy', args)
+   async groupByPassage(
+      @Args(new ValidationPipe()) args: PassageGroupByArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.passage, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Passage)
    @CheckPoliciesGuard(PassageUpdateAction)
-   async updatePassage(@Args(new ValidationPipe()) args: PassageUpdateArgs) {
-      return handleResolver(this.passage, 'update', args)
+   async updatePassage(
+      @Args(new ValidationPipe()) args: PassageUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.passage, 'update', { ...args, select })
    }
 }

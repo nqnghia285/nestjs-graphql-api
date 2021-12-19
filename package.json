@@ -13,7 +13,9 @@
       "heroku-cleanup": "echo heroku-cleanup",
       "deploy": "bash scripts/deploy.sh",
       "start": "bash scripts/start.sh",
-      "git": "bash scripts/git-push.sh"
+      "git": "bash scripts/git-push.sh",
+      "open": "heroku open",
+      "cmd": "heroku ps:exec"
    },
    "engines": {
       "node": "16.x",

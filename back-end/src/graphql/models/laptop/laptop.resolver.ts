@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregateLaptop,
    Laptop,
    LaptopAggregateArgs,
+   LaptopGroupBy,
    LaptopGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    LaptopCountArgs,
    LaptopCreateArgs,
    LaptopCreateManyArgs,
@@ -23,7 +26,6 @@ import {
    LaptopFindManyArgs,
    LaptopFindUniqueArgs,
    LaptopUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { LaptopService } from './laptop.service'
 
@@ -31,41 +33,50 @@ import { LaptopService } from './laptop.service'
 export class LaptopResolver {
    constructor(private readonly laptop: LaptopService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregateLaptop)
    @CheckPoliciesGuard(LaptopReadAction)
    async aggregateLaptop(
-      @Args(new ValidationPipe()) args: LaptopAggregateArgs
+      @Args(new ValidationPipe()) args: LaptopAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.laptop, 'aggregate', args)
+      return handleResolver(this.laptop, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(LaptopReadAction)
    async countLaptop(@Args(new ValidationPipe()) args: LaptopCountArgs) {
       return handleResolver(this.laptop, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Laptop)
    @CheckPoliciesGuard(LaptopCreateAction)
-   async createLaptop(@Args(new ValidationPipe()) args: LaptopCreateArgs) {
-      return handleResolver(this.laptop, 'create', args)
+   async createLaptop(
+      @Args(new ValidationPipe()) args: LaptopCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.laptop, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Laptop])
    @CheckPoliciesGuard(LaptopCreateAction)
    async createManyLaptop(
-      @Args(new ValidationPipe()) args: LaptopCreateManyArgs
+      @Args(new ValidationPipe())
+      args: LaptopCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.laptop, 'createMany', args)
+      return handleResolver(this.laptop, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Laptop)
    @CheckPoliciesGuard(LaptopDeleteAction)
-   async deleteLaptop(@Args(new ValidationPipe()) args: LaptopDeleteArgs) {
-      return handleResolver(this.laptop, 'delete', args)
+   async deleteLaptop(
+      @Args(new ValidationPipe()) args: LaptopDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.laptop, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(LaptopDeleteAction)
    async deleteManyLaptop(
       @Args(new ValidationPipe()) args: LaptopDeleteManyArgs
@@ -73,37 +84,48 @@ export class LaptopResolver {
       return handleResolver(this.laptop, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Laptop, { nullable: true })
    @CheckPoliciesGuard(LaptopReadAction)
    async findFirstLaptop(
-      @Args(new ValidationPipe()) args: LaptopFindFirstArgs
+      @Args(new ValidationPipe()) args: LaptopFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.laptop, 'findFirst', args)
+      return handleResolver(this.laptop, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Laptop])
    @CheckPoliciesGuard(LaptopReadAction)
-   async findManyLaptop(@Args(new ValidationPipe()) args: LaptopFindManyArgs) {
-      return handleResolver(this.laptop, 'findMany', args)
+   async findManyLaptop(
+      @Args(new ValidationPipe()) args: LaptopFindManyArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.laptop, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Laptop, { nullable: true })
    @CheckPoliciesGuard(LaptopReadAction)
    async findUniqueLaptop(
-      @Args(new ValidationPipe()) args: LaptopFindUniqueArgs
+      @Args(new ValidationPipe()) args: LaptopFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.laptop, 'findUnique', args)
+      return handleResolver(this.laptop, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => LaptopGroupBy)
    @CheckPoliciesGuard(LaptopReadAction)
-   async groupByLaptop(@Args(new ValidationPipe()) args: LaptopGroupByArgs) {
-      return handleResolver(this.laptop, 'groupBy', args)
+   async groupByLaptop(
+      @Args(new ValidationPipe()) args: LaptopGroupByArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.laptop, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Laptop)
    @CheckPoliciesGuard(LaptopUpdateAction)
-   async updateLaptop(@Args(new ValidationPipe()) args: LaptopUpdateArgs) {
-      return handleResolver(this.laptop, 'update', args)
+   async updateLaptop(
+      @Args(new ValidationPipe()) args: LaptopUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.laptop, 'update', { ...args, select })
    }
 }

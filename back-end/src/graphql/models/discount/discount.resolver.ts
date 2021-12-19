@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregateDiscount,
    Discount,
    DiscountAggregateArgs,
+   DiscountGroupBy,
    DiscountGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    DiscountCountArgs,
    DiscountCreateArgs,
    DiscountCreateManyArgs,
@@ -23,7 +26,6 @@ import {
    DiscountFindManyArgs,
    DiscountFindUniqueArgs,
    DiscountUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { DiscountService } from './discount.service'
 
@@ -31,41 +33,50 @@ import { DiscountService } from './discount.service'
 export class DiscountResolver {
    constructor(private readonly discount: DiscountService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregateDiscount)
    @CheckPoliciesGuard(DiscountReadAction)
    async aggregateDiscount(
-      @Args(new ValidationPipe()) args: DiscountAggregateArgs
+      @Args(new ValidationPipe()) args: DiscountAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.discount, 'aggregate', args)
+      return handleResolver(this.discount, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(DiscountReadAction)
    async countDiscount(@Args(new ValidationPipe()) args: DiscountCountArgs) {
       return handleResolver(this.discount, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Discount)
    @CheckPoliciesGuard(DiscountCreateAction)
-   async createDiscount(@Args(new ValidationPipe()) args: DiscountCreateArgs) {
-      return handleResolver(this.discount, 'create', args)
+   async createDiscount(
+      @Args(new ValidationPipe()) args: DiscountCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.discount, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Discount])
    @CheckPoliciesGuard(DiscountCreateAction)
    async createManyDiscount(
-      @Args(new ValidationPipe()) args: DiscountCreateManyArgs
+      @Args(new ValidationPipe())
+      args: DiscountCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.discount, 'createMany', args)
+      return handleResolver(this.discount, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Discount)
    @CheckPoliciesGuard(DiscountDeleteAction)
-   async deleteDiscount(@Args(new ValidationPipe()) args: DiscountDeleteArgs) {
-      return handleResolver(this.discount, 'delete', args)
+   async deleteDiscount(
+      @Args(new ValidationPipe()) args: DiscountDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.discount, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(DiscountDeleteAction)
    async deleteManyDiscount(
       @Args(new ValidationPipe()) args: DiscountDeleteManyArgs
@@ -73,41 +84,48 @@ export class DiscountResolver {
       return handleResolver(this.discount, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Discount, { nullable: true })
    @CheckPoliciesGuard(DiscountReadAction)
    async findFirstDiscount(
-      @Args(new ValidationPipe()) args: DiscountFindFirstArgs
+      @Args(new ValidationPipe()) args: DiscountFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.discount, 'findFirst', args)
+      return handleResolver(this.discount, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Discount])
    @CheckPoliciesGuard(DiscountReadAction)
    async findManyDiscount(
-      @Args(new ValidationPipe()) args: DiscountFindManyArgs
+      @Args(new ValidationPipe()) args: DiscountFindManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.discount, 'findMany', args)
+      return handleResolver(this.discount, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Discount, { nullable: true })
    @CheckPoliciesGuard(DiscountReadAction)
    async findUniqueDiscount(
-      @Args(new ValidationPipe()) args: DiscountFindUniqueArgs
+      @Args(new ValidationPipe()) args: DiscountFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.discount, 'findUnique', args)
+      return handleResolver(this.discount, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => DiscountGroupBy)
    @CheckPoliciesGuard(DiscountReadAction)
    async groupByDiscount(
-      @Args(new ValidationPipe()) args: DiscountGroupByArgs
+      @Args(new ValidationPipe()) args: DiscountGroupByArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.discount, 'groupBy', args)
+      return handleResolver(this.discount, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Discount)
    @CheckPoliciesGuard(DiscountUpdateAction)
-   async updateDiscount(@Args(new ValidationPipe()) args: DiscountUpdateArgs) {
-      return handleResolver(this.discount, 'update', args)
+   async updateDiscount(
+      @Args(new ValidationPipe()) args: DiscountUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.discount, 'update', { ...args, select })
    }
 }

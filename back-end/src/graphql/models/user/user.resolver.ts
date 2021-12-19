@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregateUser,
    User,
    UserAggregateArgs,
+   UserGroupBy,
    UserGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -15,7 +17,7 @@ import {
 import { handleResolver } from '~/handlers'
 import { UserCreateArgsPipe, UserCreateManyArgsPipe } from '~/pipes'
 import {
-   Response,
+   DeleteMany,
    UserCountArgs,
    UserCreateArgs,
    UserCreateManyArgs,
@@ -32,74 +34,97 @@ import { UserService } from './user.service'
 export class UserResolver {
    constructor(private readonly user: UserService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregateUser)
    @CheckPoliciesGuard(UserReadAction)
-   async aggregateUser(@Args(new ValidationPipe()) args: UserAggregateArgs) {
-      return handleResolver(this.user, 'aggregate', args)
+   async aggregateUser(
+      @Args(new ValidationPipe()) args: UserAggregateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(UserReadAction)
    async countUser(@Args(new ValidationPipe()) args: UserCountArgs) {
       return handleResolver(this.user, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => User)
    @CheckPoliciesGuard(UserCreateAction)
    async createUser(
-      @Args(new ValidationPipe(), UserCreateArgsPipe) args: UserCreateArgs
+      @Args(new ValidationPipe(), UserCreateArgsPipe) args: UserCreateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.user, 'create', args)
+      return handleResolver(this.user, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [User])
    @CheckPoliciesGuard(UserCreateAction)
    async createManyUser(
       @Args(new ValidationPipe(), UserCreateManyArgsPipe)
-      args: UserCreateManyArgs
+      args: UserCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.user, 'createMany', args)
+      return handleResolver(this.user, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => User)
    @CheckPoliciesGuard(UserDeleteAction)
-   async deleteUser(@Args(new ValidationPipe()) args: UserDeleteArgs) {
-      return handleResolver(this.user, 'delete', args)
+   async deleteUser(
+      @Args(new ValidationPipe()) args: UserDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(UserDeleteAction)
    async deleteManyUser(@Args(new ValidationPipe()) args: UserDeleteManyArgs) {
       return handleResolver(this.user, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => User, { nullable: true })
    @CheckPoliciesGuard(UserReadAction)
-   async findFirstUser(@Args(new ValidationPipe()) args: UserFindFirstArgs) {
-      return handleResolver(this.user, 'findFirst', args)
+   async findFirstUser(
+      @Args(new ValidationPipe()) args: UserFindFirstArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [User])
    @CheckPoliciesGuard(UserReadAction)
-   async findManyUser(@Args(new ValidationPipe()) args: UserFindManyArgs) {
-      return handleResolver(this.user, 'findMany', args)
+   async findManyUser(
+      @Args(new ValidationPipe()) args: UserFindManyArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => User, { nullable: true })
    @CheckPoliciesGuard(UserReadAction)
-   async findUniqueUser(@Args(new ValidationPipe()) args: UserFindUniqueArgs) {
-      return handleResolver(this.user, 'findUnique', args)
+   async findUniqueUser(
+      @Args(new ValidationPipe()) args: UserFindUniqueArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => UserGroupBy)
    @CheckPoliciesGuard(UserReadAction)
-   async groupByUser(@Args(new ValidationPipe()) args: UserGroupByArgs) {
-      return handleResolver(this.user, 'groupBy', args)
+   async groupByUser(
+      @Args(new ValidationPipe()) args: UserGroupByArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => User)
    @CheckPoliciesGuard(UserUpdateAction)
-   async updateUser(@Args(new ValidationPipe()) args: UserUpdateArgs) {
-      return handleResolver(this.user, 'update', args)
+   async updateUser(
+      @Args(new ValidationPipe()) args: UserUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.user, 'update', { ...args, select })
    }
 }

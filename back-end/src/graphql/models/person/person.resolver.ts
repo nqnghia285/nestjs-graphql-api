@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregatePerson,
    Person,
    PersonAggregateArgs,
+   PersonGroupBy,
    PersonGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    PersonCountArgs,
    PersonCreateArgs,
    PersonCreateManyArgs,
@@ -23,7 +26,6 @@ import {
    PersonFindManyArgs,
    PersonFindUniqueArgs,
    PersonUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { PersonService } from './person.service'
 
@@ -31,41 +33,50 @@ import { PersonService } from './person.service'
 export class PersonResolver {
    constructor(private readonly person: PersonService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregatePerson)
    @CheckPoliciesGuard(PersonReadAction)
    async aggregatePerson(
-      @Args(new ValidationPipe()) args: PersonAggregateArgs
+      @Args(new ValidationPipe()) args: PersonAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.person, 'aggregate', args)
+      return handleResolver(this.person, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(PersonReadAction)
    async countPerson(@Args(new ValidationPipe()) args: PersonCountArgs) {
       return handleResolver(this.person, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Person)
    @CheckPoliciesGuard(PersonCreateAction)
-   async createPerson(@Args(new ValidationPipe()) args: PersonCreateArgs) {
-      return handleResolver(this.person, 'create', args)
+   async createPerson(
+      @Args(new ValidationPipe()) args: PersonCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.person, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Person])
    @CheckPoliciesGuard(PersonCreateAction)
    async createManyPerson(
-      @Args(new ValidationPipe()) args: PersonCreateManyArgs
+      @Args(new ValidationPipe())
+      args: PersonCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.person, 'createMany', args)
+      return handleResolver(this.person, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Person)
    @CheckPoliciesGuard(PersonDeleteAction)
-   async deletePerson(@Args(new ValidationPipe()) args: PersonDeleteArgs) {
-      return handleResolver(this.person, 'delete', args)
+   async deletePerson(
+      @Args(new ValidationPipe()) args: PersonDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.person, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PersonDeleteAction)
    async deleteManyPerson(
       @Args(new ValidationPipe()) args: PersonDeleteManyArgs
@@ -73,37 +84,48 @@ export class PersonResolver {
       return handleResolver(this.person, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Person, { nullable: true })
    @CheckPoliciesGuard(PersonReadAction)
    async findFirstPerson(
-      @Args(new ValidationPipe()) args: PersonFindFirstArgs
+      @Args(new ValidationPipe()) args: PersonFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.person, 'findFirst', args)
+      return handleResolver(this.person, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Person])
    @CheckPoliciesGuard(PersonReadAction)
-   async findManyPerson(@Args(new ValidationPipe()) args: PersonFindManyArgs) {
-      return handleResolver(this.person, 'findMany', args)
+   async findManyPerson(
+      @Args(new ValidationPipe()) args: PersonFindManyArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.person, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Person, { nullable: true })
    @CheckPoliciesGuard(PersonReadAction)
    async findUniquePerson(
-      @Args(new ValidationPipe()) args: PersonFindUniqueArgs
+      @Args(new ValidationPipe()) args: PersonFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.person, 'findUnique', args)
+      return handleResolver(this.person, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => PersonGroupBy)
    @CheckPoliciesGuard(PersonReadAction)
-   async groupByPerson(@Args(new ValidationPipe()) args: PersonGroupByArgs) {
-      return handleResolver(this.person, 'groupBy', args)
+   async groupByPerson(
+      @Args(new ValidationPipe()) args: PersonGroupByArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.person, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Person)
    @CheckPoliciesGuard(PersonUpdateAction)
-   async updatePerson(@Args(new ValidationPipe()) args: PersonUpdateArgs) {
-      return handleResolver(this.person, 'update', args)
+   async updatePerson(
+      @Args(new ValidationPipe()) args: PersonUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.person, 'update', { ...args, select })
    }
 }

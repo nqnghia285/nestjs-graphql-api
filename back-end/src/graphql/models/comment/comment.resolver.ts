@@ -1,9 +1,11 @@
 import { ValidationPipe } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard } from '~/decorators'
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
+   AggregateComment,
    Comment,
    CommentAggregateArgs,
+   CommentGroupBy,
    CommentGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
 import {
@@ -23,7 +25,7 @@ import {
    CommentFindManyArgs,
    CommentFindUniqueArgs,
    CommentUpdateArgs,
-   Response,
+   DeleteMany,
 } from '../../typedefs'
 import { CommentService } from './comment.service'
 
@@ -31,41 +33,50 @@ import { CommentService } from './comment.service'
 export class CommentResolver {
    constructor(private readonly comment: CommentService) {}
 
-   @Query(() => Response)
+   @Query(() => AggregateComment)
    @CheckPoliciesGuard(CommentReadAction)
    async aggregateComment(
-      @Args(new ValidationPipe()) args: CommentAggregateArgs
+      @Args(new ValidationPipe()) args: CommentAggregateArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.comment, 'aggregate', args)
+      return handleResolver(this.comment, 'aggregate', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Int)
    @CheckPoliciesGuard(CommentReadAction)
    async countComment(@Args(new ValidationPipe()) args: CommentCountArgs) {
       return handleResolver(this.comment, 'count', args)
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Comment)
    @CheckPoliciesGuard(CommentCreateAction)
-   async createComment(@Args(new ValidationPipe()) args: CommentCreateArgs) {
-      return handleResolver(this.comment, 'create', args)
+   async createComment(
+      @Args(new ValidationPipe()) args: CommentCreateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.comment, 'create', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => [Comment])
    @CheckPoliciesGuard(CommentCreateAction)
    async createManyComment(
-      @Args(new ValidationPipe()) args: CommentCreateManyArgs
+      @Args(new ValidationPipe())
+      args: CommentCreateManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.comment, 'createMany', args)
+      return handleResolver(this.comment, 'createMany', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Comment)
    @CheckPoliciesGuard(CommentDeleteAction)
-   async deleteComment(@Args(new ValidationPipe()) args: CommentDeleteArgs) {
-      return handleResolver(this.comment, 'delete', args)
+   async deleteComment(
+      @Args(new ValidationPipe()) args: CommentDeleteArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.comment, 'delete', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(CommentDeleteAction)
    async deleteManyComment(
       @Args(new ValidationPipe()) args: CommentDeleteManyArgs
@@ -73,39 +84,48 @@ export class CommentResolver {
       return handleResolver(this.comment, 'deleteMany', args)
    }
 
-   @Query(() => Response)
+   @Query(() => Comment, { nullable: true })
    @CheckPoliciesGuard(CommentReadAction)
    async findFirstComment(
-      @Args(new ValidationPipe()) args: CommentFindFirstArgs
+      @Args(new ValidationPipe()) args: CommentFindFirstArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.comment, 'findFirst', args)
+      return handleResolver(this.comment, 'findFirst', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => [Comment])
    @CheckPoliciesGuard(CommentReadAction)
    async findManyComment(
-      @Args(new ValidationPipe()) args: CommentFindManyArgs
+      @Args(new ValidationPipe()) args: CommentFindManyArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.comment, 'findMany', args)
+      return handleResolver(this.comment, 'findMany', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => Comment, { nullable: true })
    @CheckPoliciesGuard(CommentReadAction)
    async findUniqueComment(
-      @Args(new ValidationPipe()) args: CommentFindUniqueArgs
+      @Args(new ValidationPipe()) args: CommentFindUniqueArgs,
+      @SelectedFields() select: any
    ) {
-      return handleResolver(this.comment, 'findUnique', args)
+      return handleResolver(this.comment, 'findUnique', { ...args, select })
    }
 
-   @Query(() => Response)
+   @Query(() => CommentGroupBy)
    @CheckPoliciesGuard(CommentReadAction)
-   async groupByComment(@Args(new ValidationPipe()) args: CommentGroupByArgs) {
-      return handleResolver(this.comment, 'groupBy', args)
+   async groupByComment(
+      @Args(new ValidationPipe()) args: CommentGroupByArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.comment, 'groupBy', { ...args, select })
    }
 
-   @Mutation(() => Response)
+   @Mutation(() => Comment)
    @CheckPoliciesGuard(CommentUpdateAction)
-   async updateComment(@Args(new ValidationPipe()) args: CommentUpdateArgs) {
-      return handleResolver(this.comment, 'update', args)
+   async updateComment(
+      @Args(new ValidationPipe()) args: CommentUpdateArgs,
+      @SelectedFields() select: any
+   ) {
+      return handleResolver(this.comment, 'update', { ...args, select })
    }
 }

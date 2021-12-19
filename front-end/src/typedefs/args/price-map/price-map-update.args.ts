@@ -1,12 +1,5 @@
-import { ArgsType, Field } from '@nestjs/graphql'
+import { ArgsType } from '@nestjs/graphql'
 import { UpdateOnePriceMapArgs } from '~/generated/prisma-nestjs-graphql'
-import { PriceMapInclude, PriceMapSelect } from '../..'
 
 @ArgsType()
-export class PriceMapUpdateArgs extends UpdateOnePriceMapArgs {
-   @Field(() => PriceMapSelect, { nullable: true })
-   select?: PriceMapSelect | null
-
-   @Field(() => PriceMapInclude, { nullable: true })
-   include?: PriceMapInclude | null
-}
+export class PriceMapUpdateArgs extends UpdateOnePriceMapArgs {}
