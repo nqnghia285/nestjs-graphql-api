@@ -1,4 +1,5 @@
 import { ApiConfigService } from '@libs/api-config'
+import { LoggerService } from '@libs/logger'
 import { PrismaService } from '@libs/prisma'
 import {
    CanActivate,
@@ -20,7 +21,8 @@ export class PoliciesGuard implements CanActivate {
       private readonly reflector: Reflector,
       private readonly caslAbilityFactory: CaslAbilityFactory,
       private readonly prisma: PrismaService,
-      private readonly apiConfig: ApiConfigService
+      private readonly apiConfig: ApiConfigService,
+      private readonly logger: LoggerService
    ) {}
 
    async canActivate(context: ExecutionContext) {
@@ -41,9 +43,9 @@ export class PoliciesGuard implements CanActivate {
       const ability = this.caslAbilityFactory.createForUser(user)
 
       if (this.apiConfig.system.node_env !== 'production') {
-         console.log('PoliciesGuard')
-         console.log('user', user)
-         console.log('args: ', args)
+         this.logger.log(PoliciesGuard.name, PoliciesGuard.name)
+         this.logger.log(user, 'User')
+         this.logger.log(args, 'Args')
       }
 
       // ! begin: Staff

@@ -1,6 +1,7 @@
 import { ApiConfigModule } from '@libs/api-config'
 import { AuthModule } from '@libs/auth'
 import { CaslModule } from '@libs/casl'
+import { LoggerModule } from '@libs/logger'
 import { PrismaModule } from '@libs/prisma'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
@@ -21,6 +22,7 @@ import { GraphQLModules } from './graphql'
       ApiConfigModule,
       AuthModule,
       CaslModule,
+      LoggerModule,
       PrismaModule,
       GraphQLModules,
    ],

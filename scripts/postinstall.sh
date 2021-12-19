@@ -1,4 +1,5 @@
 cd back-end/
 yarn migrate:deploy
 yarn generate
-yarn copy:.prisma:to:fe
+yarn clear:png:fe
+yarn copy:png:to:fe

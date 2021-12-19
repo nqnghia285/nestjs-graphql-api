@@ -7,7 +7,7 @@ import { CreateManyUserArgs } from '~/generated/prisma-nestjs-graphql'
 export class UserCreateManyArgsPipe implements PipeTransform<any> {
    async transform(value: any) {
       const args: CreateManyUserArgs = value
-      if (args && args.data) {
+      if (args?.data) {
          args.data.forEach((user) => {
             user.password = bcrypt.hashSync(
                user.password,

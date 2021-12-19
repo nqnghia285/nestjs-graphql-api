@@ -1,4 +1,5 @@
 import { ApiConfigModule, ApiConfigService } from '@libs/api-config'
+import { LoggerModule } from '@libs/logger'
 import { PrismaModule } from '@libs/prisma'
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
@@ -17,6 +18,7 @@ import { AuthService } from './auth.service'
             secret: config.system.jwt_key,
          }),
       }),
+      LoggerModule,
       PassportModule,
       PrismaModule,
    ],

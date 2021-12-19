@@ -13,7 +13,9 @@ import {
    UserUpdateAction,
 } from '~/guards'
 import { handleResolver } from '~/handlers'
+import { UserCreateArgsPipe, UserCreateManyArgsPipe } from '~/pipes'
 import {
+   Response,
    UserCountArgs,
    UserCreateArgs,
    UserCreateManyArgs,
@@ -23,7 +25,6 @@ import {
    UserFindManyArgs,
    UserFindUniqueArgs,
    UserUpdateArgs,
-   Response,
 } from '../../typedefs'
 import { UserService } from './user.service'
 
@@ -45,13 +46,18 @@ export class UserResolver {
 
    @Mutation(() => Response)
    @CheckPoliciesGuard(UserCreateAction)
-   async createUser(@Args(new ValidationPipe()) args: UserCreateArgs) {
+   async createUser(
+      @Args(new ValidationPipe(), UserCreateArgsPipe) args: UserCreateArgs
+   ) {
       return handleResolver(this.user, 'create', args)
    }
 
    @Mutation(() => Response)
    @CheckPoliciesGuard(UserCreateAction)
-   async createManyUser(@Args(new ValidationPipe()) args: UserCreateManyArgs) {
+   async createManyUser(
+      @Args(new ValidationPipe(), UserCreateManyArgsPipe)
+      args: UserCreateManyArgs
+   ) {
       return handleResolver(this.user, 'createMany', args)
    }
 

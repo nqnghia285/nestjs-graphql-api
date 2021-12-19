@@ -1,8 +1,11 @@
+import { Logger } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
 export async function createTemplate() {
    const prisma = new PrismaClient()
+
+   const logger = new Logger()
 
    await prisma.user
       .create({
@@ -20,9 +23,18 @@ export async function createTemplate() {
             ),
             role: 'ADMIN',
          },
+         select: {
+            id: true,
+            profile: true,
+            role: true,
+            posts: true,
+            createdAt: true,
+            updatedAt: true,
+            _count: true,
+         },
       })
-      .then((user) => console.log(`Created Admin user: `, user))
-      .catch((err) => console.log(`Error`, err))
+      .then((user) => logger.log(user, 'Created admin'))
+      .catch((err) => logger.log(err, 'Error'))
 
    await prisma.$disconnect()
 }
