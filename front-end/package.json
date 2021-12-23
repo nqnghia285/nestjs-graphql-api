@@ -20,10 +20,12 @@
     "class-validator": "^0.13.2",
     "graphql": "^16.2.0",
     "graphql-scalars": "^1.14.1",
+    "prisma-graphql-type-decimal": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.0",
     "react-scripts": "5.0.0",
+    "socket.io-client": "^4.4.0",
     "typescript": "~4.1.5"
   },
   "scripts": {

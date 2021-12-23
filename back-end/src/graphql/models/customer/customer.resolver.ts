@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class CustomerResolver {
    @Query(() => AggregateCustomer)
    @CheckPoliciesGuard(CustomerReadAction)
    async aggregateCustomer(
-      @Args(new ValidationPipe()) args: CustomerAggregateArgs,
+      @Args() args: CustomerAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class CustomerResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(CustomerReadAction)
-   async countCustomer(@Args(new ValidationPipe()) args: CustomerCountArgs) {
+   async countCustomer(@Args() args: CustomerCountArgs) {
       return handleResolver(this.customer, 'count', args)
    }
 
    @Mutation(() => Customer)
    @CheckPoliciesGuard(CustomerCreateAction)
    async createCustomer(
-      @Args(new ValidationPipe()) args: CustomerCreateArgs,
+      @Args() args: CustomerCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class CustomerResolver {
    @Mutation(() => [Customer])
    @CheckPoliciesGuard(CustomerCreateAction)
    async createManyCustomer(
-      @Args(new ValidationPipe())
+      @Args()
       args: CustomerCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class CustomerResolver {
    @Mutation(() => Customer)
    @CheckPoliciesGuard(CustomerDeleteAction)
    async deleteCustomer(
-      @Args(new ValidationPipe()) args: CustomerDeleteArgs,
+      @Args() args: CustomerDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class CustomerResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(CustomerDeleteAction)
-   async deleteManyCustomer(
-      @Args(new ValidationPipe()) args: CustomerDeleteManyArgs
-   ) {
+   async deleteManyCustomer(@Args() args: CustomerDeleteManyArgs) {
       return handleResolver(this.customer, 'deleteMany', args)
    }
 
    @Query(() => Customer, { nullable: true })
    @CheckPoliciesGuard(CustomerReadAction)
    async findFirstCustomer(
-      @Args(new ValidationPipe()) args: CustomerFindFirstArgs,
+      @Args() args: CustomerFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class CustomerResolver {
    @Query(() => [Customer])
    @CheckPoliciesGuard(CustomerReadAction)
    async findManyCustomer(
-      @Args(new ValidationPipe()) args: CustomerFindManyArgs,
+      @Args() args: CustomerFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class CustomerResolver {
    @Query(() => Customer, { nullable: true })
    @CheckPoliciesGuard(CustomerReadAction)
    async findUniqueCustomer(
-      @Args(new ValidationPipe()) args: CustomerFindUniqueArgs,
+      @Args() args: CustomerFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class CustomerResolver {
    @Query(() => CustomerGroupBy)
    @CheckPoliciesGuard(CustomerReadAction)
    async groupByCustomer(
-      @Args(new ValidationPipe()) args: CustomerGroupByArgs,
+      @Args() args: CustomerGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class CustomerResolver {
    @Mutation(() => Customer)
    @CheckPoliciesGuard(CustomerUpdateAction)
    async updateCustomer(
-      @Args(new ValidationPipe()) args: CustomerUpdateArgs,
+      @Args() args: CustomerUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'update', { ...args, select })

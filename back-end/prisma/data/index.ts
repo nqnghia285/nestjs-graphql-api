@@ -33,7 +33,7 @@ export async function createTemplate() {
             _count: true,
          },
       })
-      .then((user) => logger.log(user, 'Created admin'))
+      .then((user) => logger.log(user, 'Created Admin'))
       .catch((err) => logger.log(err, 'Error'))
 
    await prisma.$disconnect()

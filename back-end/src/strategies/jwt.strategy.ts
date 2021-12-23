@@ -3,6 +3,11 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Request } from 'express'
 import { Strategy } from 'passport-jwt'
 import { ApiConfigService } from '@libs/api-config'
+import { IncomingMessage } from 'http'
+
+type CookiesInRequest = { cookies: { [key: string]: string } }
+
+export type IRequest = IncomingMessage & CookiesInRequest
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -10,14 +15,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       super({
          ignoreExpiration: false,
          secretOrKey: apiConfig.system.jwt_key,
-         jwtFromRequest: (req: Request) => {
-            if (req.headers.authorization) {
+         jwtFromRequest: (req: Request | IRequest) => {
+            if (req?.headers?.authorization) {
                if (req.headers.authorization.startsWith('Bearer ')) {
                   return req.headers.authorization.split(' ')[1]
                } else {
                   return req.headers.authorization
                }
-            } else if (req.cookies && req.cookies[apiConfig.system.token_name]) {
+            } else if (
+               req?.cookies &&
+               req.cookies[apiConfig.system.token_name]
+            ) {
                return req.cookies[apiConfig.system.token_name]
             }
 

@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class PurchaseResolver {
    @Query(() => AggregatePurchase)
    @CheckPoliciesGuard(PurchaseReadAction)
    async aggregatePurchase(
-      @Args(new ValidationPipe()) args: PurchaseAggregateArgs,
+      @Args() args: PurchaseAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class PurchaseResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(PurchaseReadAction)
-   async countPurchase(@Args(new ValidationPipe()) args: PurchaseCountArgs) {
+   async countPurchase(@Args() args: PurchaseCountArgs) {
       return handleResolver(this.purchase, 'count', args)
    }
 
    @Mutation(() => Purchase)
    @CheckPoliciesGuard(PurchaseCreateAction)
    async createPurchase(
-      @Args(new ValidationPipe()) args: PurchaseCreateArgs,
+      @Args() args: PurchaseCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class PurchaseResolver {
    @Mutation(() => [Purchase])
    @CheckPoliciesGuard(PurchaseCreateAction)
    async createManyPurchase(
-      @Args(new ValidationPipe())
+      @Args()
       args: PurchaseCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class PurchaseResolver {
    @Mutation(() => Purchase)
    @CheckPoliciesGuard(PurchaseDeleteAction)
    async deletePurchase(
-      @Args(new ValidationPipe()) args: PurchaseDeleteArgs,
+      @Args() args: PurchaseDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class PurchaseResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PurchaseDeleteAction)
-   async deleteManyPurchase(
-      @Args(new ValidationPipe()) args: PurchaseDeleteManyArgs
-   ) {
+   async deleteManyPurchase(@Args() args: PurchaseDeleteManyArgs) {
       return handleResolver(this.purchase, 'deleteMany', args)
    }
 
    @Query(() => Purchase, { nullable: true })
    @CheckPoliciesGuard(PurchaseReadAction)
    async findFirstPurchase(
-      @Args(new ValidationPipe()) args: PurchaseFindFirstArgs,
+      @Args() args: PurchaseFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class PurchaseResolver {
    @Query(() => [Purchase])
    @CheckPoliciesGuard(PurchaseReadAction)
    async findManyPurchase(
-      @Args(new ValidationPipe()) args: PurchaseFindManyArgs,
+      @Args() args: PurchaseFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class PurchaseResolver {
    @Query(() => Purchase, { nullable: true })
    @CheckPoliciesGuard(PurchaseReadAction)
    async findUniquePurchase(
-      @Args(new ValidationPipe()) args: PurchaseFindUniqueArgs,
+      @Args() args: PurchaseFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class PurchaseResolver {
    @Query(() => PurchaseGroupBy)
    @CheckPoliciesGuard(PurchaseReadAction)
    async groupByPurchase(
-      @Args(new ValidationPipe()) args: PurchaseGroupByArgs,
+      @Args() args: PurchaseGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class PurchaseResolver {
    @Mutation(() => Purchase)
    @CheckPoliciesGuard(PurchaseUpdateAction)
    async updatePurchase(
-      @Args(new ValidationPipe()) args: PurchaseUpdateArgs,
+      @Args() args: PurchaseUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'update', { ...args, select })

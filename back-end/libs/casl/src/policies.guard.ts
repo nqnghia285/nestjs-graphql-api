@@ -1,5 +1,3 @@
-import { ApiConfigService } from '@libs/api-config'
-import { LoggerService } from '@libs/logger'
 import { PrismaService } from '@libs/prisma'
 import {
    CanActivate,
@@ -20,9 +18,7 @@ export class PoliciesGuard implements CanActivate {
    constructor(
       private readonly reflector: Reflector,
       private readonly caslAbilityFactory: CaslAbilityFactory,
-      private readonly prisma: PrismaService,
-      private readonly apiConfig: ApiConfigService,
-      private readonly logger: LoggerService
+      private readonly prisma: PrismaService
    ) {}
 
    async canActivate(context: ExecutionContext) {
@@ -41,12 +37,6 @@ export class PoliciesGuard implements CanActivate {
 
       const args = context.getArgByIndex(1)
       const ability = this.caslAbilityFactory.createForUser(user)
-
-      if (this.apiConfig.system.node_env !== 'production') {
-         this.logger.log(PoliciesGuard.name, PoliciesGuard.name)
-         this.logger.log(user, 'User')
-         this.logger.log(args, 'Args')
-      }
 
       // ! begin: Staff
       if (user?.role === Role.STAFF) {
@@ -93,8 +83,16 @@ export class PoliciesGuard implements CanActivate {
                   )
                }
 
-               return allow
+               return true
             }
+
+            const allow = ability.can(policyOption.action, policyOption.model)
+
+            if (!allow) {
+               throwForbiddenException(policyOption.action, policyOption.model)
+            }
+
+            return true
          }
 
          if (policyOption.action === Action.UPDATE) {
@@ -125,9 +123,19 @@ export class PoliciesGuard implements CanActivate {
                   )
                }
 
-               return allow
+               return true
             }
+
+            const allow = ability.can(policyOption.action, policyOption.model)
+
+            if (!allow) {
+               throwForbiddenException(policyOption.action, policyOption.model)
+            }
+
+            return true
          }
+
+         throwForbiddenException(policyOption.action, policyOption.model)
       }
       // ! end
 
@@ -144,9 +152,11 @@ export class PoliciesGuard implements CanActivate {
          if (
             policyOption.model === 'Comment' ||
             policyOption.model === 'Discount' ||
+            policyOption.model === 'Image' ||
             policyOption.model === 'Laptop' ||
             policyOption.model === 'Post' ||
-            policyOption.model === 'PriceMap'
+            policyOption.model === 'PriceMap' ||
+            policyOption.model === 'Video'
          ) {
             return true
          }

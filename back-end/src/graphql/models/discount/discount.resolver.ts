@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class DiscountResolver {
    @Query(() => AggregateDiscount)
    @CheckPoliciesGuard(DiscountReadAction)
    async aggregateDiscount(
-      @Args(new ValidationPipe()) args: DiscountAggregateArgs,
+      @Args() args: DiscountAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class DiscountResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(DiscountReadAction)
-   async countDiscount(@Args(new ValidationPipe()) args: DiscountCountArgs) {
+   async countDiscount(@Args() args: DiscountCountArgs) {
       return handleResolver(this.discount, 'count', args)
    }
 
    @Mutation(() => Discount)
    @CheckPoliciesGuard(DiscountCreateAction)
    async createDiscount(
-      @Args(new ValidationPipe()) args: DiscountCreateArgs,
+      @Args() args: DiscountCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class DiscountResolver {
    @Mutation(() => [Discount])
    @CheckPoliciesGuard(DiscountCreateAction)
    async createManyDiscount(
-      @Args(new ValidationPipe())
+      @Args()
       args: DiscountCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class DiscountResolver {
    @Mutation(() => Discount)
    @CheckPoliciesGuard(DiscountDeleteAction)
    async deleteDiscount(
-      @Args(new ValidationPipe()) args: DiscountDeleteArgs,
+      @Args() args: DiscountDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class DiscountResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(DiscountDeleteAction)
-   async deleteManyDiscount(
-      @Args(new ValidationPipe()) args: DiscountDeleteManyArgs
-   ) {
+   async deleteManyDiscount(@Args() args: DiscountDeleteManyArgs) {
       return handleResolver(this.discount, 'deleteMany', args)
    }
 
    @Query(() => Discount, { nullable: true })
    @CheckPoliciesGuard(DiscountReadAction)
    async findFirstDiscount(
-      @Args(new ValidationPipe()) args: DiscountFindFirstArgs,
+      @Args() args: DiscountFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class DiscountResolver {
    @Query(() => [Discount])
    @CheckPoliciesGuard(DiscountReadAction)
    async findManyDiscount(
-      @Args(new ValidationPipe()) args: DiscountFindManyArgs,
+      @Args() args: DiscountFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class DiscountResolver {
    @Query(() => Discount, { nullable: true })
    @CheckPoliciesGuard(DiscountReadAction)
    async findUniqueDiscount(
-      @Args(new ValidationPipe()) args: DiscountFindUniqueArgs,
+      @Args() args: DiscountFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class DiscountResolver {
    @Query(() => DiscountGroupBy)
    @CheckPoliciesGuard(DiscountReadAction)
    async groupByDiscount(
-      @Args(new ValidationPipe()) args: DiscountGroupByArgs,
+      @Args() args: DiscountGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class DiscountResolver {
    @Mutation(() => Discount)
    @CheckPoliciesGuard(DiscountUpdateAction)
    async updateDiscount(
-      @Args(new ValidationPipe()) args: DiscountUpdateArgs,
+      @Args() args: DiscountUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'update', { ...args, select })

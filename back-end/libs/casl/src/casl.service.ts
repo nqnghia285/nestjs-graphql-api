@@ -11,6 +11,7 @@ import {
    Comment,
    Customer,
    Discount,
+   Image,
    Laptop,
    Passage,
    Person,
@@ -18,6 +19,7 @@ import {
    PriceMap,
    Purchase,
    User,
+   Video,
 } from '~/graphql/typedefs'
 import { Action, IUserInfo } from '~/interface'
 
@@ -25,13 +27,15 @@ export type AppSubjects = InferSubjects<
    | typeof Comment
    | typeof Customer
    | typeof Discount
+   | typeof Image
    | typeof Laptop
    | typeof Passage
    | typeof Person
    | typeof Post
    | typeof PriceMap
    | typeof Purchase
-   | typeof User,
+   | typeof User
+   | typeof Video,
    true
 >
 
@@ -45,7 +49,6 @@ export class CaslAbilityFactory {
       )
       if (user) {
          if (user.role === Role.ADMIN) {
-            console.log(Role.ADMIN)
             // ? Apply to Admin
             can(
                [Action.CREATE, Action.DELETE, Action.READ, Action.UPDATE],
@@ -53,6 +56,7 @@ export class CaslAbilityFactory {
                   'Comment',
                   'Customer',
                   'Discount',
+                  'Image',
                   'Laptop',
                   'Passage',
                   'Person',
@@ -60,10 +64,10 @@ export class CaslAbilityFactory {
                   'PriceMap',
                   'Purchase',
                   'User',
+                  'Video',
                ]
             )
          } else {
-            console.log(Role.STAFF)
             // ? Apply to Staff
             // ? can
             // * CREATE and READ action:
@@ -73,10 +77,12 @@ export class CaslAbilityFactory {
                   'Comment',
                   'Customer',
                   'Discount',
+                  'Image',
                   'Laptop',
                   'Post',
                   'PriceMap',
                   'Purchase',
+                  'Video',
                ]
             )
             // * DELETE action:
@@ -87,9 +93,11 @@ export class CaslAbilityFactory {
             can(Action.UPDATE, [
                'Customer',
                'Discount',
+               'Image',
                'Laptop',
                'PriceMap',
                'Purchase',
+               'Video',
             ])
             can(Action.UPDATE, 'Comment', {
                isStaff: true,
@@ -105,7 +113,14 @@ export class CaslAbilityFactory {
          // ? can
          // * CREATE and READ action:
          can([Action.CREATE, Action.READ], 'Comment')
-         can(Action.READ, ['Discount', 'Laptop', 'Post', 'PriceMap'])
+         can(Action.READ, [
+            'Discount',
+            'Image',
+            'Laptop',
+            'Post',
+            'PriceMap',
+            'Video',
+         ])
       }
 
       return build({
@@ -127,6 +142,10 @@ export class CaslAbilityFactory {
          }
          case 'Discount': {
             target = new Discount()
+            break
+         }
+         case 'Image': {
+            target = new Image()
             break
          }
          case 'Laptop': {
@@ -155,6 +174,10 @@ export class CaslAbilityFactory {
          }
          case 'User': {
             target = new User()
+            break
+         }
+         case 'Video': {
+            target = new Video()
             break
          }
       }

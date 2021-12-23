@@ -12,6 +12,7 @@ import {
    gqlModuleAsyncOptions,
    serveStaticModuleOptions,
 } from './config'
+import { FeaturesModule } from './features'
 import { GraphQLModules } from './graphql'
 
 @Module({
@@ -25,6 +26,7 @@ import { GraphQLModules } from './graphql'
       LoggerModule,
       PrismaModule,
       GraphQLModules,
+      FeaturesModule,
    ],
 })
 export class AppModule {}

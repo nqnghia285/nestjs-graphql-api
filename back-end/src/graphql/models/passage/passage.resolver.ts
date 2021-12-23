@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class PassageResolver {
    @Query(() => AggregatePassage)
    @CheckPoliciesGuard(PassageReadAction)
    async aggregatePassage(
-      @Args(new ValidationPipe()) args: PassageAggregateArgs,
+      @Args() args: PassageAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class PassageResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(PassageReadAction)
-   async countPassage(@Args(new ValidationPipe()) args: PassageCountArgs) {
+   async countPassage(@Args() args: PassageCountArgs) {
       return handleResolver(this.passage, 'count', args)
    }
 
    @Mutation(() => Passage)
    @CheckPoliciesGuard(PassageCreateAction)
    async createPassage(
-      @Args(new ValidationPipe()) args: PassageCreateArgs,
+      @Args() args: PassageCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class PassageResolver {
    @Mutation(() => [Passage])
    @CheckPoliciesGuard(PassageCreateAction)
    async createManyPassage(
-      @Args(new ValidationPipe())
+      @Args()
       args: PassageCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class PassageResolver {
    @Mutation(() => Passage)
    @CheckPoliciesGuard(PassageDeleteAction)
    async deletePassage(
-      @Args(new ValidationPipe()) args: PassageDeleteArgs,
+      @Args() args: PassageDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class PassageResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PassageDeleteAction)
-   async deleteManyPassage(
-      @Args(new ValidationPipe()) args: PassageDeleteManyArgs
-   ) {
+   async deleteManyPassage(@Args() args: PassageDeleteManyArgs) {
       return handleResolver(this.passage, 'deleteMany', args)
    }
 
    @Query(() => Passage, { nullable: true })
    @CheckPoliciesGuard(PassageReadAction)
    async findFirstPassage(
-      @Args(new ValidationPipe()) args: PassageFindFirstArgs,
+      @Args() args: PassageFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class PassageResolver {
    @Query(() => [Passage])
    @CheckPoliciesGuard(PassageReadAction)
    async findManyPassage(
-      @Args(new ValidationPipe()) args: PassageFindManyArgs,
+      @Args() args: PassageFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class PassageResolver {
    @Query(() => Passage, { nullable: true })
    @CheckPoliciesGuard(PassageReadAction)
    async findUniquePassage(
-      @Args(new ValidationPipe()) args: PassageFindUniqueArgs,
+      @Args() args: PassageFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class PassageResolver {
    @Query(() => PassageGroupBy)
    @CheckPoliciesGuard(PassageReadAction)
    async groupByPassage(
-      @Args(new ValidationPipe()) args: PassageGroupByArgs,
+      @Args() args: PassageGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class PassageResolver {
    @Mutation(() => Passage)
    @CheckPoliciesGuard(PassageUpdateAction)
    async updatePassage(
-      @Args(new ValidationPipe()) args: PassageUpdateArgs,
+      @Args() args: PassageUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'update', { ...args, select })

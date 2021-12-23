@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class PostResolver {
    @Query(() => AggregatePost)
    @CheckPoliciesGuard(PostReadAction)
    async aggregatePost(
-      @Args(new ValidationPipe()) args: PostAggregateArgs,
+      @Args() args: PostAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class PostResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(PostReadAction)
-   async countPost(@Args(new ValidationPipe()) args: PostCountArgs) {
+   async countPost(@Args() args: PostCountArgs) {
       return handleResolver(this.post, 'count', args)
    }
 
    @Mutation(() => Post)
    @CheckPoliciesGuard(PostCreateAction)
    async createPost(
-      @Args(new ValidationPipe()) args: PostCreateArgs,
+      @Args() args: PostCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class PostResolver {
    @Mutation(() => [Post])
    @CheckPoliciesGuard(PostCreateAction)
    async createManyPost(
-      @Args(new ValidationPipe())
+      @Args()
       args: PostCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class PostResolver {
    @Mutation(() => Post)
    @CheckPoliciesGuard(PostDeleteAction)
    async deletePost(
-      @Args(new ValidationPipe()) args: PostDeleteArgs,
+      @Args() args: PostDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'delete', { ...args, select })
@@ -78,14 +77,14 @@ export class PostResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PostDeleteAction)
-   async deleteManyPost(@Args(new ValidationPipe()) args: PostDeleteManyArgs) {
+   async deleteManyPost(@Args() args: PostDeleteManyArgs) {
       return handleResolver(this.post, 'deleteMany', args)
    }
 
    @Query(() => Post, { nullable: true })
    @CheckPoliciesGuard(PostReadAction)
    async findFirstPost(
-      @Args(new ValidationPipe()) args: PostFindFirstArgs,
+      @Args() args: PostFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'findFirst', { ...args, select })
@@ -94,7 +93,7 @@ export class PostResolver {
    @Query(() => [Post])
    @CheckPoliciesGuard(PostReadAction)
    async findManyPost(
-      @Args(new ValidationPipe()) args: PostFindManyArgs,
+      @Args() args: PostFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'findMany', { ...args, select })
@@ -103,7 +102,7 @@ export class PostResolver {
    @Query(() => Post, { nullable: true })
    @CheckPoliciesGuard(PostReadAction)
    async findUniquePost(
-      @Args(new ValidationPipe()) args: PostFindUniqueArgs,
+      @Args() args: PostFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'findUnique', { ...args, select })
@@ -112,7 +111,7 @@ export class PostResolver {
    @Query(() => PostGroupBy)
    @CheckPoliciesGuard(PostReadAction)
    async groupByPost(
-      @Args(new ValidationPipe()) args: PostGroupByArgs,
+      @Args() args: PostGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'groupBy', { ...args, select })
@@ -121,7 +120,7 @@ export class PostResolver {
    @Mutation(() => Post)
    @CheckPoliciesGuard(PostUpdateAction)
    async updatePost(
-      @Args(new ValidationPipe()) args: PostUpdateArgs,
+      @Args() args: PostUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.post, 'update', { ...args, select })

@@ -66,7 +66,6 @@ export class AuthService {
 
       if (person?.user && bcrypt.compareSync(password, person.user.password)) {
          const { user, ...rest } = person
-         rest.phone = rest.phone?.trim()
          const profile = { role: user.role, ...rest }
 
          return profile

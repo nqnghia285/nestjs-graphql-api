@@ -29,6 +29,20 @@ generator nestgraphql {
   fields_Scalars_from   = "graphql-scalars"
   fields_Scalars_input  = true
   fields_Scalars_output = true
+
+  // import * as TD from '~/typedefs'
+  fields_TD_from   = "~/graphql/typedefs"
+  fields_TD_input  = true
+  fields_TD_output = true
+
+  // import { GraphQLDecimal } from 'prisma-graphql-type-decimal'
+  //   fields_GraphQLDecimal_from          = "prisma-graphql-type-decimal"
+  //   fields_GraphQLDecimal_defaultImport = "{ GraphQLDecimal }"
+
+
+  // import { Prisma } from '@prisma/client'
+  //   fields_Prisma_from          = "@prisma/client"
+  //   fields_Prisma_defaultImport = "{ Prisma }"
 }
 
 enum Gender {
@@ -55,6 +69,14 @@ enum Rank {
   THREE
   FOUR
   FIVE
+}
+
+enum MimeType {
+  gif
+  jpeg
+  pipeg
+  png
+  svg
 }
 
 model Person {
@@ -92,7 +114,7 @@ model User {
   profile   Person   @relation(fields: [id], references: [id])
   /// @HideField({ output: true })
   /// @Validator.Length(1, 20)
-  password  String   @db.VarChar(60)
+  password  String   @db.Char(60)
   role      Role     @default(STAFF)
   posts     Post[]
   createdAt DateTime @default(now()) @map("created_at")
@@ -100,7 +122,7 @@ model User {
 }
 
 model Laptop {
-  id                  Int        @id @default(autoincrement()) @db.SmallInt
+  id                  Int        @id @default(autoincrement())
   /// @Validator.MaxLength(255)
   brand               String     @default("None") @db.VarChar(255)
   /// @Validator.MaxLength(255)
@@ -141,18 +163,22 @@ model Laptop {
   releaseDate         DateTime   @default(now()) @map("release_date")
   os                  OS         @default(WINDOWS)
   priceMap            PriceMap?  @relation(fields: [priceMapId], references: [id])
-  priceMapId          Int?       @map("price_map_id") @db.SmallInt
+  priceMapId          Int?       @map("price_map_id")
   discount            Discount?  @relation(fields: [discountId], references: [id])
-  discountId          Int?       @map("discount_id") @db.SmallInt
+  discountId          Int?       @map("discount_id")
+  defaultImage        Image?     @relation("LaptopToDefaultImage", fields: [defaultImageId], references: [id])
+  defaultImageId      Int?       @map("default_image_id")
   purchases           Purchase[]
   posts               Post[]
   comments            Comment[]
+  images              Image[]
+  videos              Video[]
   createdAt           DateTime   @default(now()) @map("created_at")
   updatedAt           DateTime   @updatedAt @map("updated_at")
 }
 
 model Comment {
-  id        Int       @id @default(autoincrement()) @db.SmallInt
+  id        Int       @id @default(autoincrement())
   rank      Rank      @default(FIVE)
   /// @Validator.MaxLength(400)
   content   String    @db.VarChar(400)
@@ -161,25 +187,24 @@ model Comment {
   authorId  String    @map("author_id") @db.Uuid
   isStaff   Boolean   @default(false) @map("is_staff")
   laptop    Laptop    @relation(fields: [laptopId], references: [id])
-  laptopId  Int       @map("laptop_id") @db.SmallInt
+  laptopId  Int       @map("laptop_id")
   comment   Comment?  @relation("CommentToComment", fields: [commentId], references: [id])
-  commentId Int?      @map("comment_id") @db.SmallInt
+  commentId Int?      @map("comment_id")
   comments  Comment[] @relation("CommentToComment")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
 }
 
 model PriceMap {
-  id        Int      @id @default(autoincrement()) @db.SmallInt
-  /// @FieldType('Scalars.GraphQLCurrency')
-  price     Float    @unique @default(0) @db.Real
+  id        Int      @id @default(autoincrement())
+  price     Decimal  @unique @default(0) @db.Money
   laptops   Laptop[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
 
 model Discount {
-  id        Int      @id @default(autoincrement()) @db.SmallInt
+  id        Int      @id @default(autoincrement())
   value     Float    @unique @default(0) @db.Real
   laptops   Laptop[]
   createdAt DateTime @default(now()) @map("created_at")
@@ -187,7 +212,7 @@ model Discount {
 }
 
 model Purchase {
-  id         Int      @id @default(autoincrement()) @db.SmallInt
+  id         Int      @id @default(autoincrement())
   customer   Customer @relation(fields: [customerId], references: [id])
   /// @FieldType('Scalars.GraphQLUUID')
   customerId String   @map("customer_id") @db.Uuid
@@ -197,23 +222,54 @@ model Purchase {
 }
 
 model Passage {
-  id      Int    @id @default(autoincrement()) @db.SmallInt
-  /// @Validator.MaxLength(150)
-  header  String @db.VarChar(150)
-  content String @db.Text
+  id      Int    @id @default(autoincrement())
+  /// @Validator.MaxLength(250)
+  header  String @db.VarChar(255)
+  content String
   post    Post   @relation(fields: [postId], references: [id])
-  postId  Int    @map("post_id") @db.SmallInt
+  postId  Int    @map("post_id")
 }
 
 model Post {
-  id        Int       @id @default(autoincrement()) @db.SmallInt
+  id             Int       @id @default(autoincrement())
   /// @Validator.MaxLength(255)
-  title     String    @db.VarChar(255)
-  passages  Passage[]
-  laptops   Laptop[]
-  author    User      @relation(fields: [authorId], references: [id])
+  title          String    @db.VarChar(255)
+  passages       Passage[]
+  laptops        Laptop[]
+  author         User      @relation(fields: [authorId], references: [id])
   /// @FieldType('Scalars.GraphQLUUID')
-  authorId  String    @map("author_id") @db.Uuid
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  authorId       String    @map("author_id") @db.Uuid
+  defaultImage   Image?    @relation("PostToDefaultImage", fields: [defaultImageId], references: [id])
+  defaultImageId Int?      @map("default_image_id")
+  images         Image[]
+  videos         Video[]
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+}
+
+model Image {
+  id             Int      @id @default(autoincrement())
+  /// @Validator.MaxLength(255)
+  title          String   @db.VarChar(255)
+  mimeType       MimeType @default(jpeg) @map("mime_type")
+  /// @FieldType('TD.Base64')
+  data           Bytes
+  laptops        Laptop[]
+  post           Post[]
+  defaultLaptops Laptop[] @relation("LaptopToDefaultImage")
+  defaultPosts   Post[]   @relation("PostToDefaultImage")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+}
+
+model Video {
+  id        Int      @id @default(autoincrement())
+  /// @Validator.MaxLength(255)
+  title     String   @db.VarChar(255)
+  /// @FieldType('Scalars.GraphQLURL')
+  url       String
+  laptops   Laptop[]
+  post      Post[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 }

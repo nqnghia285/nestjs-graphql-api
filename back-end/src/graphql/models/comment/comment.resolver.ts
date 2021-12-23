@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class CommentResolver {
    @Query(() => AggregateComment)
    @CheckPoliciesGuard(CommentReadAction)
    async aggregateComment(
-      @Args(new ValidationPipe()) args: CommentAggregateArgs,
+      @Args() args: CommentAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class CommentResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(CommentReadAction)
-   async countComment(@Args(new ValidationPipe()) args: CommentCountArgs) {
+   async countComment(@Args() args: CommentCountArgs) {
       return handleResolver(this.comment, 'count', args)
    }
 
    @Mutation(() => Comment)
    @CheckPoliciesGuard(CommentCreateAction)
    async createComment(
-      @Args(new ValidationPipe()) args: CommentCreateArgs,
+      @Args() args: CommentCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class CommentResolver {
    @Mutation(() => [Comment])
    @CheckPoliciesGuard(CommentCreateAction)
    async createManyComment(
-      @Args(new ValidationPipe())
+      @Args()
       args: CommentCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class CommentResolver {
    @Mutation(() => Comment)
    @CheckPoliciesGuard(CommentDeleteAction)
    async deleteComment(
-      @Args(new ValidationPipe()) args: CommentDeleteArgs,
+      @Args() args: CommentDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class CommentResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(CommentDeleteAction)
-   async deleteManyComment(
-      @Args(new ValidationPipe()) args: CommentDeleteManyArgs
-   ) {
+   async deleteManyComment(@Args() args: CommentDeleteManyArgs) {
       return handleResolver(this.comment, 'deleteMany', args)
    }
 
    @Query(() => Comment, { nullable: true })
    @CheckPoliciesGuard(CommentReadAction)
    async findFirstComment(
-      @Args(new ValidationPipe()) args: CommentFindFirstArgs,
+      @Args() args: CommentFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class CommentResolver {
    @Query(() => [Comment])
    @CheckPoliciesGuard(CommentReadAction)
    async findManyComment(
-      @Args(new ValidationPipe()) args: CommentFindManyArgs,
+      @Args() args: CommentFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class CommentResolver {
    @Query(() => Comment, { nullable: true })
    @CheckPoliciesGuard(CommentReadAction)
    async findUniqueComment(
-      @Args(new ValidationPipe()) args: CommentFindUniqueArgs,
+      @Args() args: CommentFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class CommentResolver {
    @Query(() => CommentGroupBy)
    @CheckPoliciesGuard(CommentReadAction)
    async groupByComment(
-      @Args(new ValidationPipe()) args: CommentGroupByArgs,
+      @Args() args: CommentGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class CommentResolver {
    @Mutation(() => Comment)
    @CheckPoliciesGuard(CommentUpdateAction)
    async updateComment(
-      @Args(new ValidationPipe()) args: CommentUpdateArgs,
+      @Args() args: CommentUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'update', { ...args, select })

@@ -20,7 +20,9 @@
          "~": ["src"],
          "~/*": ["src/*"],
          "~/generated": ["src"],
-         "~/generated/*": ["src/*"]
+         "~/generated/*": ["src/*"],
+         "~/graphql": ["src"],
+         "~/graphql/*": ["src/*"]
       },
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true

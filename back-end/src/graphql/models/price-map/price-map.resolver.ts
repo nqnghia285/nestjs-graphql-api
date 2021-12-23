@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class PriceMapResolver {
    @Query(() => AggregatePriceMap)
    @CheckPoliciesGuard(PriceMapReadAction)
    async aggregatePriceMap(
-      @Args(new ValidationPipe()) args: PriceMapAggregateArgs,
+      @Args() args: PriceMapAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class PriceMapResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(PriceMapReadAction)
-   async countPriceMap(@Args(new ValidationPipe()) args: PriceMapCountArgs) {
+   async countPriceMap(@Args() args: PriceMapCountArgs) {
       return handleResolver(this.priceMap, 'count', args)
    }
 
    @Mutation(() => PriceMap)
    @CheckPoliciesGuard(PriceMapCreateAction)
    async createPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapCreateArgs,
+      @Args() args: PriceMapCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class PriceMapResolver {
    @Mutation(() => [PriceMap])
    @CheckPoliciesGuard(PriceMapCreateAction)
    async createManyPriceMap(
-      @Args(new ValidationPipe())
+      @Args()
       args: PriceMapCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class PriceMapResolver {
    @Mutation(() => PriceMap)
    @CheckPoliciesGuard(PriceMapDeleteAction)
    async deletePriceMap(
-      @Args(new ValidationPipe()) args: PriceMapDeleteArgs,
+      @Args() args: PriceMapDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class PriceMapResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(PriceMapDeleteAction)
-   async deleteManyPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapDeleteManyArgs
-   ) {
+   async deleteManyPriceMap(@Args() args: PriceMapDeleteManyArgs) {
       return handleResolver(this.priceMap, 'deleteMany', args)
    }
 
    @Query(() => PriceMap, { nullable: true })
    @CheckPoliciesGuard(PriceMapReadAction)
    async findFirstPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapFindFirstArgs,
+      @Args() args: PriceMapFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class PriceMapResolver {
    @Query(() => [PriceMap])
    @CheckPoliciesGuard(PriceMapReadAction)
    async findManyPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapFindManyArgs,
+      @Args() args: PriceMapFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class PriceMapResolver {
    @Query(() => PriceMap, { nullable: true })
    @CheckPoliciesGuard(PriceMapReadAction)
    async findUniquePriceMap(
-      @Args(new ValidationPipe()) args: PriceMapFindUniqueArgs,
+      @Args() args: PriceMapFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class PriceMapResolver {
    @Query(() => PriceMapGroupBy)
    @CheckPoliciesGuard(PriceMapReadAction)
    async groupByPriceMap(
-      @Args(new ValidationPipe()) args: PriceMapGroupByArgs,
+      @Args() args: PriceMapGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class PriceMapResolver {
    @Mutation(() => PriceMap)
    @CheckPoliciesGuard(PriceMapUpdateAction)
    async updatePriceMap(
-      @Args(new ValidationPipe()) args: PriceMapUpdateArgs,
+      @Args() args: PriceMapUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.priceMap, 'update', { ...args, select })

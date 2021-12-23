@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -36,7 +35,7 @@ export class LaptopResolver {
    @Query(() => AggregateLaptop)
    @CheckPoliciesGuard(LaptopReadAction)
    async aggregateLaptop(
-      @Args(new ValidationPipe()) args: LaptopAggregateArgs,
+      @Args() args: LaptopAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'aggregate', { ...args, select })
@@ -44,14 +43,14 @@ export class LaptopResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(LaptopReadAction)
-   async countLaptop(@Args(new ValidationPipe()) args: LaptopCountArgs) {
+   async countLaptop(@Args() args: LaptopCountArgs) {
       return handleResolver(this.laptop, 'count', args)
    }
 
    @Mutation(() => Laptop)
    @CheckPoliciesGuard(LaptopCreateAction)
    async createLaptop(
-      @Args(new ValidationPipe()) args: LaptopCreateArgs,
+      @Args() args: LaptopCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'create', { ...args, select })
@@ -60,7 +59,7 @@ export class LaptopResolver {
    @Mutation(() => [Laptop])
    @CheckPoliciesGuard(LaptopCreateAction)
    async createManyLaptop(
-      @Args(new ValidationPipe())
+      @Args()
       args: LaptopCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -70,7 +69,7 @@ export class LaptopResolver {
    @Mutation(() => Laptop)
    @CheckPoliciesGuard(LaptopDeleteAction)
    async deleteLaptop(
-      @Args(new ValidationPipe()) args: LaptopDeleteArgs,
+      @Args() args: LaptopDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'delete', { ...args, select })
@@ -78,16 +77,14 @@ export class LaptopResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(LaptopDeleteAction)
-   async deleteManyLaptop(
-      @Args(new ValidationPipe()) args: LaptopDeleteManyArgs
-   ) {
+   async deleteManyLaptop(@Args() args: LaptopDeleteManyArgs) {
       return handleResolver(this.laptop, 'deleteMany', args)
    }
 
    @Query(() => Laptop, { nullable: true })
    @CheckPoliciesGuard(LaptopReadAction)
    async findFirstLaptop(
-      @Args(new ValidationPipe()) args: LaptopFindFirstArgs,
+      @Args() args: LaptopFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'findFirst', { ...args, select })
@@ -96,7 +93,7 @@ export class LaptopResolver {
    @Query(() => [Laptop])
    @CheckPoliciesGuard(LaptopReadAction)
    async findManyLaptop(
-      @Args(new ValidationPipe()) args: LaptopFindManyArgs,
+      @Args() args: LaptopFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'findMany', { ...args, select })
@@ -105,7 +102,7 @@ export class LaptopResolver {
    @Query(() => Laptop, { nullable: true })
    @CheckPoliciesGuard(LaptopReadAction)
    async findUniqueLaptop(
-      @Args(new ValidationPipe()) args: LaptopFindUniqueArgs,
+      @Args() args: LaptopFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'findUnique', { ...args, select })
@@ -114,7 +111,7 @@ export class LaptopResolver {
    @Query(() => LaptopGroupBy)
    @CheckPoliciesGuard(LaptopReadAction)
    async groupByLaptop(
-      @Args(new ValidationPipe()) args: LaptopGroupByArgs,
+      @Args() args: LaptopGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'groupBy', { ...args, select })
@@ -123,7 +120,7 @@ export class LaptopResolver {
    @Mutation(() => Laptop)
    @CheckPoliciesGuard(LaptopUpdateAction)
    async updateLaptop(
-      @Args(new ValidationPipe()) args: LaptopUpdateArgs,
+      @Args() args: LaptopUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.laptop, 'update', { ...args, select })

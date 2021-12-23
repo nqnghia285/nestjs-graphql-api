@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common'
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
 import {
@@ -37,7 +36,7 @@ export class UserResolver {
    @Query(() => AggregateUser)
    @CheckPoliciesGuard(UserReadAction)
    async aggregateUser(
-      @Args(new ValidationPipe()) args: UserAggregateArgs,
+      @Args() args: UserAggregateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'aggregate', { ...args, select })
@@ -45,14 +44,14 @@ export class UserResolver {
 
    @Query(() => Int)
    @CheckPoliciesGuard(UserReadAction)
-   async countUser(@Args(new ValidationPipe()) args: UserCountArgs) {
+   async countUser(@Args() args: UserCountArgs) {
       return handleResolver(this.user, 'count', args)
    }
 
    @Mutation(() => User)
    @CheckPoliciesGuard(UserCreateAction)
    async createUser(
-      @Args(new ValidationPipe(), UserCreateArgsPipe) args: UserCreateArgs,
+      @Args(UserCreateArgsPipe) args: UserCreateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'create', { ...args, select })
@@ -61,7 +60,7 @@ export class UserResolver {
    @Mutation(() => [User])
    @CheckPoliciesGuard(UserCreateAction)
    async createManyUser(
-      @Args(new ValidationPipe(), UserCreateManyArgsPipe)
+      @Args(UserCreateManyArgsPipe)
       args: UserCreateManyArgs,
       @SelectedFields() select: any
    ) {
@@ -71,7 +70,7 @@ export class UserResolver {
    @Mutation(() => User)
    @CheckPoliciesGuard(UserDeleteAction)
    async deleteUser(
-      @Args(new ValidationPipe()) args: UserDeleteArgs,
+      @Args() args: UserDeleteArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'delete', { ...args, select })
@@ -79,14 +78,14 @@ export class UserResolver {
 
    @Mutation(() => DeleteMany)
    @CheckPoliciesGuard(UserDeleteAction)
-   async deleteManyUser(@Args(new ValidationPipe()) args: UserDeleteManyArgs) {
+   async deleteManyUser(@Args() args: UserDeleteManyArgs) {
       return handleResolver(this.user, 'deleteMany', args)
    }
 
    @Query(() => User, { nullable: true })
    @CheckPoliciesGuard(UserReadAction)
    async findFirstUser(
-      @Args(new ValidationPipe()) args: UserFindFirstArgs,
+      @Args() args: UserFindFirstArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'findFirst', { ...args, select })
@@ -95,7 +94,7 @@ export class UserResolver {
    @Query(() => [User])
    @CheckPoliciesGuard(UserReadAction)
    async findManyUser(
-      @Args(new ValidationPipe()) args: UserFindManyArgs,
+      @Args() args: UserFindManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'findMany', { ...args, select })
@@ -104,7 +103,7 @@ export class UserResolver {
    @Query(() => User, { nullable: true })
    @CheckPoliciesGuard(UserReadAction)
    async findUniqueUser(
-      @Args(new ValidationPipe()) args: UserFindUniqueArgs,
+      @Args() args: UserFindUniqueArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'findUnique', { ...args, select })
@@ -113,7 +112,7 @@ export class UserResolver {
    @Query(() => UserGroupBy)
    @CheckPoliciesGuard(UserReadAction)
    async groupByUser(
-      @Args(new ValidationPipe()) args: UserGroupByArgs,
+      @Args() args: UserGroupByArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'groupBy', { ...args, select })
@@ -122,7 +121,7 @@ export class UserResolver {
    @Mutation(() => User)
    @CheckPoliciesGuard(UserUpdateAction)
    async updateUser(
-      @Args(new ValidationPipe()) args: UserUpdateArgs,
+      @Args() args: UserUpdateArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.user, 'update', { ...args, select })

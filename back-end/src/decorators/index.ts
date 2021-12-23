@@ -1,6 +1,5 @@
-export * from './auth.decorator'
+export * from './chat'
 export * from './check-policies-guard.decorator'
 export * from './check-policies.decorator'
-export * from './roles.decorator'
 export * from './selected-fields.decorator'
 export * from './user'
