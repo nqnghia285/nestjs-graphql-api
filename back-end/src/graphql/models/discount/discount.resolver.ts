@@ -7,12 +7,7 @@ import {
    DiscountGroupBy,
    DiscountGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   DiscountCreateAction,
-   DiscountDeleteAction,
-   DiscountReadAction,
-   DiscountUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class DiscountResolver {
    constructor(private readonly discount: DiscountService) {}
 
    @Query(() => AggregateDiscount)
-   @CheckPoliciesGuard(DiscountReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Discount'))
    async aggregateDiscount(
       @Args() args: DiscountAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class DiscountResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(DiscountReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Discount'))
    async countDiscount(@Args() args: DiscountCountArgs) {
       return handleResolver(this.discount, 'count', args)
    }
 
    @Mutation(() => Discount)
-   @CheckPoliciesGuard(DiscountCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Discount'))
    async createDiscount(
       @Args() args: DiscountCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class DiscountResolver {
    }
 
    @Mutation(() => [Discount])
-   @CheckPoliciesGuard(DiscountCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Discount'))
    async createManyDiscount(
       @Args()
       args: DiscountCreateManyArgs,
@@ -67,7 +62,7 @@ export class DiscountResolver {
    }
 
    @Mutation(() => Discount)
-   @CheckPoliciesGuard(DiscountDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Discount'))
    async deleteDiscount(
       @Args() args: DiscountDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class DiscountResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(DiscountDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Discount'))
    async deleteManyDiscount(@Args() args: DiscountDeleteManyArgs) {
       return handleResolver(this.discount, 'deleteMany', args)
    }
 
    @Query(() => Discount, { nullable: true })
-   @CheckPoliciesGuard(DiscountReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Discount'))
    async findFirstDiscount(
       @Args() args: DiscountFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class DiscountResolver {
    }
 
    @Query(() => [Discount])
-   @CheckPoliciesGuard(DiscountReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Discount'))
    async findManyDiscount(
       @Args() args: DiscountFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class DiscountResolver {
    }
 
    @Query(() => Discount, { nullable: true })
-   @CheckPoliciesGuard(DiscountReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Discount'))
    async findUniqueDiscount(
       @Args() args: DiscountFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class DiscountResolver {
    }
 
    @Query(() => DiscountGroupBy)
-   @CheckPoliciesGuard(DiscountReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Discount'))
    async groupByDiscount(
       @Args() args: DiscountGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class DiscountResolver {
    }
 
    @Mutation(() => Discount)
-   @CheckPoliciesGuard(DiscountUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Discount'))
    async updateDiscount(
       @Args() args: DiscountUpdateArgs,
       @SelectedFields() select: any

@@ -7,12 +7,7 @@ import {
    PostGroupBy,
    PostGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   PostCreateAction,
-   PostDeleteAction,
-   PostReadAction,
-   PostUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class PostResolver {
    constructor(private readonly post: PostService) {}
 
    @Query(() => AggregatePost)
-   @CheckPoliciesGuard(PostReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Post'))
    async aggregatePost(
       @Args() args: PostAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class PostResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(PostReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Post'))
    async countPost(@Args() args: PostCountArgs) {
       return handleResolver(this.post, 'count', args)
    }
 
    @Mutation(() => Post)
-   @CheckPoliciesGuard(PostCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Post'))
    async createPost(
       @Args() args: PostCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class PostResolver {
    }
 
    @Mutation(() => [Post])
-   @CheckPoliciesGuard(PostCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Post'))
    async createManyPost(
       @Args()
       args: PostCreateManyArgs,
@@ -67,7 +62,7 @@ export class PostResolver {
    }
 
    @Mutation(() => Post)
-   @CheckPoliciesGuard(PostDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Post'))
    async deletePost(
       @Args() args: PostDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class PostResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(PostDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Post'))
    async deleteManyPost(@Args() args: PostDeleteManyArgs) {
       return handleResolver(this.post, 'deleteMany', args)
    }
 
    @Query(() => Post, { nullable: true })
-   @CheckPoliciesGuard(PostReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Post'))
    async findFirstPost(
       @Args() args: PostFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class PostResolver {
    }
 
    @Query(() => [Post])
-   @CheckPoliciesGuard(PostReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Post'))
    async findManyPost(
       @Args() args: PostFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class PostResolver {
    }
 
    @Query(() => Post, { nullable: true })
-   @CheckPoliciesGuard(PostReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Post'))
    async findUniquePost(
       @Args() args: PostFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class PostResolver {
    }
 
    @Query(() => PostGroupBy)
-   @CheckPoliciesGuard(PostReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Post'))
    async groupByPost(
       @Args() args: PostGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class PostResolver {
    }
 
    @Mutation(() => Post)
-   @CheckPoliciesGuard(PostUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Post'))
    async updatePost(
       @Args() args: PostUpdateArgs,
       @SelectedFields() select: any

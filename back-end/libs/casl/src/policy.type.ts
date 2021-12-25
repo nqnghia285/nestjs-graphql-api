@@ -2,6 +2,6 @@ import { Action } from '~/interface'
 import { AppSubjects } from '.'
 
 export interface PolicyOption {
-   action: Action
+   action: keyof typeof Action
    model: AppSubjects
 }

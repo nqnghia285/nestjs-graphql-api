@@ -21,6 +21,11 @@ export class PoliciesGuard implements CanActivate {
       private readonly prisma: PrismaService
    ) {}
 
+   /**
+    * ! Note: To check permissions of users with conditions you have to create an instance of classes in AppSubjects.
+    * ! Because CASL stipulates that.
+    * * For more details, visits: https://casl.js.org
+    */
    async canActivate(context: ExecutionContext) {
       const policyOption = this.reflector.get<PolicyOption>(
          CHECK_POLICIES_KEY,
@@ -28,152 +33,116 @@ export class PoliciesGuard implements CanActivate {
       )
 
       const user = context.getArgByIndex<IUserInfo>(0)
+      const args = context.getArgByIndex(1)
+      const ability = this.caslAbilityFactory.createForUser(user)
+      let subject: AppSubjects = null
 
       // ! begin: Admin
       if (user?.role === Role.ADMIN) {
+         const allow = ability.can(policyOption.action, policyOption.model)
+         return allow
+      }
+      // ! end
+
+      // ! begin: Staff
+      if (user?.role === Role.STAFF) {
+         if (
+            policyOption.action === 'FIND_FIRST' &&
+            policyOption.model === 'User'
+         ) {
+            const object = await this.prisma.user.findFirst({
+               where: args.where,
+            })
+
+            subject = this.caslAbilityFactory.createSubjectInstance(
+               object,
+               policyOption.model
+            )
+         }
+
+         if (
+            policyOption.action === 'FIND_UNIQUE' &&
+            policyOption.model === 'User'
+         ) {
+            const object = await this.prisma.user.findUnique({
+               where: args.where,
+            })
+
+            subject = this.caslAbilityFactory.createSubjectInstance(
+               object,
+               policyOption.model
+            )
+         }
+
+         if (
+            policyOption.action === 'UPDATE' &&
+            (policyOption.model === 'Comment' ||
+               policyOption.model === 'Post' ||
+               policyOption.model === 'User')
+         ) {
+            const modelProperty = (policyOption.model as string).toLowerCase()
+
+            const object = await this.prisma[modelProperty].findUnique({
+               where: args.where,
+            })
+
+            subject = this.caslAbilityFactory.createSubjectInstance(
+               object,
+               policyOption.model
+            )
+         }
+
+         if (
+            policyOption.action === 'UPDATE_MANY' &&
+            (policyOption.model === 'Comment' || policyOption.model === 'Post')
+         ) {
+            const modelProperty = (policyOption.model as string).toLowerCase()
+
+            const object = await this.prisma[modelProperty].findFirst({
+               where: args.where,
+            })
+
+            subject = this.caslAbilityFactory.createSubjectInstance(
+               object,
+               policyOption.model
+            )
+         }
+
+         const allow = subject
+            ? ability.can(policyOption.action, subject)
+            : ability.can(policyOption.action, policyOption.model)
+
+         if (!allow) {
+            throwForbiddenException(policyOption.action, policyOption.model)
+         }
+
          return true
       }
       // ! end
 
-      const args = context.getArgByIndex(1)
-      const ability = this.caslAbilityFactory.createForUser(user)
-
-      // ! begin: Staff
-      if (user?.role === Role.STAFF) {
-         if (policyOption.action === Action.CREATE) {
-            if (
-               policyOption.model === 'Person' ||
-               policyOption.model === 'User'
-            ) {
-               throwForbiddenException(policyOption.action, policyOption.model)
-            }
-
-            return true
-         }
-
-         if (policyOption.action === Action.DELETE) {
-            if (policyOption.model === 'Comment') {
-               return true
-            }
-
-            throwForbiddenException(policyOption.action, policyOption.model)
-         }
-
-         if (policyOption.action === Action.READ) {
-            if (policyOption.model === 'Person') {
-               throwForbiddenException(policyOption.action, policyOption.model)
-            }
-
-            if (policyOption.model === 'User') {
-               const object = await this.prisma.user.findUnique({
-                  where: args.where,
-               })
-
-               const subject = this.caslAbilityFactory.createSubjectInstance(
-                  object,
-                  policyOption.model
-               )
-
-               const allow = ability.can(policyOption.action, subject)
-
-               if (!allow) {
-                  throwForbiddenException(
-                     policyOption.action,
-                     policyOption.model
-                  )
-               }
-
-               return true
-            }
-
-            const allow = ability.can(policyOption.action, policyOption.model)
-
-            if (!allow) {
-               throwForbiddenException(policyOption.action, policyOption.model)
-            }
-
-            return true
-         }
-
-         if (policyOption.action === Action.UPDATE) {
-            if (
-               policyOption.model === 'Comment' ||
-               policyOption.model === 'Post' ||
-               policyOption.model === 'User'
-            ) {
-               const modelProperty = (
-                  policyOption.model as string
-               ).toLowerCase()
-
-               const object = await this.prisma[modelProperty].findUnique({
-                  where: args.where,
-               })
-
-               const subject = this.caslAbilityFactory.createSubjectInstance(
-                  object,
-                  policyOption.model
-               )
-
-               const allow = ability.can(policyOption.action, subject)
-
-               if (!allow) {
-                  throwForbiddenException(
-                     policyOption.action,
-                     policyOption.model
-                  )
-               }
-
-               return true
-            }
-
-            const allow = ability.can(policyOption.action, policyOption.model)
-
-            if (!allow) {
-               throwForbiddenException(policyOption.action, policyOption.model)
-            }
-
-            return true
-         }
-
-         throwForbiddenException(policyOption.action, policyOption.model)
-      }
-      // ! end
-
       // ! begin: Customer
-      if (policyOption.action === Action.CREATE) {
-         if (policyOption.model === 'Comment') {
-            return true
-         }
+      const allow = ability.can(policyOption.action, policyOption.model)
 
+      if (!allow) {
          throwForbiddenException(policyOption.action, policyOption.model)
       }
 
-      if (policyOption.action === Action.READ) {
-         if (
-            policyOption.model === 'Comment' ||
-            policyOption.model === 'Discount' ||
-            policyOption.model === 'Image' ||
-            policyOption.model === 'Laptop' ||
-            policyOption.model === 'Post' ||
-            policyOption.model === 'PriceMap' ||
-            policyOption.model === 'Video'
-         ) {
-            return true
-         }
-
-         throwForbiddenException(policyOption.action, policyOption.model)
-      }
+      return true
       // ! end
-
-      return !(
-         typeof throwForbiddenException(
-            policyOption.action,
-            policyOption.model
-         ) === 'function'
-      )
    }
 }
 
-function throwForbiddenException(action: Action, model: AppSubjects) {
-   throw new ForbiddenException(`You are not allowed to ${action} to ${model}`)
+function throwForbiddenException(
+   action: keyof typeof Action,
+   model: AppSubjects
+) {
+   throw new ForbiddenException(
+      {
+         action,
+         model,
+         error: 'Authorization',
+         message: `You are not allowed to ${action} to ${model} or unsatisfactory condition`,
+      },
+      '[Error]: Authorization'
+   )
 }

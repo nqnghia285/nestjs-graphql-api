@@ -7,14 +7,10 @@ import {
    CommentGroupBy,
    CommentGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   CommentCreateAction,
-   CommentDeleteAction,
-   CommentReadAction,
-   CommentUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    CommentCountArgs,
    CommentCreateArgs,
    CommentCreateManyArgs,
@@ -24,7 +20,6 @@ import {
    CommentFindManyArgs,
    CommentFindUniqueArgs,
    CommentUpdateArgs,
-   DeleteMany,
 } from '../../typedefs'
 import { CommentService } from './comment.service'
 
@@ -33,7 +28,7 @@ export class CommentResolver {
    constructor(private readonly comment: CommentService) {}
 
    @Query(() => AggregateComment)
-   @CheckPoliciesGuard(CommentReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Comment'))
    async aggregateComment(
       @Args() args: CommentAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class CommentResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(CommentReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Comment'))
    async countComment(@Args() args: CommentCountArgs) {
       return handleResolver(this.comment, 'count', args)
    }
 
    @Mutation(() => Comment)
-   @CheckPoliciesGuard(CommentCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Comment'))
    async createComment(
       @Args() args: CommentCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class CommentResolver {
    }
 
    @Mutation(() => [Comment])
-   @CheckPoliciesGuard(CommentCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Comment'))
    async createManyComment(
       @Args()
       args: CommentCreateManyArgs,
@@ -67,7 +62,7 @@ export class CommentResolver {
    }
 
    @Mutation(() => Comment)
-   @CheckPoliciesGuard(CommentDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Comment'))
    async deleteComment(
       @Args() args: CommentDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class CommentResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(CommentDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Comment'))
    async deleteManyComment(@Args() args: CommentDeleteManyArgs) {
       return handleResolver(this.comment, 'deleteMany', args)
    }
 
    @Query(() => Comment, { nullable: true })
-   @CheckPoliciesGuard(CommentReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Comment'))
    async findFirstComment(
       @Args() args: CommentFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class CommentResolver {
    }
 
    @Query(() => [Comment])
-   @CheckPoliciesGuard(CommentReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Comment'))
    async findManyComment(
       @Args() args: CommentFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class CommentResolver {
    }
 
    @Query(() => Comment, { nullable: true })
-   @CheckPoliciesGuard(CommentReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Comment'))
    async findUniqueComment(
       @Args() args: CommentFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class CommentResolver {
    }
 
    @Query(() => CommentGroupBy)
-   @CheckPoliciesGuard(CommentReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Comment'))
    async groupByComment(
       @Args() args: CommentGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class CommentResolver {
    }
 
    @Mutation(() => Comment)
-   @CheckPoliciesGuard(CommentUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Comment'))
    async updateComment(
       @Args() args: CommentUpdateArgs,
       @SelectedFields() select: any

@@ -7,12 +7,7 @@ import {
    PassageGroupBy,
    PassageGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   PassageCreateAction,
-   PassageDeleteAction,
-   PassageReadAction,
-   PassageUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class PassageResolver {
    constructor(private readonly passage: PassageService) {}
 
    @Query(() => AggregatePassage)
-   @CheckPoliciesGuard(PassageReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Passage'))
    async aggregatePassage(
       @Args() args: PassageAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class PassageResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(PassageReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Passage'))
    async countPassage(@Args() args: PassageCountArgs) {
       return handleResolver(this.passage, 'count', args)
    }
 
    @Mutation(() => Passage)
-   @CheckPoliciesGuard(PassageCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Passage'))
    async createPassage(
       @Args() args: PassageCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class PassageResolver {
    }
 
    @Mutation(() => [Passage])
-   @CheckPoliciesGuard(PassageCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Passage'))
    async createManyPassage(
       @Args()
       args: PassageCreateManyArgs,
@@ -67,7 +62,7 @@ export class PassageResolver {
    }
 
    @Mutation(() => Passage)
-   @CheckPoliciesGuard(PassageDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Passage'))
    async deletePassage(
       @Args() args: PassageDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class PassageResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(PassageDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Passage'))
    async deleteManyPassage(@Args() args: PassageDeleteManyArgs) {
       return handleResolver(this.passage, 'deleteMany', args)
    }
 
    @Query(() => Passage, { nullable: true })
-   @CheckPoliciesGuard(PassageReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Passage'))
    async findFirstPassage(
       @Args() args: PassageFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class PassageResolver {
    }
 
    @Query(() => [Passage])
-   @CheckPoliciesGuard(PassageReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Passage'))
    async findManyPassage(
       @Args() args: PassageFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class PassageResolver {
    }
 
    @Query(() => Passage, { nullable: true })
-   @CheckPoliciesGuard(PassageReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Passage'))
    async findUniquePassage(
       @Args() args: PassageFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class PassageResolver {
    }
 
    @Query(() => PassageGroupBy)
-   @CheckPoliciesGuard(PassageReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Passage'))
    async groupByPassage(
       @Args() args: PassageGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class PassageResolver {
    }
 
    @Mutation(() => Passage)
-   @CheckPoliciesGuard(PassageUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Passage'))
    async updatePassage(
       @Args() args: PassageUpdateArgs,
       @SelectedFields() select: any

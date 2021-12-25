@@ -7,12 +7,7 @@ import {
    ImageGroupBy,
    ImageGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   ImageCreateAction,
-   ImageDeleteAction,
-   ImageReadAction,
-   ImageUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class ImageResolver {
    constructor(private readonly image: ImageService) {}
 
    @Query(() => AggregateImage)
-   @CheckPoliciesGuard(ImageReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Image'))
    async aggregateImage(
       @Args() args: ImageAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class ImageResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(ImageReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Image'))
    async countImage(@Args() args: ImageCountArgs) {
       return handleResolver(this.image, 'count', args)
    }
 
    @Mutation(() => Image)
-   @CheckPoliciesGuard(ImageCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Image'))
    async createImage(
       @Args() args: ImageCreateArgs,
       @SelectedFields() select: any
@@ -57,16 +52,17 @@ export class ImageResolver {
    }
 
    @Mutation(() => [Image])
-   @CheckPoliciesGuard(ImageCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Image'))
    async createManyImage(
-      @Args() args: ImageCreateManyArgs,
+      @Args()
+      args: ImageCreateManyArgs,
       @SelectedFields() select: any
    ) {
       return handleResolver(this.image, 'createMany', { ...args, select })
    }
 
    @Mutation(() => Image)
-   @CheckPoliciesGuard(ImageDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Image'))
    async deleteImage(
       @Args() args: ImageDeleteArgs,
       @SelectedFields() select: any
@@ -75,13 +71,13 @@ export class ImageResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(ImageDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Image'))
    async deleteManyImage(@Args() args: ImageDeleteManyArgs) {
       return handleResolver(this.image, 'deleteMany', args)
    }
 
    @Query(() => Image, { nullable: true })
-   @CheckPoliciesGuard(ImageReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Image'))
    async findFirstImage(
       @Args() args: ImageFindFirstArgs,
       @SelectedFields() select: any
@@ -90,7 +86,7 @@ export class ImageResolver {
    }
 
    @Query(() => [Image])
-   @CheckPoliciesGuard(ImageReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Image'))
    async findManyImage(
       @Args() args: ImageFindManyArgs,
       @SelectedFields() select: any
@@ -99,7 +95,7 @@ export class ImageResolver {
    }
 
    @Query(() => Image, { nullable: true })
-   @CheckPoliciesGuard(ImageReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Image'))
    async findUniqueImage(
       @Args() args: ImageFindUniqueArgs,
       @SelectedFields() select: any
@@ -108,7 +104,7 @@ export class ImageResolver {
    }
 
    @Query(() => ImageGroupBy)
-   @CheckPoliciesGuard(ImageReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Image'))
    async groupByImage(
       @Args() args: ImageGroupByArgs,
       @SelectedFields() select: any
@@ -117,7 +113,7 @@ export class ImageResolver {
    }
 
    @Mutation(() => Image)
-   @CheckPoliciesGuard(ImageUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Image'))
    async updateImage(
       @Args() args: ImageUpdateArgs,
       @SelectedFields() select: any

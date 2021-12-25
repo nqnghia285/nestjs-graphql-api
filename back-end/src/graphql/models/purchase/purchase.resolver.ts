@@ -7,12 +7,7 @@ import {
    PurchaseGroupBy,
    PurchaseGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   PurchaseCreateAction,
-   PurchaseDeleteAction,
-   PurchaseReadAction,
-   PurchaseUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class PurchaseResolver {
    constructor(private readonly purchase: PurchaseService) {}
 
    @Query(() => AggregatePurchase)
-   @CheckPoliciesGuard(PurchaseReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Purchase'))
    async aggregatePurchase(
       @Args() args: PurchaseAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class PurchaseResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(PurchaseReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Purchase'))
    async countPurchase(@Args() args: PurchaseCountArgs) {
       return handleResolver(this.purchase, 'count', args)
    }
 
    @Mutation(() => Purchase)
-   @CheckPoliciesGuard(PurchaseCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Purchase'))
    async createPurchase(
       @Args() args: PurchaseCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class PurchaseResolver {
    }
 
    @Mutation(() => [Purchase])
-   @CheckPoliciesGuard(PurchaseCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Purchase'))
    async createManyPurchase(
       @Args()
       args: PurchaseCreateManyArgs,
@@ -67,7 +62,7 @@ export class PurchaseResolver {
    }
 
    @Mutation(() => Purchase)
-   @CheckPoliciesGuard(PurchaseDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Purchase'))
    async deletePurchase(
       @Args() args: PurchaseDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class PurchaseResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(PurchaseDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Purchase'))
    async deleteManyPurchase(@Args() args: PurchaseDeleteManyArgs) {
       return handleResolver(this.purchase, 'deleteMany', args)
    }
 
    @Query(() => Purchase, { nullable: true })
-   @CheckPoliciesGuard(PurchaseReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Purchase'))
    async findFirstPurchase(
       @Args() args: PurchaseFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class PurchaseResolver {
    }
 
    @Query(() => [Purchase])
-   @CheckPoliciesGuard(PurchaseReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Purchase'))
    async findManyPurchase(
       @Args() args: PurchaseFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class PurchaseResolver {
    }
 
    @Query(() => Purchase, { nullable: true })
-   @CheckPoliciesGuard(PurchaseReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Purchase'))
    async findUniquePurchase(
       @Args() args: PurchaseFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class PurchaseResolver {
    }
 
    @Query(() => PurchaseGroupBy)
-   @CheckPoliciesGuard(PurchaseReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Purchase'))
    async groupByPurchase(
       @Args() args: PurchaseGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class PurchaseResolver {
    }
 
    @Mutation(() => Purchase)
-   @CheckPoliciesGuard(PurchaseUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Purchase'))
    async updatePurchase(
       @Args() args: PurchaseUpdateArgs,
       @SelectedFields() select: any

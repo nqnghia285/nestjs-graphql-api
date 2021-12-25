@@ -7,12 +7,7 @@ import {
    UserGroupBy,
    UserGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   UserCreateAction,
-   UserDeleteAction,
-   UserReadAction,
-   UserUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import { UserCreateArgsPipe, UserCreateManyArgsPipe } from '~/pipes'
 import {
@@ -34,7 +29,7 @@ export class UserResolver {
    constructor(private readonly user: UserService) {}
 
    @Query(() => AggregateUser)
-   @CheckPoliciesGuard(UserReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'User'))
    async aggregateUser(
       @Args() args: UserAggregateArgs,
       @SelectedFields() select: any
@@ -43,13 +38,13 @@ export class UserResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(UserReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'User'))
    async countUser(@Args() args: UserCountArgs) {
       return handleResolver(this.user, 'count', args)
    }
 
    @Mutation(() => User)
-   @CheckPoliciesGuard(UserCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'User'))
    async createUser(
       @Args(UserCreateArgsPipe) args: UserCreateArgs,
       @SelectedFields() select: any
@@ -58,7 +53,7 @@ export class UserResolver {
    }
 
    @Mutation(() => [User])
-   @CheckPoliciesGuard(UserCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'User'))
    async createManyUser(
       @Args(UserCreateManyArgsPipe)
       args: UserCreateManyArgs,
@@ -68,7 +63,7 @@ export class UserResolver {
    }
 
    @Mutation(() => User)
-   @CheckPoliciesGuard(UserDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'User'))
    async deleteUser(
       @Args() args: UserDeleteArgs,
       @SelectedFields() select: any
@@ -77,13 +72,13 @@ export class UserResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(UserDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'User'))
    async deleteManyUser(@Args() args: UserDeleteManyArgs) {
       return handleResolver(this.user, 'deleteMany', args)
    }
 
    @Query(() => User, { nullable: true })
-   @CheckPoliciesGuard(UserReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'User'))
    async findFirstUser(
       @Args() args: UserFindFirstArgs,
       @SelectedFields() select: any
@@ -92,7 +87,7 @@ export class UserResolver {
    }
 
    @Query(() => [User])
-   @CheckPoliciesGuard(UserReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'User'))
    async findManyUser(
       @Args() args: UserFindManyArgs,
       @SelectedFields() select: any
@@ -101,7 +96,7 @@ export class UserResolver {
    }
 
    @Query(() => User, { nullable: true })
-   @CheckPoliciesGuard(UserReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'User'))
    async findUniqueUser(
       @Args() args: UserFindUniqueArgs,
       @SelectedFields() select: any
@@ -110,7 +105,7 @@ export class UserResolver {
    }
 
    @Query(() => UserGroupBy)
-   @CheckPoliciesGuard(UserReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'User'))
    async groupByUser(
       @Args() args: UserGroupByArgs,
       @SelectedFields() select: any
@@ -119,7 +114,7 @@ export class UserResolver {
    }
 
    @Mutation(() => User)
-   @CheckPoliciesGuard(UserUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'User'))
    async updateUser(
       @Args() args: UserUpdateArgs,
       @SelectedFields() select: any

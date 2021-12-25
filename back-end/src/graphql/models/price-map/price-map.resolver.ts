@@ -7,12 +7,7 @@ import {
    PriceMapGroupBy,
    PriceMapGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   PriceMapCreateAction,
-   PriceMapDeleteAction,
-   PriceMapReadAction,
-   PriceMapUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class PriceMapResolver {
    constructor(private readonly priceMap: PriceMapService) {}
 
    @Query(() => AggregatePriceMap)
-   @CheckPoliciesGuard(PriceMapReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'PriceMap'))
    async aggregatePriceMap(
       @Args() args: PriceMapAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class PriceMapResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(PriceMapReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'PriceMap'))
    async countPriceMap(@Args() args: PriceMapCountArgs) {
       return handleResolver(this.priceMap, 'count', args)
    }
 
    @Mutation(() => PriceMap)
-   @CheckPoliciesGuard(PriceMapCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'PriceMap'))
    async createPriceMap(
       @Args() args: PriceMapCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class PriceMapResolver {
    }
 
    @Mutation(() => [PriceMap])
-   @CheckPoliciesGuard(PriceMapCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'PriceMap'))
    async createManyPriceMap(
       @Args()
       args: PriceMapCreateManyArgs,
@@ -67,7 +62,7 @@ export class PriceMapResolver {
    }
 
    @Mutation(() => PriceMap)
-   @CheckPoliciesGuard(PriceMapDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'PriceMap'))
    async deletePriceMap(
       @Args() args: PriceMapDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class PriceMapResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(PriceMapDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'PriceMap'))
    async deleteManyPriceMap(@Args() args: PriceMapDeleteManyArgs) {
       return handleResolver(this.priceMap, 'deleteMany', args)
    }
 
    @Query(() => PriceMap, { nullable: true })
-   @CheckPoliciesGuard(PriceMapReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'PriceMap'))
    async findFirstPriceMap(
       @Args() args: PriceMapFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class PriceMapResolver {
    }
 
    @Query(() => [PriceMap])
-   @CheckPoliciesGuard(PriceMapReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'PriceMap'))
    async findManyPriceMap(
       @Args() args: PriceMapFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class PriceMapResolver {
    }
 
    @Query(() => PriceMap, { nullable: true })
-   @CheckPoliciesGuard(PriceMapReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'PriceMap'))
    async findUniquePriceMap(
       @Args() args: PriceMapFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class PriceMapResolver {
    }
 
    @Query(() => PriceMapGroupBy)
-   @CheckPoliciesGuard(PriceMapReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'PriceMap'))
    async groupByPriceMap(
       @Args() args: PriceMapGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class PriceMapResolver {
    }
 
    @Mutation(() => PriceMap)
-   @CheckPoliciesGuard(PriceMapUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'PriceMap'))
    async updatePriceMap(
       @Args() args: PriceMapUpdateArgs,
       @SelectedFields() select: any

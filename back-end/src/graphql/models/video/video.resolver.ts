@@ -7,12 +7,7 @@ import {
    VideoGroupBy,
    VideoGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   VideoCreateAction,
-   VideoDeleteAction,
-   VideoReadAction,
-   VideoUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class VideoResolver {
    constructor(private readonly video: VideoService) {}
 
    @Query(() => AggregateVideo)
-   @CheckPoliciesGuard(VideoReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Video'))
    async aggregateVideo(
       @Args() args: VideoAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class VideoResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(VideoReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Video'))
    async countVideo(@Args() args: VideoCountArgs) {
       return handleResolver(this.video, 'count', args)
    }
 
    @Mutation(() => Video)
-   @CheckPoliciesGuard(VideoCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Video'))
    async createVideo(
       @Args() args: VideoCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class VideoResolver {
    }
 
    @Mutation(() => [Video])
-   @CheckPoliciesGuard(VideoCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Video'))
    async createManyVideo(
       @Args()
       args: VideoCreateManyArgs,
@@ -67,7 +62,7 @@ export class VideoResolver {
    }
 
    @Mutation(() => Video)
-   @CheckPoliciesGuard(VideoDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Video'))
    async deleteVideo(
       @Args() args: VideoDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class VideoResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(VideoDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Video'))
    async deleteManyVideo(@Args() args: VideoDeleteManyArgs) {
       return handleResolver(this.video, 'deleteMany', args)
    }
 
    @Query(() => Video, { nullable: true })
-   @CheckPoliciesGuard(VideoReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Video'))
    async findFirstVideo(
       @Args() args: VideoFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class VideoResolver {
    }
 
    @Query(() => [Video])
-   @CheckPoliciesGuard(VideoReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Video'))
    async findManyVideo(
       @Args() args: VideoFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class VideoResolver {
    }
 
    @Query(() => Video, { nullable: true })
-   @CheckPoliciesGuard(VideoReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Video'))
    async findUniqueVideo(
       @Args() args: VideoFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class VideoResolver {
    }
 
    @Query(() => VideoGroupBy)
-   @CheckPoliciesGuard(VideoReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Video'))
    async groupByVideo(
       @Args() args: VideoGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class VideoResolver {
    }
 
    @Mutation(() => Video)
-   @CheckPoliciesGuard(VideoUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Video'))
    async updateVideo(
       @Args() args: VideoUpdateArgs,
       @SelectedFields() select: any

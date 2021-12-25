@@ -39,10 +39,15 @@ export type AppSubjects = InferSubjects<
    true
 >
 
-export type AppAbility = Ability<[Action, AppSubjects]>
+export type AppAbility = Ability<[keyof typeof Action, AppSubjects]>
 
 @Injectable()
 export class CaslAbilityFactory {
+   /**
+    * ! Note: To define permissions of users with conditions you have to use classes in AppSubjects instead of their 'key string' or 'model name string'.
+    * ! Because CASL stipulates that.
+    * * For more details, visits: https://casl.js.org
+    */
    createForUser(user?: IUserInfo) {
       const { can, build } = new AbilityBuilder(
          Ability as AbilityClass<AppAbility>
@@ -51,7 +56,20 @@ export class CaslAbilityFactory {
          if (user.role === Role.ADMIN) {
             // ? Apply to Admin
             can(
-               [Action.CREATE, Action.DELETE, Action.READ, Action.UPDATE],
+               [
+                  'AGGREGATE',
+                  'COUNT',
+                  'CREATE',
+                  'CREATE_MANY',
+                  'DELETE',
+                  'DELETE_MANY',
+                  'FIND_FIRST',
+                  'FIND_MANY',
+                  'FIND_UNIQUE',
+                  'GROUP_BY',
+                  'UPDATE',
+                  'UPDATE_MANY',
+               ],
                [
                   'Comment',
                   'Customer',
@@ -72,7 +90,16 @@ export class CaslAbilityFactory {
             // ? can
             // * CREATE and READ action:
             can(
-               [Action.CREATE, Action.READ],
+               [
+                  'AGGREGATE',
+                  'COUNT',
+                  'CREATE',
+                  'CREATE_MANY',
+                  'FIND_FIRST',
+                  'FIND_MANY',
+                  'FIND_UNIQUE',
+                  'GROUP_BY',
+               ],
                [
                   'Comment',
                   'Customer',
@@ -86,41 +113,57 @@ export class CaslAbilityFactory {
                ]
             )
             // * DELETE action:
-            can(Action.DELETE, 'Comment')
-            // * READ action:
-            can(Action.READ, 'User', { id: user.id })
+            can(['DELETE', 'DELETE_MANY'], 'Comment')
+            // * READ action with conditions:
+            can(['FIND_FIRST', 'FIND_UNIQUE'], User, { id: user.id })
             // * UPDATE action:
-            can(Action.UPDATE, [
-               'Customer',
-               'Discount',
-               'Image',
-               'Laptop',
-               'PriceMap',
-               'Purchase',
-               'Video',
-            ])
-            can(Action.UPDATE, 'Comment', {
+            can(
+               ['UPDATE', 'UPDATE_MANY'],
+               [
+                  'Customer',
+                  'Discount',
+                  'Image',
+                  'Laptop',
+                  'PriceMap',
+                  'Purchase',
+                  'Video',
+               ]
+            )
+            // * UPDATE action with conditions:
+            can(['UPDATE', 'UPDATE_MANY'], Comment, {
                isStaff: true,
                authorId: user.id,
             })
-            can(Action.UPDATE, 'Post', {
+            can(['UPDATE', 'UPDATE_MANY'], Post, {
                authorId: user.id,
             })
-            can(Action.UPDATE, 'User', { id: user.id })
+            can('UPDATE', User, { id: user.id })
          }
       } else {
          // ? Apply to customer
          // ? can
-         // * CREATE and READ action:
-         can([Action.CREATE, Action.READ], 'Comment')
-         can(Action.READ, [
-            'Discount',
-            'Image',
-            'Laptop',
-            'Post',
-            'PriceMap',
-            'Video',
-         ])
+         // * CREATE action:
+         can('CREATE', 'Comment')
+         // * READ action:
+         can(
+            [
+               'AGGREGATE',
+               'COUNT',
+               'FIND_FIRST',
+               'FIND_MANY',
+               'FIND_UNIQUE',
+               'GROUP_BY',
+            ],
+            [
+               'Comment',
+               'Discount',
+               'Image',
+               'Laptop',
+               'Post',
+               'PriceMap',
+               'Video',
+            ]
+         )
       }
 
       return build({

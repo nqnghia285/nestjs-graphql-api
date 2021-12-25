@@ -7,12 +7,7 @@ import {
    LaptopGroupBy,
    LaptopGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   LaptopCreateAction,
-   LaptopDeleteAction,
-   LaptopReadAction,
-   LaptopUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class LaptopResolver {
    constructor(private readonly laptop: LaptopService) {}
 
    @Query(() => AggregateLaptop)
-   @CheckPoliciesGuard(LaptopReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Laptop'))
    async aggregateLaptop(
       @Args() args: LaptopAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class LaptopResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(LaptopReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Laptop'))
    async countLaptop(@Args() args: LaptopCountArgs) {
       return handleResolver(this.laptop, 'count', args)
    }
 
    @Mutation(() => Laptop)
-   @CheckPoliciesGuard(LaptopCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Laptop'))
    async createLaptop(
       @Args() args: LaptopCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class LaptopResolver {
    }
 
    @Mutation(() => [Laptop])
-   @CheckPoliciesGuard(LaptopCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Laptop'))
    async createManyLaptop(
       @Args()
       args: LaptopCreateManyArgs,
@@ -67,7 +62,7 @@ export class LaptopResolver {
    }
 
    @Mutation(() => Laptop)
-   @CheckPoliciesGuard(LaptopDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Laptop'))
    async deleteLaptop(
       @Args() args: LaptopDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class LaptopResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(LaptopDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Laptop'))
    async deleteManyLaptop(@Args() args: LaptopDeleteManyArgs) {
       return handleResolver(this.laptop, 'deleteMany', args)
    }
 
    @Query(() => Laptop, { nullable: true })
-   @CheckPoliciesGuard(LaptopReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Laptop'))
    async findFirstLaptop(
       @Args() args: LaptopFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class LaptopResolver {
    }
 
    @Query(() => [Laptop])
-   @CheckPoliciesGuard(LaptopReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Laptop'))
    async findManyLaptop(
       @Args() args: LaptopFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class LaptopResolver {
    }
 
    @Query(() => Laptop, { nullable: true })
-   @CheckPoliciesGuard(LaptopReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Laptop'))
    async findUniqueLaptop(
       @Args() args: LaptopFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class LaptopResolver {
    }
 
    @Query(() => LaptopGroupBy)
-   @CheckPoliciesGuard(LaptopReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Laptop'))
    async groupByLaptop(
       @Args() args: LaptopGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class LaptopResolver {
    }
 
    @Mutation(() => Laptop)
-   @CheckPoliciesGuard(LaptopUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Laptop'))
    async updateLaptop(
       @Args() args: LaptopUpdateArgs,
       @SelectedFields() select: any

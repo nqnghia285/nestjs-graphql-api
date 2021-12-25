@@ -7,14 +7,10 @@ import {
    CustomerGroupBy,
    CustomerGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   CustomerCreateAction,
-   CustomerDeleteAction,
-   CustomerReadAction,
-   CustomerUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
+   DeleteMany,
    CustomerCountArgs,
    CustomerCreateArgs,
    CustomerCreateManyArgs,
@@ -24,7 +20,6 @@ import {
    CustomerFindManyArgs,
    CustomerFindUniqueArgs,
    CustomerUpdateArgs,
-   DeleteMany,
 } from '../../typedefs'
 import { CustomerService } from './customer.service'
 
@@ -33,7 +28,7 @@ export class CustomerResolver {
    constructor(private readonly customer: CustomerService) {}
 
    @Query(() => AggregateCustomer)
-   @CheckPoliciesGuard(CustomerReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Customer'))
    async aggregateCustomer(
       @Args() args: CustomerAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class CustomerResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(CustomerReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Customer'))
    async countCustomer(@Args() args: CustomerCountArgs) {
       return handleResolver(this.customer, 'count', args)
    }
 
    @Mutation(() => Customer)
-   @CheckPoliciesGuard(CustomerCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Customer'))
    async createCustomer(
       @Args() args: CustomerCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class CustomerResolver {
    }
 
    @Mutation(() => [Customer])
-   @CheckPoliciesGuard(CustomerCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Customer'))
    async createManyCustomer(
       @Args()
       args: CustomerCreateManyArgs,
@@ -67,7 +62,7 @@ export class CustomerResolver {
    }
 
    @Mutation(() => Customer)
-   @CheckPoliciesGuard(CustomerDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Customer'))
    async deleteCustomer(
       @Args() args: CustomerDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class CustomerResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(CustomerDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Customer'))
    async deleteManyCustomer(@Args() args: CustomerDeleteManyArgs) {
       return handleResolver(this.customer, 'deleteMany', args)
    }
 
    @Query(() => Customer, { nullable: true })
-   @CheckPoliciesGuard(CustomerReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Customer'))
    async findFirstCustomer(
       @Args() args: CustomerFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class CustomerResolver {
    }
 
    @Query(() => [Customer])
-   @CheckPoliciesGuard(CustomerReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Customer'))
    async findManyCustomer(
       @Args() args: CustomerFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class CustomerResolver {
    }
 
    @Query(() => Customer, { nullable: true })
-   @CheckPoliciesGuard(CustomerReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Customer'))
    async findUniqueCustomer(
       @Args() args: CustomerFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class CustomerResolver {
    }
 
    @Query(() => CustomerGroupBy)
-   @CheckPoliciesGuard(CustomerReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Customer'))
    async groupByCustomer(
       @Args() args: CustomerGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class CustomerResolver {
    }
 
    @Mutation(() => Customer)
-   @CheckPoliciesGuard(CustomerUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Customer'))
    async updateCustomer(
       @Args() args: CustomerUpdateArgs,
       @SelectedFields() select: any

@@ -7,12 +7,7 @@ import {
    PersonGroupBy,
    PersonGroupByArgs,
 } from '~/generated/prisma-nestjs-graphql'
-import {
-   PersonCreateAction,
-   PersonDeleteAction,
-   PersonReadAction,
-   PersonUpdateAction,
-} from '~/guards'
+import { ActionCreator } from '~/guards'
 import { handleResolver } from '~/handlers'
 import {
    DeleteMany,
@@ -33,7 +28,7 @@ export class PersonResolver {
    constructor(private readonly person: PersonService) {}
 
    @Query(() => AggregatePerson)
-   @CheckPoliciesGuard(PersonReadAction)
+   @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Person'))
    async aggregatePerson(
       @Args() args: PersonAggregateArgs,
       @SelectedFields() select: any
@@ -42,13 +37,13 @@ export class PersonResolver {
    }
 
    @Query(() => Int)
-   @CheckPoliciesGuard(PersonReadAction)
+   @CheckPoliciesGuard(ActionCreator('COUNT', 'Person'))
    async countPerson(@Args() args: PersonCountArgs) {
       return handleResolver(this.person, 'count', args)
    }
 
    @Mutation(() => Person)
-   @CheckPoliciesGuard(PersonCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE', 'Person'))
    async createPerson(
       @Args() args: PersonCreateArgs,
       @SelectedFields() select: any
@@ -57,7 +52,7 @@ export class PersonResolver {
    }
 
    @Mutation(() => [Person])
-   @CheckPoliciesGuard(PersonCreateAction)
+   @CheckPoliciesGuard(ActionCreator('CREATE_MANY', 'Person'))
    async createManyPerson(
       @Args()
       args: PersonCreateManyArgs,
@@ -67,7 +62,7 @@ export class PersonResolver {
    }
 
    @Mutation(() => Person)
-   @CheckPoliciesGuard(PersonDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE', 'Person'))
    async deletePerson(
       @Args() args: PersonDeleteArgs,
       @SelectedFields() select: any
@@ -76,13 +71,13 @@ export class PersonResolver {
    }
 
    @Mutation(() => DeleteMany)
-   @CheckPoliciesGuard(PersonDeleteAction)
+   @CheckPoliciesGuard(ActionCreator('DELETE_MANY', 'Person'))
    async deleteManyPerson(@Args() args: PersonDeleteManyArgs) {
       return handleResolver(this.person, 'deleteMany', args)
    }
 
    @Query(() => Person, { nullable: true })
-   @CheckPoliciesGuard(PersonReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Person'))
    async findFirstPerson(
       @Args() args: PersonFindFirstArgs,
       @SelectedFields() select: any
@@ -91,7 +86,7 @@ export class PersonResolver {
    }
 
    @Query(() => [Person])
-   @CheckPoliciesGuard(PersonReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Person'))
    async findManyPerson(
       @Args() args: PersonFindManyArgs,
       @SelectedFields() select: any
@@ -100,7 +95,7 @@ export class PersonResolver {
    }
 
    @Query(() => Person, { nullable: true })
-   @CheckPoliciesGuard(PersonReadAction)
+   @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Person'))
    async findUniquePerson(
       @Args() args: PersonFindUniqueArgs,
       @SelectedFields() select: any
@@ -109,7 +104,7 @@ export class PersonResolver {
    }
 
    @Query(() => PersonGroupBy)
-   @CheckPoliciesGuard(PersonReadAction)
+   @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Person'))
    async groupByPerson(
       @Args() args: PersonGroupByArgs,
       @SelectedFields() select: any
@@ -118,7 +113,7 @@ export class PersonResolver {
    }
 
    @Mutation(() => Person)
-   @CheckPoliciesGuard(PersonUpdateAction)
+   @CheckPoliciesGuard(ActionCreator('UPDATE', 'Person'))
    async updatePerson(
       @Args() args: PersonUpdateArgs,
       @SelectedFields() select: any
