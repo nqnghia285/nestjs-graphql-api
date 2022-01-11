@@ -1,5 +1,5 @@
 export * from './chat'
 export * from './check-policies-guard.decorator'
 export * from './check-policies.decorator'
-export * from './selected-fields.decorator'
+export * from './parse-and-remove-selected-fields.decorator'
 export * from './user'
