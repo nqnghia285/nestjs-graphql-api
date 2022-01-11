@@ -4,6 +4,11 @@ export async function handleResolver<
    TArgs
 >(service: TService, action: TAction, args: TArgs) {
    if (typeof service[action] === 'function') {
+      if (args?.['select' as keyof TArgs]) {
+         if (Object.keys(args['select' as keyof TArgs]).length === 0) {
+            delete args['select' as keyof TArgs]
+         }
+      }
       // @ts-expect-error: Unreachable code error
       return service[action](args)
    }

@@ -17,11 +17,9 @@ function App() {
       console.log('Message: ', payload)
    })
 
-   setInterval(() => {
-      if (socket.connected) {
-         socket.emit('message', 'Hello Server!')
-      }
-   }, 3000)
+   socket.on('join-support-team-room', (payload: unknown) => {
+      console.log('Message: ', payload)
+   })
 
    const upload = gql`
       mutation ($data: ImageCreateInput!) {
@@ -36,6 +34,7 @@ function App() {
       }
    `
 
+   let message: string
    let file: File
    const [hidden, setHidden] = useState(true)
    const [imgSrc, setImgSrc] = useState('')
@@ -65,6 +64,22 @@ function App() {
          .catch((err) => console.log(err))
    }
 
+   function onChangedMessage(e: ChangeEvent<HTMLInputElement>) {
+      message = e.target.value
+   }
+
+   function sendMessage() {
+      if (!socket.disconnected) {
+         socket.emit('message', message)
+      }
+   }
+
+   function joinSTR() {
+      if (!socket.disconnected) {
+         socket.emit('join-support-team-room')
+      }
+   }
+
    return (
       <div className='App'>
          <header className='App-header'>
@@ -72,6 +87,9 @@ function App() {
             <img src={imgSrc} hidden={hidden} alt='Nothing' />
             <input type='file' onChange={onChangedFile} />
             <input type='button' value='Upload' onClick={uploadFile} />
+            <input type='button' value='Join STR' onClick={joinSTR} />
+            <input type='text' onChange={onChangedMessage} />
+            <input type='button' value='Send' onClick={sendMessage} />
          </header>
       </div>
    )

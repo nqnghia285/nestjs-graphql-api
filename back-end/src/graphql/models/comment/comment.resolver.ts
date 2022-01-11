@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
+import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
 import {
    AggregateComment,
    Comment,
@@ -31,7 +31,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Comment'))
    async aggregateComment(
       @Args() args: CommentAggregateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'aggregate', { ...args, select })
    }
@@ -46,7 +46,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Comment'))
    async createComment(
       @Args() args: CommentCreateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'create', { ...args, select })
    }
@@ -56,7 +56,7 @@ export class CommentResolver {
    async createManyComment(
       @Args()
       args: CommentCreateManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'createMany', { ...args, select })
    }
@@ -65,7 +65,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Comment'))
    async deleteComment(
       @Args() args: CommentDeleteArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'delete', { ...args, select })
    }
@@ -80,7 +80,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Comment'))
    async findFirstComment(
       @Args() args: CommentFindFirstArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'findFirst', { ...args, select })
    }
@@ -89,7 +89,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Comment'))
    async findManyComment(
       @Args() args: CommentFindManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'findMany', { ...args, select })
    }
@@ -98,7 +98,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Comment'))
    async findUniqueComment(
       @Args() args: CommentFindUniqueArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'findUnique', { ...args, select })
    }
@@ -107,7 +107,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Comment'))
    async groupByComment(
       @Args() args: CommentGroupByArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'groupBy', { ...args, select })
    }
@@ -116,7 +116,7 @@ export class CommentResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Comment'))
    async updateComment(
       @Args() args: CommentUpdateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.comment, 'update', { ...args, select })
    }

@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
+import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
 import {
    AggregateCustomer,
    Customer,
@@ -31,7 +31,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Customer'))
    async aggregateCustomer(
       @Args() args: CustomerAggregateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'aggregate', { ...args, select })
    }
@@ -46,7 +46,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Customer'))
    async createCustomer(
       @Args() args: CustomerCreateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'create', { ...args, select })
    }
@@ -56,7 +56,7 @@ export class CustomerResolver {
    async createManyCustomer(
       @Args()
       args: CustomerCreateManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'createMany', { ...args, select })
    }
@@ -65,7 +65,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Customer'))
    async deleteCustomer(
       @Args() args: CustomerDeleteArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'delete', { ...args, select })
    }
@@ -80,7 +80,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Customer'))
    async findFirstCustomer(
       @Args() args: CustomerFindFirstArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'findFirst', { ...args, select })
    }
@@ -89,7 +89,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Customer'))
    async findManyCustomer(
       @Args() args: CustomerFindManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'findMany', { ...args, select })
    }
@@ -98,7 +98,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Customer'))
    async findUniqueCustomer(
       @Args() args: CustomerFindUniqueArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'findUnique', { ...args, select })
    }
@@ -107,7 +107,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Customer'))
    async groupByCustomer(
       @Args() args: CustomerGroupByArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'groupBy', { ...args, select })
    }
@@ -116,7 +116,7 @@ export class CustomerResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Customer'))
    async updateCustomer(
       @Args() args: CustomerUpdateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.customer, 'update', { ...args, select })
    }

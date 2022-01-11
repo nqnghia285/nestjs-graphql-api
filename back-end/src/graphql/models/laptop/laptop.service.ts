@@ -35,7 +35,6 @@ export class LaptopService {
    }
 
    findMany(args: Prisma.LaptopFindManyArgs) {
-      args.select
       return this.prisma.laptop.findMany(args)
    }
 

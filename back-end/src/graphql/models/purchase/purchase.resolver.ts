@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
+import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
 import {
    AggregatePurchase,
    Purchase,
@@ -31,7 +31,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Purchase'))
    async aggregatePurchase(
       @Args() args: PurchaseAggregateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'aggregate', { ...args, select })
    }
@@ -46,7 +46,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Purchase'))
    async createPurchase(
       @Args() args: PurchaseCreateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'create', { ...args, select })
    }
@@ -56,7 +56,7 @@ export class PurchaseResolver {
    async createManyPurchase(
       @Args()
       args: PurchaseCreateManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'createMany', { ...args, select })
    }
@@ -65,7 +65,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Purchase'))
    async deletePurchase(
       @Args() args: PurchaseDeleteArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'delete', { ...args, select })
    }
@@ -80,7 +80,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Purchase'))
    async findFirstPurchase(
       @Args() args: PurchaseFindFirstArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'findFirst', { ...args, select })
    }
@@ -89,7 +89,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Purchase'))
    async findManyPurchase(
       @Args() args: PurchaseFindManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'findMany', { ...args, select })
    }
@@ -98,7 +98,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Purchase'))
    async findUniquePurchase(
       @Args() args: PurchaseFindUniqueArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'findUnique', { ...args, select })
    }
@@ -107,7 +107,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Purchase'))
    async groupByPurchase(
       @Args() args: PurchaseGroupByArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'groupBy', { ...args, select })
    }
@@ -116,7 +116,7 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Purchase'))
    async updatePurchase(
       @Args() args: PurchaseUpdateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.purchase, 'update', { ...args, select })
    }

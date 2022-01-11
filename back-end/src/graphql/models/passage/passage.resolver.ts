@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
+import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
 import {
    AggregatePassage,
    Passage,
@@ -31,7 +31,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Passage'))
    async aggregatePassage(
       @Args() args: PassageAggregateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'aggregate', { ...args, select })
    }
@@ -46,7 +46,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Passage'))
    async createPassage(
       @Args() args: PassageCreateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'create', { ...args, select })
    }
@@ -56,7 +56,7 @@ export class PassageResolver {
    async createManyPassage(
       @Args()
       args: PassageCreateManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'createMany', { ...args, select })
    }
@@ -65,7 +65,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Passage'))
    async deletePassage(
       @Args() args: PassageDeleteArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'delete', { ...args, select })
    }
@@ -80,7 +80,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Passage'))
    async findFirstPassage(
       @Args() args: PassageFindFirstArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'findFirst', { ...args, select })
    }
@@ -89,7 +89,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Passage'))
    async findManyPassage(
       @Args() args: PassageFindManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'findMany', { ...args, select })
    }
@@ -98,7 +98,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Passage'))
    async findUniquePassage(
       @Args() args: PassageFindUniqueArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'findUnique', { ...args, select })
    }
@@ -107,7 +107,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Passage'))
    async groupByPassage(
       @Args() args: PassageGroupByArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'groupBy', { ...args, select })
    }
@@ -116,7 +116,7 @@ export class PassageResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Passage'))
    async updatePassage(
       @Args() args: PassageUpdateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.passage, 'update', { ...args, select })
    }

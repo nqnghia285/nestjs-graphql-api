@@ -164,8 +164,7 @@ model Laptop {
   os                  OS         @default(WINDOWS)
   priceMap            PriceMap?  @relation(fields: [priceMapId], references: [id])
   priceMapId          Int?       @map("price_map_id")
-  discount            Discount?  @relation(fields: [discountId], references: [id])
-  discountId          Int?       @map("discount_id")
+  discounts           Discount[]
   defaultImage        Image?     @relation("LaptopToDefaultImage", fields: [defaultImageId], references: [id])
   defaultImageId      Int?       @map("default_image_id")
   purchases           Purchase[]

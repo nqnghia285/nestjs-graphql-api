@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, SelectedFields } from '~/decorators'
+import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
 import {
    AggregateDiscount,
    Discount,
@@ -31,7 +31,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'Discount'))
    async aggregateDiscount(
       @Args() args: DiscountAggregateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'aggregate', { ...args, select })
    }
@@ -46,7 +46,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Discount'))
    async createDiscount(
       @Args() args: DiscountCreateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'create', { ...args, select })
    }
@@ -56,7 +56,7 @@ export class DiscountResolver {
    async createManyDiscount(
       @Args()
       args: DiscountCreateManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'createMany', { ...args, select })
    }
@@ -65,7 +65,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Discount'))
    async deleteDiscount(
       @Args() args: DiscountDeleteArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'delete', { ...args, select })
    }
@@ -80,7 +80,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Discount'))
    async findFirstDiscount(
       @Args() args: DiscountFindFirstArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'findFirst', { ...args, select })
    }
@@ -89,7 +89,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Discount'))
    async findManyDiscount(
       @Args() args: DiscountFindManyArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'findMany', { ...args, select })
    }
@@ -98,7 +98,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Discount'))
    async findUniqueDiscount(
       @Args() args: DiscountFindUniqueArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'findUnique', { ...args, select })
    }
@@ -107,7 +107,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('GROUP_BY', 'Discount'))
    async groupByDiscount(
       @Args() args: DiscountGroupByArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'groupBy', { ...args, select })
    }
@@ -116,7 +116,7 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Discount'))
    async updateDiscount(
       @Args() args: DiscountUpdateArgs,
-      @SelectedFields() select: any
+      @ParseAndRemoveSelectedFields() select: any
    ) {
       return handleResolver(this.discount, 'update', { ...args, select })
    }
