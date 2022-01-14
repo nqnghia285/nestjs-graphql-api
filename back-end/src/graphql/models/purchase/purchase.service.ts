@@ -35,7 +35,6 @@ export class PurchaseService {
    }
 
    findMany(args: Prisma.PurchaseFindManyArgs) {
-      args.select
       return this.prisma.purchase.findMany(args)
    }
 

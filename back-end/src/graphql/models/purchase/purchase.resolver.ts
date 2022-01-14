@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Int, Mutation, Parent, Query, Resolver } from '@nestjs/graphql'
 import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
 import {
    AggregatePurchase,
@@ -46,7 +46,11 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Purchase'))
    async createPurchase(
       @Args() args: PurchaseCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields({
+         excludeFields: ['total', 'price', 'rating'],
+         includeFields: ['id'],
+      })
+      select: any
    ) {
       return handleResolver(this.purchase, 'create', { ...args, select })
    }
@@ -89,7 +93,11 @@ export class PurchaseResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Purchase'))
    async findManyPurchase(
       @Args() args: PurchaseFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields({
+         excludeFields: ['total', 'price', 'rating'],
+         includeFields: ['id'],
+      })
+      select: any
    ) {
       return handleResolver(this.purchase, 'findMany', { ...args, select })
    }

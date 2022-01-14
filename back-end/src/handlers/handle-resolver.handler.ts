@@ -1,3 +1,10 @@
+/**
+ * @method handleResolver Handle the actions to the models
+ * @param service TService
+ * @param action TAction
+ * @param args TArgs
+ * @returns Promise<any>
+ */
 export async function handleResolver<
    TService,
    TAction extends keyof TService,
@@ -9,6 +16,7 @@ export async function handleResolver<
             delete args['select' as keyof TArgs]
          }
       }
+
       // @ts-expect-error: Unreachable code error
       return service[action](args)
    }
