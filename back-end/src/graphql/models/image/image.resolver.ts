@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregateImage,
    Image,
@@ -46,7 +50,8 @@ export class ImageResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Image'))
    async createImage(
       @Args() args: ImageCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'create', { ...args, select })
    }
@@ -56,7 +61,8 @@ export class ImageResolver {
    async createManyImage(
       @Args()
       args: ImageCreateManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'createMany', { ...args, select })
    }
@@ -65,7 +71,8 @@ export class ImageResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Image'))
    async deleteImage(
       @Args() args: ImageDeleteArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'delete', { ...args, select })
    }
@@ -80,7 +87,8 @@ export class ImageResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Image'))
    async findFirstImage(
       @Args() args: ImageFindFirstArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'findFirst', { ...args, select })
    }
@@ -89,7 +97,8 @@ export class ImageResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Image'))
    async findManyImage(
       @Args() args: ImageFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'findMany', { ...args, select })
    }
@@ -98,7 +107,8 @@ export class ImageResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Image'))
    async findUniqueImage(
       @Args() args: ImageFindUniqueArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'findUnique', { ...args, select })
    }
@@ -116,7 +126,8 @@ export class ImageResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Image'))
    async updateImage(
       @Args() args: ImageUpdateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.image, 'update', { ...args, select })
    }

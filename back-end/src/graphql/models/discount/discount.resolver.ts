@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregateDiscount,
    Discount,
@@ -46,7 +50,8 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Discount'))
    async createDiscount(
       @Args() args: DiscountCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'create', { ...args, select })
    }
@@ -56,7 +61,8 @@ export class DiscountResolver {
    async createManyDiscount(
       @Args()
       args: DiscountCreateManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'createMany', { ...args, select })
    }
@@ -65,7 +71,8 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Discount'))
    async deleteDiscount(
       @Args() args: DiscountDeleteArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'delete', { ...args, select })
    }
@@ -80,7 +87,8 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Discount'))
    async findFirstDiscount(
       @Args() args: DiscountFindFirstArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'findFirst', { ...args, select })
    }
@@ -89,7 +97,8 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Discount'))
    async findManyDiscount(
       @Args() args: DiscountFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'findMany', { ...args, select })
    }
@@ -98,7 +107,8 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Discount'))
    async findUniqueDiscount(
       @Args() args: DiscountFindUniqueArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'findUnique', { ...args, select })
    }
@@ -116,7 +126,8 @@ export class DiscountResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Discount'))
    async updateDiscount(
       @Args() args: DiscountUpdateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.discount, 'update', { ...args, select })
    }

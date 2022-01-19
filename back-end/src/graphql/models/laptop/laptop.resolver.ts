@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregateLaptop,
    Laptop,
@@ -46,10 +50,7 @@ export class LaptopResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Laptop'))
    async createLaptop(
       @Args() args: LaptopCreateArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'create', { ...args, select })
@@ -60,10 +61,7 @@ export class LaptopResolver {
    async createManyLaptop(
       @Args()
       args: LaptopCreateManyArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'createMany', { ...args, select })
@@ -73,10 +71,7 @@ export class LaptopResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Laptop'))
    async deleteLaptop(
       @Args() args: LaptopDeleteArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'delete', { ...args, select })
@@ -92,10 +87,7 @@ export class LaptopResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Laptop'))
    async findFirstLaptop(
       @Args() args: LaptopFindFirstArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'findFirst', { ...args, select })
@@ -105,10 +97,7 @@ export class LaptopResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Laptop'))
    async findManyLaptop(
       @Args() args: LaptopFindManyArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'findMany', { ...args, select })
@@ -118,10 +107,7 @@ export class LaptopResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Laptop'))
    async findUniqueLaptop(
       @Args() args: LaptopFindUniqueArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'findUnique', { ...args, select })
@@ -140,10 +126,7 @@ export class LaptopResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Laptop'))
    async updateLaptop(
       @Args() args: LaptopUpdateArgs,
-      @ParseAndRemoveSelectedFields({
-         excludeFields: ['price', 'rating'],
-         includeFields: ['id'],
-      })
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
       select: any
    ) {
       return handleResolver(this.laptop, 'update', { ...args, select })

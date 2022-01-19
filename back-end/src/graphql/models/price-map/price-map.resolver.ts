@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregatePriceMap,
    PriceMap,
@@ -46,7 +50,8 @@ export class PriceMapResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'PriceMap'))
    async createPriceMap(
       @Args() args: PriceMapCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       delete select.price
       return handleResolver(this.priceMap, 'create', { ...args, select })
@@ -57,7 +62,8 @@ export class PriceMapResolver {
    async createManyPriceMap(
       @Args()
       args: PriceMapCreateManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.priceMap, 'createMany', { ...args, select })
    }
@@ -66,7 +72,8 @@ export class PriceMapResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'PriceMap'))
    async deletePriceMap(
       @Args() args: PriceMapDeleteArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.priceMap, 'delete', { ...args, select })
    }
@@ -81,7 +88,8 @@ export class PriceMapResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'PriceMap'))
    async findFirstPriceMap(
       @Args() args: PriceMapFindFirstArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.priceMap, 'findFirst', { ...args, select })
    }
@@ -90,7 +98,8 @@ export class PriceMapResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'PriceMap'))
    async findManyPriceMap(
       @Args() args: PriceMapFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.priceMap, 'findMany', { ...args, select })
    }
@@ -99,7 +108,8 @@ export class PriceMapResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'PriceMap'))
    async findUniquePriceMap(
       @Args() args: PriceMapFindUniqueArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.priceMap, 'findUnique', { ...args, select })
    }
@@ -117,7 +127,8 @@ export class PriceMapResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'PriceMap'))
    async updatePriceMap(
       @Args() args: PriceMapUpdateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.priceMap, 'update', { ...args, select })
    }

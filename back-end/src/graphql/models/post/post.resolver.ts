@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregatePost,
    Post,
@@ -46,7 +50,8 @@ export class PostResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Post'))
    async createPost(
       @Args() args: PostCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'create', { ...args, select })
    }
@@ -56,7 +61,8 @@ export class PostResolver {
    async createManyPost(
       @Args()
       args: PostCreateManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'createMany', { ...args, select })
    }
@@ -65,7 +71,8 @@ export class PostResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Post'))
    async deletePost(
       @Args() args: PostDeleteArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'delete', { ...args, select })
    }
@@ -80,7 +87,8 @@ export class PostResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Post'))
    async findFirstPost(
       @Args() args: PostFindFirstArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'findFirst', { ...args, select })
    }
@@ -89,7 +97,8 @@ export class PostResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Post'))
    async findManyPost(
       @Args() args: PostFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'findMany', { ...args, select })
    }
@@ -98,7 +107,8 @@ export class PostResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Post'))
    async findUniquePost(
       @Args() args: PostFindUniqueArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'findUnique', { ...args, select })
    }
@@ -116,7 +126,8 @@ export class PostResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Post'))
    async updatePost(
       @Args() args: PostUpdateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.post, 'update', { ...args, select })
    }

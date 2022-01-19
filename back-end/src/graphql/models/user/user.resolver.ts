@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregateUser,
    User,
@@ -32,7 +36,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('AGGREGATE', 'User'))
    async aggregateUser(
       @Args() args: UserAggregateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'aggregate', { ...args, select })
    }
@@ -47,7 +52,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'User'))
    async createUser(
       @Args(UserCreateArgsPipe) args: UserCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'create', { ...args, select })
    }
@@ -57,7 +63,8 @@ export class UserResolver {
    async createManyUser(
       @Args(UserCreateManyArgsPipe)
       args: UserCreateManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'createMany', { ...args, select })
    }
@@ -66,7 +73,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'User'))
    async deleteUser(
       @Args() args: UserDeleteArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'delete', { ...args, select })
    }
@@ -81,7 +89,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'User'))
    async findFirstUser(
       @Args() args: UserFindFirstArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'findFirst', { ...args, select })
    }
@@ -90,7 +99,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'User'))
    async findManyUser(
       @Args() args: UserFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'findMany', { ...args, select })
    }
@@ -99,7 +109,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'User'))
    async findUniqueUser(
       @Args() args: UserFindUniqueArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'findUnique', { ...args, select })
    }
@@ -117,7 +128,8 @@ export class UserResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'User'))
    async updateUser(
       @Args() args: UserUpdateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.user, 'update', { ...args, select })
    }

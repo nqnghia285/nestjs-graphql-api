@@ -1,5 +1,9 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { CheckPoliciesGuard, ParseAndRemoveSelectedFields } from '~/decorators'
+import {
+   CheckPoliciesGuard,
+   includeAndExcludeFieldsCreator,
+   ParseAndRemoveSelectedFields,
+} from '~/decorators'
 import {
    AggregateVideo,
    Video,
@@ -46,7 +50,8 @@ export class VideoResolver {
    @CheckPoliciesGuard(ActionCreator('CREATE', 'Video'))
    async createVideo(
       @Args() args: VideoCreateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'create', { ...args, select })
    }
@@ -56,7 +61,8 @@ export class VideoResolver {
    async createManyVideo(
       @Args()
       args: VideoCreateManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'createMany', { ...args, select })
    }
@@ -65,7 +71,8 @@ export class VideoResolver {
    @CheckPoliciesGuard(ActionCreator('DELETE', 'Video'))
    async deleteVideo(
       @Args() args: VideoDeleteArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'delete', { ...args, select })
    }
@@ -80,7 +87,8 @@ export class VideoResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_FIRST', 'Video'))
    async findFirstVideo(
       @Args() args: VideoFindFirstArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'findFirst', { ...args, select })
    }
@@ -89,7 +97,8 @@ export class VideoResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_MANY', 'Video'))
    async findManyVideo(
       @Args() args: VideoFindManyArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'findMany', { ...args, select })
    }
@@ -98,7 +107,8 @@ export class VideoResolver {
    @CheckPoliciesGuard(ActionCreator('FIND_UNIQUE', 'Video'))
    async findUniqueVideo(
       @Args() args: VideoFindUniqueArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'findUnique', { ...args, select })
    }
@@ -116,7 +126,8 @@ export class VideoResolver {
    @CheckPoliciesGuard(ActionCreator('UPDATE', 'Video'))
    async updateVideo(
       @Args() args: VideoUpdateArgs,
-      @ParseAndRemoveSelectedFields() select: any
+      @ParseAndRemoveSelectedFields(includeAndExcludeFieldsCreator())
+      select: any
    ) {
       return handleResolver(this.video, 'update', { ...args, select })
    }

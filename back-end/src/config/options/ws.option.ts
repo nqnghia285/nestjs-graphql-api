@@ -1,7 +1,5 @@
-import { WSKey } from '~/interface'
-
 export const wsOptions = {
-   namespace: WSKey.NSP,
+   namespace: 'support',
    cookie: true,
    cors: {
       origin: [process.env.ORIGIN],

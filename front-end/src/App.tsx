@@ -17,7 +17,8 @@ function App() {
       console.log('Message: ', payload)
    })
 
-   socket.on('join-support-team-room', (payload: unknown) => {
+   socket.on('staff-joins-support-team-room', (payload: unknown) => {
+      console.log('ClientId: ', socket.id)
       console.log('Message: ', payload)
    })
 
@@ -76,7 +77,7 @@ function App() {
 
    function joinSTR() {
       if (!socket.disconnected) {
-         socket.emit('join-support-team-room')
+         socket.emit('staff-joins-support-team-room')
       }
    }
 
