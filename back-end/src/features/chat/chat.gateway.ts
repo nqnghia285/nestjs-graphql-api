@@ -113,7 +113,7 @@ export class ChatGateway {
       if (client.rooms.has(Rooms.SUPPORT_TEAM_ROOM)) {
          const { customerSocketId } = payload
          // * Send a notification to staffs in 'support-team-room' but the sender
-         client.broadcast
+         client
             .to(Rooms.SUPPORT_TEAM_ROOM)
             .emit(Events.STAFF_RESPONSIBLE_FOR_CUSTOMER_SUPPORT, {
                supported: true,
@@ -150,8 +150,8 @@ export class ChatGateway {
       @MessageBody() payload: Payload,
       @Profile() profile: IUserInfo
    ) {
-      const { room, message } = payload
-      client.to(room).emit(Events.MESSAGE, message)
+      const { rooms, message } = payload
+      client.to(rooms).emit(Events.MESSAGE, message)
 
       this.logger.log(payload, 'message:payload')
       this.logger.log(profile, `${Events.MESSAGE}:profile`)

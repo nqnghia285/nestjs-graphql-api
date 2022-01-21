@@ -1,27 +1,12 @@
 import { gql } from '@apollo/client'
 import React, { ChangeEvent, useState } from 'react'
-import { io } from 'socket.io-client'
 import { mutate } from './apollo-client'
 import './App.css'
+import socket from './features/chat/instance'
 import logo from './logo.svg'
 import { Image } from './prisma-nestjs-graphql'
 
 function App() {
-   const socket = io('/support', { withCredentials: true })
-
-   socket.on('message', (payload: unknown) => {
-      console.log('Message: ', payload)
-   })
-
-   socket.on('connection', (payload: unknown) => {
-      console.log('Message: ', payload)
-   })
-
-   socket.on('staff-joins-support-team-room', (payload: unknown) => {
-      console.log('ClientId: ', socket.id)
-      console.log('Message: ', payload)
-   })
-
    const upload = gql`
       mutation ($data: ImageCreateInput!) {
          createImage(data: $data) {
@@ -70,13 +55,13 @@ function App() {
    }
 
    function sendMessage() {
-      if (!socket.disconnected) {
+      if (!socket.disconnected()) {
          socket.emit('message', message)
       }
    }
 
    function joinSTR() {
-      if (!socket.disconnected) {
+      if (!socket.disconnected()) {
          socket.emit('staff-joins-support-team-room')
       }
    }
@@ -84,7 +69,7 @@ function App() {
    return (
       <div className='App'>
          <header className='App-header'>
-            <img src={logo} className='App-logo' alt='logo' />
+            <img src={logo} className='App-logo' alt='logo' />☑
             <img src={imgSrc} hidden={hidden} alt='Nothing' />
             <input type='file' onChange={onChangedFile} />
             <input type='button' value='Upload' onClick={uploadFile} />
