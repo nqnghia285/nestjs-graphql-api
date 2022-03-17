@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   html {
+      @apply font-sans font-medium;
+   }
+
+   body {
+      @apply bg-white h-[5000px];
+   }
+}
+
+:root {
+   --bg-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}

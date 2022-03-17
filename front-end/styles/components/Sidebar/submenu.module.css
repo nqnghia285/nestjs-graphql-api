@@ -1,0 +1,8 @@
+.submenu {
+   @apply block rounded-lg overflow-hidden bg-inherit;
+   @apply laptop:hidden laptop:absolute laptop:top-0 laptop:left-full laptop:w-64;
+}
+
+.open {
+   @apply laptop:block;
+}

@@ -1,0 +1,7 @@
+.header {
+   @apply relative w-screen h-14 flex flex-row;
+}
+
+.favicon {
+   @apply absolute top-1 left-1 z-50;
+}

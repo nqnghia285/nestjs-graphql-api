@@ -1,0 +1,28 @@
+.menu-icon {
+   @apply absolute top-0 left-0 z-50 w-12 h-12 py-0 pl-3;
+   @apply border-2 border-solid border-white/50 items-center justify-start;
+   @apply cursor-pointer flex;
+
+   &::before {
+      @apply absolute w-9 h-[2px] content-[''];
+      @apply -translate-y-2 -translate-x-2 duration-300 bg-white;
+   }
+
+   &::after {
+      @apply absolute w-9 h-[2px] content-[''] shadow-dash;
+      @apply translate-y-2 -translate-x-2 duration-300 bg-white;
+   }
+
+   &:hover {
+      @apply laptop:text-purple-600;
+
+      &::before {
+         @apply laptop:bg-purple-600 laptop:translate-y-0 laptop:rotate-45;
+      }
+
+      &::after {
+         @apply laptop:bg-purple-600 laptop:translate-y-0 laptop:-rotate-45;
+         @apply shadow-none;
+      }
+   }
+}

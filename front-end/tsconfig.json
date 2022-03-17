@@ -1,31 +1,35 @@
 {
    "compilerOptions": {
-      "target": "ES6",
-      "lib": ["dom", "dom.iterable", "esnext"],
+      "target": "ESNext",
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
       "allowJs": true,
       "skipLibCheck": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
       "strict": true,
+      "checkJs": false,
       "forceConsistentCasingInFileNames": true,
-      "noFallthroughCasesInSwitch": true,
-      "module": "esnext",
-      "moduleResolution": "node",
+      "noEmit": true,
+      "esModuleInterop": true,
+      "module": "ESNext",
+      "moduleResolution": "Node",
       "resolveJsonModule": true,
       "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react-jsx",
+      "jsx": "preserve",
+      "incremental": true,
+      "allowSyntheticDefaultImports": true,
       "baseUrl": ".",
       "paths": {
-         "~": ["src"],
-         "~/*": ["src/*"],
-         "~/generated": ["src"],
-         "~/generated/*": ["src/*"],
-         "~/graphql": ["src"],
-         "~/graphql/*": ["src/*"]
-      },
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true
+         "~/": ["./"],
+         "~/*": ["./*"]
+      }
    },
-   "include": ["src"]
+   "include": [
+      "next-env.d.ts",
+      "**/*.ts",
+      "**/*.tsx",
+      "tailwind.config.js",
+      "postcss.config.js",
+      "next.config.js",
+      "additional.d.ts"
+   ],
+   "exclude": ["node_modules"]
 }

@@ -1,0 +1,8 @@
+.navigation {
+   @apply absolute top-full left-1 bg-gray-900 drop-shadow-xl w-12 h-12;
+   @apply hidden saturate-200 text-white z-20;
+}
+
+.show {
+   @apply block;
+}

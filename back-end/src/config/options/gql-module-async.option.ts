@@ -40,7 +40,7 @@ export const gqlModuleAsyncOptions: GqlModuleAsyncOptions = {
          return res
       },
       plugins: [
-         config.system.node_env !== NodeEnv.PROVISION
+         config.system.node_env !== NodeEnv.PRODUCTION
             ? ApolloServerPluginLandingPageGraphQLPlayground()
             : ApolloServerPluginLandingPageDisabled(),
          HandleResolverParams,
