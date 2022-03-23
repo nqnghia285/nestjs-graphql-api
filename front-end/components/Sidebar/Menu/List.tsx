@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Link from 'next/link'
 import {
    forwardRef,
    memo,
@@ -44,7 +45,7 @@ function List(
 
    useImperativeHandle(
       ref,
-      (): ListMethods => ({
+      () => ({
          active() {
             const list = listRef.current
             if (list) {
@@ -135,21 +136,22 @@ function List(
       }
    }, [listRef, submenuMethodsRef])
 
-   console.log('re-render List')
-
    return (
       <li
          ref={listRef}
          className={clsx(styles.list, { [styles.active]: active })}
       >
-         <a href={path}>
-            <span className={styles.icon}>
-               <i className={icon}></i>
-            </span>
-            <span className={styles.text}>
-               {typeof children === 'string' ? children : children.content}
-            </span>
-         </a>
+         <Link href={path} passHref>
+            <a>
+               <span className={styles.icon}>
+                  <i className={icon}></i>
+               </span>
+               <span className={styles.text}>
+                  {typeof children === 'string' ? children : children.content}
+               </span>
+            </a>
+         </Link>
+
          {typeof children === 'object' ? (
             <Submenu ref={submenuMethodsRef}>
                {children.submenuChildren}

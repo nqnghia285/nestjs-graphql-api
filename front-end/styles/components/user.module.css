@@ -1,0 +1,44 @@
+/* CSS is applied for User block in Header component */
+.user {
+   @apply relative basis-3/12;
+
+   /* Apply for 'Log in' text */
+   & > a {
+      @apply absolute top-0 right-[10px] text-white leading-[3.5rem] px-2;
+
+      font-size: 14px;
+
+      &:hover {
+         @apply text-sky-400;
+      }
+   }
+
+   /* Apply for user icon */
+   & i {
+      @apply w-9 h-9 text-3xl rounded-md bg-blue-600 text-white cursor-pointer;
+      @apply absolute top-0 right-[10px] text-center mx-4 my-[10px];
+   }
+
+   /* Apply for user menu */
+   & .user-menu {
+      @apply absolute top-[56px] right-[26px] bg-gray-900 rounded-b-md overflow-hidden;
+      @apply divide-y divide-solid divide-white w-24 laptop:w-28 h-fit hidden;
+
+      & li {
+         @apply w-full h-8 laptop:w-full laptop:h-12 bg-inherit;
+
+         & a {
+            @apply w-full h-full laptop:w-full laptop:h-full block;
+            @apply text-white leading-8 laptop:leading-12 px-2;
+         }
+
+         &:hover {
+            @apply bg-blue-700 text-sky-400;
+         }
+      }
+   }
+
+   & .show-user-menu {
+      @apply block;
+   }
+}

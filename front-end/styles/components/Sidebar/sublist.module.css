@@ -6,8 +6,9 @@
 
       & .subicon {
          & i {
-            @apply my-[2px] w-[44px] h-[44px] rounded-full bg-white text-center;
-            @apply leading-12 justify-start items-start text-gray-900;
+            @apply my-[2px] w-[28px] h-[28px] laptop:w-[44px] laptop:h-[44px];
+            @apply leading-8 laptop:leading-12 justify-start items-start;
+            @apply rounded-full bg-white text-center text-gray-900;
          }
       }
 
@@ -24,11 +25,11 @@
          @apply bg-white;
 
          & .subicon i {
-            @apply bg-gray-900 text-purple-600;
+            @apply bg-gray-900 text-sky-400;
          }
 
          & .subtext {
-            @apply text-purple-600;
+            @apply text-sky-400;
          }
       }
    }

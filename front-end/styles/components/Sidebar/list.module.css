@@ -1,16 +1,17 @@
 .list {
-   @apply relative block list-none w-full min-h-12;
+   @apply relative block list-none w-full bg-inherit;
    @apply rounded-lg duration-300 border-y border-solid border-white/50;
 
    & a {
       @apply relative block justify-start items-start no-underline;
-      @apply min-w-full min-h-full leading-12 border-none;
+      @apply min-w-full min-h-full leading-8 laptop:leading-12 border-none;
       @apply px-[5px] py-0 rounded-lg;
 
       & .icon {
          & i {
-            @apply my-[2px] w-[44px] h-[44px] rounded-full bg-white text-center;
-            @apply leading-12 justify-start items-start text-gray-900;
+            @apply my-[2px] w-[28px] h-[28px] laptop:w-[44px] laptop:h-[44px];
+            @apply leading-8 laptop:leading-12 justify-start items-start;
+            @apply rounded-full bg-white text-center text-gray-900;
          }
       }
 
@@ -24,11 +25,11 @@
       @apply bg-blue-700;
 
       & a {
-         @apply text-purple-600;
+         @apply text-sky-400;
 
          & .icon {
-            & > i {
-               @apply bg-gray-900 text-purple-600;
+            & i {
+               @apply bg-gray-900 text-sky-400;
             }
          }
       }

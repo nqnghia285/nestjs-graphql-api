@@ -1,9 +1,27 @@
-import { forwardRef, memo, Ref, useMemo } from 'react'
+import clsx from 'clsx'
+import {
+   forwardRef,
+   memo,
+   Ref,
+   useImperativeHandle,
+   useMemo,
+   useRef,
+} from 'react'
 import styles from '~/styles/components/header.module.css'
-import Sidebar from './Sidebar'
+import Logo, { LogoMethods } from './Logo'
+import Search, { SearchMethods } from './Search'
+import Sidebar, { SidebarMethods } from './Sidebar'
 import { ListProps } from './Sidebar/Menu/List'
+import User, { UserMethods } from './User'
 
-function Header(_props: object, ref: Ref<unknown>) {
+export interface HeaderMethods {
+   readonly hidden: () => void
+   readonly show: () => void
+   readonly toggle: () => void
+}
+
+function Header(_props: object, ref: Ref<HeaderMethods>) {
+   const brandName = useMemo(() => 'Atom', [])
    const menuChildren: ListProps[] = useMemo(
       () => [
          {
@@ -43,7 +61,7 @@ function Header(_props: object, ref: Ref<unknown>) {
                      children: 'Lenovo',
                   },
                   {
-                     icon: 'fa-solid fa-cart-flatbed',
+                     icon: 'fa-brands fa-apple',
                      path: '#',
                      key: '5',
                      children: 'Macbook',
@@ -65,9 +83,41 @@ function Header(_props: object, ref: Ref<unknown>) {
       []
    )
 
+   const headerRef = useRef<HTMLElement | null>(null)
+   const sidebarMethodsRef = useRef<SidebarMethods | null>(null)
+   const logoMethodsRef = useRef<LogoMethods | null>(null)
+   const searchMethodsRef = useRef<SearchMethods | null>(null)
+   const userMethodsRef = useRef<UserMethods | null>(null)
+
+   useImperativeHandle(
+      ref,
+      () => ({
+         hidden() {
+            const header = headerRef.current
+            header?.classList.remove(styles.show)
+         },
+         show() {
+            const header = headerRef.current
+            header?.classList.add(styles.show)
+         },
+         toggle() {
+            const header = headerRef.current
+            header?.classList.toggle(styles.show)
+         },
+      }),
+      [headerRef]
+   )
+
    return (
-      <header className={styles.header}>
-         <Sidebar menuChildren={menuChildren} />
+      <header ref={headerRef} className={clsx(styles.header, styles.show)}>
+         <Sidebar ref={sidebarMethodsRef} menuChildren={menuChildren} />
+         <Logo
+            ref={logoMethodsRef}
+            icon={'fa-solid fa-atom'}
+            brandName={brandName}
+         />
+         <Search ref={searchMethodsRef} />
+         <User ref={userMethodsRef} icon={'fa-solid fa-user'} logined={true} />
       </header>
    )
 }

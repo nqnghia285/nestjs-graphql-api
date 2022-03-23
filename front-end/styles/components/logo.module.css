@@ -1,0 +1,22 @@
+.wrap {
+   @apply basis-3/12;
+
+   & .logo {
+      @apply flex flex-row w-fit h-full mx-3 text-white cursor-pointer;
+
+      & .icon {
+         @apply text-inherit text-3xl leading-[3.5rem];
+      }
+
+      & .brand-name {
+         @apply text-inherit text-3xl leading-[3.5rem] px-1;
+      }
+
+      &:hover {
+         & .icon,
+         .brand-name {
+            @apply text-sky-400;
+         }
+      }
+   }
+}

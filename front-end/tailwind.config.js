@@ -36,6 +36,7 @@ module.exports = {
          boxShadow: {
             dash: '0 -8px 0',
          },
+         fontSize: {},
          keyframes: {
             ripple: {
                '0%': {

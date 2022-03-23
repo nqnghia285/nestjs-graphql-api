@@ -57,7 +57,7 @@ function Submenu({ children }: SubmenuProps, ref: Ref<SubmenuMethods>) {
 
    useImperativeHandle(
       ref,
-      (): SubmenuMethods => ({
+      () => ({
          close() {
             const submenu = submenuRef.current
             if (submenu) {
@@ -87,8 +87,6 @@ function Submenu({ children }: SubmenuProps, ref: Ref<SubmenuMethods>) {
       }),
       [submenuRef]
    )
-
-   console.log('re-render Submenu')
 
    return (
       <ul ref={submenuRef} className={styles.submenu}>

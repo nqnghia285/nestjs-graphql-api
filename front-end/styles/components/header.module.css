@@ -1,7 +1,11 @@
 .header {
-   @apply relative w-screen h-14 flex flex-row;
+   @apply fixed top-0 left-0 flex w-screen h-14 bg-gray-900 flex-row invisible;
 }
 
 .favicon {
    @apply absolute top-1 left-1 z-50;
+}
+
+.show {
+   @apply visible;
 }

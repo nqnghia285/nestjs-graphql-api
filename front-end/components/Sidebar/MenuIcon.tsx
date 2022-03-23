@@ -1,5 +1,13 @@
-import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
+import {
+   forwardRef,
+   memo,
+   Ref,
+   useEffect,
+   useImperativeHandle,
+   useRef,
+} from 'react'
 import styles from '~/styles/components/Sidebar/menu-icon.module.css'
+import { theme } from '~/tailwind.config'
 
 export interface MenuIconMethods {
    readonly setOnClick: (callback: () => void) => void
@@ -7,7 +15,14 @@ export interface MenuIconMethods {
    readonly setOnMouseOver: (callback: () => void) => void
 }
 
-function MenuIcon(_props: object, ref: Ref<MenuIconMethods>) {
+export interface MenuIconProps {
+   handleMouseDown: () => void
+}
+
+function MenuIcon(
+   { handleMouseDown }: MenuIconProps,
+   ref: Ref<MenuIconMethods>
+) {
    const menuIconRef = useRef<HTMLDivElement | null>(null)
 
    useImperativeHandle(
@@ -35,7 +50,32 @@ function MenuIcon(_props: object, ref: Ref<MenuIconMethods>) {
       [menuIconRef]
    )
 
-   console.log('re-render MenuIcon')
+   useEffect(() => {
+      const menuIcon = menuIconRef.current
+      function handleMouseDownOutside(ev: Event) {
+         const element = ev.target as Element
+         if (element !== menuIcon) {
+            handleMouseDown()
+         }
+      }
+
+      if (screen.width < Number(theme.screens.laptop.replace('px', ''))) {
+         document.body.addEventListener(
+            'mousedown',
+            handleMouseDownOutside,
+            true
+         )
+      }
+
+      return () => {
+         if (screen.width < Number(theme.screens.laptop.replace('px', ''))) {
+            document.body.removeEventListener(
+               'mousedown',
+               handleMouseDownOutside
+            )
+         }
+      }
+   }, [menuIconRef, handleMouseDown])
 
    return <div ref={menuIconRef} className={styles['menu-icon']} />
 }

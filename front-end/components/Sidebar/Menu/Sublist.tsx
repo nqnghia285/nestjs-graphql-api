@@ -24,7 +24,7 @@ function Sublist(
 
    useImperativeHandle(
       ref,
-      (): SublistMethods => ({
+      () => ({
          active() {
             const sublist = sublistRef.current
             if (sublist) {
@@ -47,14 +47,12 @@ function Sublist(
       [sublistRef]
    )
 
-   console.log('re-render Sublist')
-
    return (
       <li
          ref={sublistRef}
          className={clsx(styles.sublist, { [styles.active]: active })}
       >
-         <Link href={path}>
+         <Link href={path} passHref>
             <a>
                <span className={styles.subicon}>
                   <i className={icon}></i>

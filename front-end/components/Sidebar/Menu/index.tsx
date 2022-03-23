@@ -92,8 +92,6 @@ function Menu({ children }: MenuProps, ref: Ref<MenuMethods>) {
       [menuRef]
    )
 
-   console.log('re-render Menu')
-
    return (
       <ul ref={menuRef} className={styles.menu}>
          {children?.map((e, i) => (
