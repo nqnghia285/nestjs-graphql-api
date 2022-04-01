@@ -6,7 +6,7 @@ import {
    useImperativeHandle,
    useRef,
 } from 'react'
-import styles from '~/styles/components/Sidebar/menu-icon.module.css'
+import styles from '~/styles/components/sidebar/menu-icon.module.css'
 import { theme } from '~/tailwind.config'
 
 export interface MenuIconMethods {
@@ -23,7 +23,7 @@ function MenuIcon(
    { handleMouseDown }: MenuIconProps,
    ref: Ref<MenuIconMethods>
 ) {
-   const menuIconRef = useRef<HTMLDivElement | null>(null)
+   const menuIconRef = useRef<HTMLDivElement>(null)
 
    useImperativeHandle(
       ref,
@@ -60,19 +60,12 @@ function MenuIcon(
       }
 
       if (screen.width < Number(theme.screens.laptop.replace('px', ''))) {
-         document.body.addEventListener(
-            'mousedown',
-            handleMouseDownOutside,
-            true
-         )
+         document.addEventListener('mousedown', handleMouseDownOutside, true)
       }
 
       return () => {
          if (screen.width < Number(theme.screens.laptop.replace('px', ''))) {
-            document.body.removeEventListener(
-               'mousedown',
-               handleMouseDownOutside
-            )
+            document.removeEventListener('mousedown', handleMouseDownOutside)
          }
       }
    }, [menuIconRef, handleMouseDown])

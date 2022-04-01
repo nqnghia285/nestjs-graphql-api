@@ -2,6 +2,7 @@ import { ApiConfigService } from '@libs/api-config'
 import { LoggerService } from '@libs/logger'
 import { ValidationPipe } from '@nestjs/common'
 import { Args, Context, Query, Resolver } from '@nestjs/graphql'
+import { throwHttpGraphQLError } from 'apollo-server-core/dist/runHttpQuery'
 import { AuthLogInArgs, Response } from '~/graphql/typedefs'
 import { IContext } from '~/interface'
 import { AuthService } from './auth.service'
@@ -40,8 +41,9 @@ export class AuthResolver {
 
                res.cookie(tokenName, accessToken, { httpOnly: true })
             } else {
+               response.message = `username and password are not matched or "${username}" is not existed in database!`
                response.errors.push({
-                  message: `username and password are not matched or ${username} is not existed in database!`,
+                  message: response.message,
                })
             }
          })

@@ -13,7 +13,7 @@ export interface LogoMethods {
 }
 
 function Logo({ icon, brandName }: LogoProps, ref: Ref<LogoMethods>) {
-   const logoRef = useRef<HTMLAnchorElement | null>(null)
+   const logoRef = useRef<HTMLAnchorElement>(null)
 
    useImperativeHandle(
       ref,

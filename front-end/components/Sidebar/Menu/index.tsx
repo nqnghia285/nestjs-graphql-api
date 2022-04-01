@@ -9,7 +9,7 @@ import {
    useImperativeHandle,
    useRef,
 } from 'react'
-import styles from '~/styles/components/Sidebar/menu.module.css'
+import styles from '~/styles/components/sidebar/menu.module.css'
 import List, { ListMethods, ListProps } from './List'
 
 export interface MenuProps {
@@ -25,7 +25,7 @@ export interface MenuMethods {
 }
 
 function Menu({ children }: MenuProps, ref: Ref<MenuMethods>) {
-   const menuRef = useRef<HTMLUListElement | null>(null)
+   const menuRef = useRef<HTMLUListElement>(null)
    const listMethodsRefs = useRef<RefObject<ListMethods>[] | undefined>(
       children?.map(() => createRef())
    )

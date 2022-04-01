@@ -8,7 +8,7 @@ import {
    useImperativeHandle,
    useRef,
 } from 'react'
-import styles from '~/styles/components/Sidebar/index.module.css'
+import styles from '~/styles/components/sidebar/index.module.css'
 import { theme } from '~/tailwind.config'
 import Menu, { MenuMethods } from './Menu'
 import { ListProps } from './Menu/List'
@@ -25,9 +25,9 @@ export interface SidebarMethods {
 }
 
 function Sidebar({ menuChildren }: SidebarProps, ref: Ref<SidebarMethods>) {
-   const sidebarRef = useRef<HTMLElement | null>(null)
-   const menuIconMethodsRef = useRef<MenuIconMethods | null>(null)
-   const menuMethodsRef = useRef<MenuMethods | null>(null)
+   const sidebarRef = useRef<HTMLElement>(null)
+   const menuIconMethodsRef = useRef<MenuIconMethods>(null)
+   const menuMethodsRef = useRef<MenuMethods>(null)
 
    const handleMouseDownOutside = useCallback(() => {
       const menuMethods = menuMethodsRef.current

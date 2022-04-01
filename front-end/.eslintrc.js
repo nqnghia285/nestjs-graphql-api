@@ -17,6 +17,7 @@ module.exports = {
       jest: true,
    },
    ignorePatterns: [
+      'plugins',
       '.eslintrc.js',
       'next.config.js',
       'postcss.config.js',

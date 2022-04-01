@@ -1,0 +1,34 @@
+.label-icon-input-box {
+   @apply flex-shrink;
+
+   & .label {
+      @apply text-gray-700 dark:text-gray-200 cursor-pointer;
+   }
+
+   & .icon-input-box {
+      @apply relative;
+
+      & .icon-wrap {
+         @apply absolute inset-y-0 left-0 flex items-center pl-3;
+
+         & .icon {
+            @apply w-5 h-5 text-gray-400;
+         }
+
+         & .text-sky {
+            @apply text-sky-600;
+         }
+      }
+
+      & .input {
+         @apply w-full py-3 pl-10 pr-4 text-gray-700 bg-white border focus:ring;
+         @apply border-gray-400 rounded-md dark:bg-gray-800 dark:text-gray-300;
+         @apply dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300;
+         @apply focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none;
+      }
+
+      &:hover .icon-wrap .icon {
+         @apply text-sky-600;
+      }
+   }
+}

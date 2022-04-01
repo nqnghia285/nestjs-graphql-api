@@ -5,7 +5,7 @@ import { useRef } from 'react'
 import Header, { HeaderMethods } from '~/components/Header'
 
 const Home: NextPage = () => {
-   const headerMethodsRef = useRef<HeaderMethods | null>(null)
+   const headerMethodsRef = useRef<HeaderMethods>(null)
 
    return (
       <div className='container flex justify-center'>

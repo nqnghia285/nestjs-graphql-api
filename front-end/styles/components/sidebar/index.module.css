@@ -1,0 +1,8 @@
+.navigation {
+   @apply absolute top-full left-1 block drop-shadow-xl w-8 h-8;
+   @apply saturate-200 text-white z-20 laptop:w-12 laptop:h-12 invisible;
+}
+
+.show {
+   @apply visible;
+}

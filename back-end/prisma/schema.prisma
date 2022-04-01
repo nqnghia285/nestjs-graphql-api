@@ -164,6 +164,8 @@ model Laptop {
    /// @Validator.MaxLength(255)
    origin              String     @default("None") @db.VarChar(255)
    releaseDate         DateTime   @default(now()) @map("release_date")
+   sold                Int        @default(0)
+   stopSelling         Boolean    @default(false) @map("stop_selling")
    os                  OS         @default(WINDOWS)
    priceMap            PriceMap?  @relation(fields: [priceMapId], references: [id])
    priceMapId          Int?       @map("price_map_id")

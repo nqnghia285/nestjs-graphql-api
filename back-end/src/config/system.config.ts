@@ -1,10 +1,11 @@
 import { registerAs } from '@nestjs/config'
+import { isURL } from 'class-validator'
 
 export const system = registerAs('system', () => ({
    node_env: process.env.NODE_ENV,
    host: process.env.HOST,
    port: parseInt(process.env.PORT, 10),
-   origin: process.env.ORIGIN,
+   origin: JSON.parse(process.env.ORIGIN) as string | string[],
    url: process.env.URL,
    graphql_path: process.env.GRAPHQL_PATH,
    jwt_key: process.env.JWT_KEY,

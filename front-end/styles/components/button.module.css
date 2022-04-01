@@ -1,0 +1,47 @@
+.btn,
+.btn-default {
+   @apply px-4 py-2 font-medium tracking-wide text-white capitalize;
+   @apply transition-colors duration-200 transform bg-slate-700 rounded-md;
+   @apply hover:bg-sky-700 focus:outline-none focus:ring focus:ring-blue-300;
+   @apply focus:ring-opacity-80 active:bg-slate-700 active:ring-red-500;
+}
+
+.btn-xs {
+   @apply w-fit h-fit text-xs;
+}
+
+.btn-sm {
+   @apply w-fit h-fit text-sm;
+}
+
+.btn-md {
+   @apply w-fit h-fit text-base;
+}
+
+.btn-lg {
+   @apply w-fit h-fit text-lg;
+}
+
+.btn-xl {
+   @apply w-fit h-fit text-xl;
+}
+
+.btn-half {
+   @apply w-1/2 h-fit text-base;
+}
+
+.btn-info {
+   @apply bg-blue-600 hover:bg-sky-700;
+}
+
+.btn-success {
+   @apply bg-emerald-400 hover:bg-sky-700;
+}
+
+.btn-warning {
+   @apply bg-yellow-400 hover:bg-sky-700;
+}
+
+.btn-error {
+   @apply bg-red-500 hover:bg-sky-700;
+}

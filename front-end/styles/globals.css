@@ -8,7 +8,7 @@
    }
 
    body {
-      @apply bg-white h-[5000px];
+      @apply bg-slate-200;
    }
 }
 

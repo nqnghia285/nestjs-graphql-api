@@ -8,7 +8,7 @@ import {
    useImperativeHandle,
    useRef,
 } from 'react'
-import styles from '~/styles/components/Sidebar/list.module.css'
+import styles from '~/styles/components/sidebar/list.module.css'
 import { theme } from '~/tailwind.config'
 import { SublistProps } from './Sublist'
 import Submenu, { SubmenuMethods } from './Submenu'
@@ -40,8 +40,8 @@ function List(
    { active, path, icon, children }: ListProps,
    ref: Ref<ListMethods>
 ) {
-   const listRef = useRef<HTMLLIElement | null>(null)
-   const submenuMethodsRef = useRef<SubmenuMethods | null>(null)
+   const listRef = useRef<HTMLLIElement>(null)
+   const submenuMethodsRef = useRef<SubmenuMethods>(null)
 
    useImperativeHandle(
       ref,

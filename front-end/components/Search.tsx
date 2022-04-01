@@ -1,17 +1,18 @@
 import clsx from 'clsx'
 import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/search.module.css'
+import Input from './Input'
 
 export interface SearchMethods {
-   readonly setOnChange: (callback: (event: Event) => void) => void
-   readonly setOnKeyDown: (callback: (event: KeyboardEvent) => void) => any
-   readonly setOnClick: (callback: (event: Event) => void) => void
+   readonly setOnChange: (callback: (event: Event) => any) => void
+   readonly setOnKeyDown: (callback: (event: KeyboardEvent) => any) => any
+   readonly setOnSubmit: (callback: (event: SubmitEvent) => any) => void
    readonly value: () => string | undefined
 }
 
 function Search(_props: object, ref: Ref<SearchMethods>) {
-   const searchTextRef = useRef<HTMLInputElement | null>(null)
-   const searchIconRef = useRef<HTMLElement | null>(null)
+   const searchFormRef = useRef<HTMLFormElement>(null)
+   const searchTextRef = useRef<HTMLInputElement>(null)
 
    useImperativeHandle(
       ref,
@@ -28,10 +29,10 @@ function Search(_props: object, ref: Ref<SearchMethods>) {
                searchText.onkeydown = callback
             }
          },
-         setOnClick(callback) {
-            const searchIcon = searchIconRef.current
-            if (searchIcon) {
-               searchIcon.onclick = callback
+         setOnSubmit(callback) {
+            const searchForm = searchFormRef.current
+            if (searchForm) {
+               searchForm.onsubmit = callback
             }
          },
          value() {
@@ -39,30 +40,33 @@ function Search(_props: object, ref: Ref<SearchMethods>) {
             return searchText?.value
          },
       }),
-      [searchTextRef]
+      [searchFormRef, searchTextRef]
    )
 
    return (
       <>
-         <form role='search' className={styles.search}>
-            <input
-               ref={searchTextRef}
-               type='search'
-               spellCheck={false}
-               placeholder='Laptop model...'
-               aria-autocomplete='both'
-               className={styles['search-text']}
-            />
-            <span>
+         <form ref={searchFormRef} role='search' className={styles.search}>
+            <div className={styles['search-text']}>
+               <Input
+                  ref={searchTextRef}
+                  type='search'
+                  color='info'
+                  fontSize='sm'
+                  size='full'
+                  placeholder='Laptop model...'
+                  aria-autocomplete='both'
+               />
+            </div>
+
+            <button type={'submit'}>
                <i
-                  ref={searchIconRef}
                   className={clsx(
                      styles['search-icon'],
                      'fa-solid',
                      'fa-magnifying-glass'
                   )}
                ></i>
-            </span>
+            </button>
          </form>
       </>
    )

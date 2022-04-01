@@ -16,6 +16,8 @@
       "jsx": "preserve",
       "incremental": true,
       "allowSyntheticDefaultImports": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "baseUrl": ".",
       "paths": {
          "~/": ["./"],
@@ -24,6 +26,7 @@
    },
    "include": [
       "next-env.d.ts",
+      "**.*.js",
       "**/*.ts",
       "**/*.tsx",
       "tailwind.config.js",

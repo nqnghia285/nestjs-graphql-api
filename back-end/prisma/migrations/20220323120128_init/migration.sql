@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Laptop" ADD COLUMN     "sold" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "stop_selling" BOOLEAN NOT NULL DEFAULT false;

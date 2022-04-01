@@ -1,0 +1,13 @@
+.login-container {
+   @apply bg-center bg-cover bg-no-repeat w-screen h-screen;
+   @apply flex justify-center items-center bg-login;
+
+   & .login {
+      @apply flex flex-col bg-gray-900 dark:bg-indigo-700 w-fit p-4;
+      @apply space-y-2 rounded-lg justify-center items-center overflow-hidden;
+
+      & .title {
+         @apply text-lg font-semibold text-white uppercase;
+      }
+   }
+}

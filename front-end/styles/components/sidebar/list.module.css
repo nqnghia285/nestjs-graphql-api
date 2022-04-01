@@ -1,0 +1,37 @@
+.list {
+   @apply relative block list-none w-full bg-inherit;
+   @apply rounded-lg duration-300 border-y border-solid border-white/50;
+
+   & a {
+      @apply relative block justify-start items-start no-underline;
+      @apply min-w-full min-h-full leading-8 laptop:leading-12 border-none;
+      @apply px-[5px] py-0 rounded-lg;
+
+      & .icon {
+         & i {
+            @apply my-[2px] w-[28px] h-[28px] laptop:w-[44px] laptop:h-[44px];
+            @apply leading-8 laptop:leading-12 justify-start items-start;
+            @apply rounded-full bg-white text-center text-gray-900;
+         }
+      }
+
+      & .text {
+         @apply px-1;
+      }
+   }
+
+   &.active,
+   &:hover {
+      @apply bg-blue-700;
+
+      & a {
+         @apply text-sky-400;
+
+         & .icon {
+            & i {
+               @apply bg-gray-900 text-sky-400;
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,36 @@
+.sublist {
+   @apply w-full h-full border-solid border-y border-white/50 rounded-lg;
+
+   & a {
+      @apply px-6;
+
+      & .subicon {
+         & i {
+            @apply my-[2px] w-[28px] h-[28px] laptop:w-[44px] laptop:h-[44px];
+            @apply leading-8 laptop:leading-12 justify-start items-start;
+            @apply rounded-full bg-white text-center text-gray-900;
+         }
+      }
+
+      & .subtext {
+         @apply px-1 text-white;
+      }
+   }
+
+   &.active,
+   &:hover {
+      @apply bg-blue-700 text-purple-600;
+
+      & a {
+         @apply bg-white;
+
+         & .subicon i {
+            @apply bg-gray-900 text-sky-400;
+         }
+
+         & .subtext {
+            @apply text-sky-400;
+         }
+      }
+   }
+}

@@ -4,6 +4,7 @@ module.exports = {
    content: [
       './pages/**/*.{js,ts,jsx,tsx}',
       './components/**/*.{js,ts,jsx,tsx}',
+      './public/**/*.{svg,png,jpg,ico}',
    ],
    theme: {
       aspectRatio: {
@@ -32,6 +33,10 @@ module.exports = {
             ripple: 'ripple 0.3s linear infinite',
             hidden: 'hidden 0.5s linear 1',
             fadeIn: 'fadeIn 0.3s',
+         },
+         backgroundImage: {
+            login: 'url("/images/bg-login.jpg")',
+            'not-found': 'url("/images/p404.png")',
          },
          boxShadow: {
             dash: '0 -8px 0',
@@ -86,8 +91,5 @@ module.exports = {
       require('@tailwindcss/forms'),
       require('@tailwindcss/line-clamp'),
       require('@tailwindcss/typography'),
-      plugin(({ addVariant }) => {
-         addVariant('bg-color', '#333')
-      }),
    ],
 }

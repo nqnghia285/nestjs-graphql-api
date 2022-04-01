@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
-import styles from '~/styles/components/Sidebar/sublist.module.css'
+import styles from '~/styles/components/sidebar/sublist.module.css'
 
 export interface SublistProps {
    active?: boolean
@@ -20,7 +20,7 @@ function Sublist(
    { active, path, icon, children }: SublistProps,
    ref: Ref<SublistMethods>
 ) {
-   const sublistRef = useRef<HTMLLIElement | null>(null)
+   const sublistRef = useRef<HTMLLIElement>(null)
 
    useImperativeHandle(
       ref,

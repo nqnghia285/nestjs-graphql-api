@@ -12,7 +12,7 @@ import Logo, { LogoMethods } from './Logo'
 import Search, { SearchMethods } from './Search'
 import Sidebar, { SidebarMethods } from './Sidebar'
 import { ListProps } from './Sidebar/Menu/List'
-import User, { UserMethods } from './User'
+import User from './User'
 
 export interface HeaderMethods {
    readonly hidden: () => void
@@ -27,42 +27,42 @@ function Header(_props: object, ref: Ref<HeaderMethods>) {
          {
             active: true,
             icon: 'fa-solid fa-house-chimney',
-            path: '#',
+            path: '/',
             children: 'Home',
          },
          {
             icon: 'fa-solid fa-cart-flatbed',
-            path: '#',
+            path: '/products',
             children: {
                content: 'Products',
                submenuChildren: [
                   {
                      icon: 'fa-solid fa-cart-flatbed',
-                     path: '#',
+                     path: '/products/asus',
                      key: '1',
                      children: 'Asus',
                   },
                   {
                      icon: 'fa-solid fa-cart-flatbed',
-                     path: '#',
+                     path: '/products/acer',
                      key: '2',
                      children: 'Acer',
                   },
                   {
                      icon: 'fa-solid fa-cart-flatbed',
-                     path: '#',
+                     path: '/products/hp',
                      key: '3',
                      children: 'Hp',
                   },
                   {
                      icon: 'fa-solid fa-cart-flatbed',
-                     path: '#',
+                     path: '/products/lenovo',
                      key: '4',
                      children: 'Lenovo',
                   },
                   {
                      icon: 'fa-brands fa-apple',
-                     path: '#',
+                     path: '/products/macbook',
                      key: '5',
                      children: 'Macbook',
                   },
@@ -71,23 +71,22 @@ function Header(_props: object, ref: Ref<HeaderMethods>) {
          },
          {
             icon: 'fa-solid fa-address-book',
-            path: '#',
+            path: '/contact',
             children: 'Contact',
          },
          {
             icon: 'fa-solid fa-address-card',
-            path: '#',
+            path: '/about',
             children: 'About',
          },
       ],
       []
    )
 
-   const headerRef = useRef<HTMLElement | null>(null)
-   const sidebarMethodsRef = useRef<SidebarMethods | null>(null)
-   const logoMethodsRef = useRef<LogoMethods | null>(null)
-   const searchMethodsRef = useRef<SearchMethods | null>(null)
-   const userMethodsRef = useRef<UserMethods | null>(null)
+   const headerRef = useRef<HTMLElement>(null)
+   const sidebarMethodsRef = useRef<SidebarMethods>(null)
+   const logoMethodsRef = useRef<LogoMethods>(null)
+   const searchMethodsRef = useRef<SearchMethods>(null)
 
    useImperativeHandle(
       ref,
@@ -117,7 +116,7 @@ function Header(_props: object, ref: Ref<HeaderMethods>) {
             brandName={brandName}
          />
          <Search ref={searchMethodsRef} />
-         <User ref={userMethodsRef} icon={'fa-solid fa-user'} logined={true} />
+         <User icon={'fa-solid fa-user'} />
       </header>
    )
 }

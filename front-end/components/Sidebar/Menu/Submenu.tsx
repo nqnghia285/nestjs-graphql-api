@@ -9,7 +9,7 @@ import {
    useImperativeHandle,
    useRef,
 } from 'react'
-import styles from '~/styles/components/Sidebar/submenu.module.css'
+import styles from '~/styles/components/sidebar/submenu.module.css'
 import Sublist, { SublistMethods, SublistProps } from './Sublist'
 
 export interface SubmenuProps {
@@ -24,7 +24,7 @@ export interface SubmenuMethods {
 }
 
 function Submenu({ children }: SubmenuProps, ref: Ref<SubmenuMethods>) {
-   const submenuRef = useRef<HTMLUListElement | null>(null)
+   const submenuRef = useRef<HTMLUListElement>(null)
    const sublistMethodsRefs = useRef<RefObject<SublistMethods>[] | undefined>(
       children?.map(() => createRef())
    )
