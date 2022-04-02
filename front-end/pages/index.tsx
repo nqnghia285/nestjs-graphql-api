@@ -1,4 +1,3 @@
-import '@fortawesome/fontawesome-free/css/all.min.css'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRef } from 'react'

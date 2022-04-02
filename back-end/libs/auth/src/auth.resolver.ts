@@ -2,7 +2,6 @@ import { ApiConfigService } from '@libs/api-config'
 import { LoggerService } from '@libs/logger'
 import { ValidationPipe } from '@nestjs/common'
 import { Args, Context, Query, Resolver } from '@nestjs/graphql'
-import { throwHttpGraphQLError } from 'apollo-server-core/dist/runHttpQuery'
 import { AuthLogInArgs, Response } from '~/graphql/typedefs'
 import { IContext } from '~/interface'
 import { AuthService } from './auth.service'
@@ -39,7 +38,10 @@ export class AuthResolver {
                const accessToken = this.auth.createJWT(profile)
                const tokenName = this.apiConfig.system.token_name
 
-               res.cookie(tokenName, accessToken, { httpOnly: true })
+               res.cookie(tokenName, accessToken, {
+                  httpOnly: true,
+                  sameSite: 'lax',
+               })
             } else {
                response.message = `username and password are not matched or "${username}" is not existed in database!`
                response.errors.push({
@@ -51,6 +53,30 @@ export class AuthResolver {
 
       if (this.apiConfig.system.node_env !== 'production') {
          this.logger.log(response, `${AuthResolver.name}:logIn`)
+      }
+
+      return response
+   }
+
+   @Query(() => Response)
+   async logOut(@Context() { res }: IContext) {
+      const tokenName = this.apiConfig.system.token_name
+      const response: Response = {
+         action: 'logOut',
+         isSuccess: true,
+         message: `Success`,
+         data: null,
+         errors: [],
+      }
+
+      res.cookie(tokenName, '', {
+         httpOnly: true,
+         sameSite: 'lax',
+         maxAge: 0,
+      })
+
+      if (this.apiConfig.system.node_env !== 'production') {
+         this.logger.log(response, `${AuthResolver.name}:logOut`)
       }
 
       return response

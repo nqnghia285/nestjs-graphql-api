@@ -13,7 +13,22 @@ export interface SpinnerButtonProps {
    children?: string | ReactChildren
    type?: 'button' | 'submit' | 'reset'
    color?: 'info' | 'success' | 'warning' | 'error' | 'default'
-   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'half'
+   size?: 'fit' | 'half' | 'full'
+   fontSize?:
+      | 'xs'
+      | 'sm'
+      | 'md'
+      | 'lg'
+      | 'xl'
+      | '2xl'
+      | '3xl'
+      | '4xl'
+      | '5xl'
+      | '6xl'
+      | '7xl'
+      | '8xl'
+      | '9xl'
+   padding?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export interface SpinnerButtonMethods {
@@ -30,7 +45,9 @@ function SpinnerButton(
       children,
       type = 'button',
       color = 'default',
-      size = 'md',
+      size = 'fit',
+      fontSize = 'md',
+      padding = 'md',
    }: SpinnerButtonProps,
    ref: Ref<SpinnerButtonMethods>
 ) {
@@ -83,7 +100,9 @@ function SpinnerButton(
          className={clsx(
             styles.btn,
             styles[`btn-${color}`],
-            styles[`btn-${size}`]
+            styles[`btn-${size}`],
+            styles[`btn-${fontSize}`],
+            styles[`btn-p-${padding}`]
          )}
       >
          {/* eslint-disable-next-line @next/next/no-img-element */}

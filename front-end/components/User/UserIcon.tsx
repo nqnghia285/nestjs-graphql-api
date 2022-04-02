@@ -4,6 +4,7 @@ import { memo, useEffect, useRef } from 'react'
 import useLocalStorage from 'use-local-storage'
 import { IUserInfo, LSKeys } from '~/interface'
 import styles from '~/styles/components/user/user-icon.module.css'
+import { generateErrorMessage, logout } from '~/utilities'
 
 export interface UserIconProps {
    icon: string
@@ -24,7 +25,9 @@ function UserIcon({ icon }: UserIconProps) {
    }
 
    function handleLogout() {
-      setProfile(null)
+      logout()
+         .then((res) => (res.isSuccess ? setProfile(null) : null))
+         .catch((errors) => console.log(generateErrorMessage(errors)))
    }
 
    useEffect(() => {

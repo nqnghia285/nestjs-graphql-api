@@ -16,56 +16,76 @@
    @apply w-full h-fit;
 }
 
+.input-p-xs {
+   @apply px-1 py-1;
+}
+
+.input-p-sm {
+   @apply px-2 py-1;
+}
+
+.input-p-md {
+   @apply px-3 py-2;
+}
+
+.input-p-lg {
+   @apply px-3 py-3;
+}
+
+.input-p-xl {
+   @apply px-4 py-3;
+}
+
 .input-xs {
-   @apply py-1 px-2 text-xs;
+   @apply text-xs;
 }
 
 .input-sm {
-   @apply py-2 px-2 text-sm;
+   @apply text-sm;
 }
 
 .input-md {
-   @apply py-2 px-2 text-base;
+   @apply text-base;
 }
 
 .input-lg {
-   @apply py-3 px-2 text-lg;
+   @apply text-lg;
 }
 
 .input-xl {
-   @apply py-3 px-2 text-xl;
+   @apply text-xl;
 }
 
 .input-2xl {
-   @apply py-3 px-2 text-2xl;
+   @apply text-2xl;
 }
 
 .input-3xl {
-   @apply py-3 px-2 text-3xl;
+   @apply text-3xl;
 }
 
 .input-4xl {
-   @apply py-3 px-2 text-4xl;
+   @apply text-4xl;
 }
 
 .input-5xl {
-   @apply py-3 px-2 text-5xl;
+   @apply text-5xl;
 }
 
 .input-6xl {
-   @apply py-3 px-2 text-6xl;
+   @apply text-6xl;
 }
 
 .input-7xl {
-   @apply py-3 px-2 text-7xl;
+   @apply text-7xl;
 }
 
 .input-8xl {
-   @apply py-3 px-2 text-8xl;
+   @apply text-8xl;
 }
 
 .input-9xl {
-   @apply py-3 px-2 text-9xl;
+   @apply text-9xl;
 }
 
 .input-error {

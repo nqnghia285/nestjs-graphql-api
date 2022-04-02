@@ -1,8 +1,7 @@
-.btn,
-.btn-default {
-   @apply flex flex-row px-4 py-2 font-medium tracking-wide text-white capitalize;
-   @apply transition-colors duration-200 transform bg-slate-700 rounded-md;
-   @apply hover:bg-sky-700 focus:outline-none focus:ring focus:ring-blue-300;
+.btn {
+   @apply flex flex-row font-medium tracking-wide text-white capitalize;
+   @apply transition-colors duration-200 transform rounded-md;
+   @apply focus:outline-none focus:ring focus:ring-blue-300;
    @apply focus:ring-opacity-80 active:bg-slate-700 active:ring-red-500;
    @apply items-center justify-center;
 
@@ -15,28 +14,85 @@
    }
 }
 
-.btn-xs {
-   @apply w-fit h-fit text-xs;
-}
-
-.btn-sm {
-   @apply w-fit h-fit text-sm;
-}
-
-.btn-md {
-   @apply w-fit h-fit text-base;
-}
-
-.btn-lg {
-   @apply w-fit h-fit text-lg;
-}
-
-.btn-xl {
-   @apply w-fit h-fit text-xl;
+.btn-fit {
+   @apply w-fit h-fit;
 }
 
 .btn-half {
-   @apply w-1/2 h-fit text-base;
+   @apply w-1/2 h-fit;
+}
+
+.btn-full {
+   @apply w-full h-fit;
+}
+
+.btn-p-xs {
+   @apply px-1 py-1;
+}
+
+.btn-p-sm {
+   @apply px-2 py-1;
+}
+
+.btn-p-md {
+   @apply px-3 py-2;
+}
+
+.btn-p-lg {
+   @apply px-3 py-3;
+}
+
+.btn-p-xl {
+   @apply px-4 py-3;
+}
+
+.btn-xs {
+   @apply text-xs;
+}
+
+.btn-sm {
+   @apply text-sm;
+}
+
+.btn-md {
+   @apply text-base;
+}
+
+.btn-lg {
+   @apply text-lg;
+}
+
+.btn-xl {
+   @apply text-xl;
+}
+
+.btn-2xl {
+   @apply text-2xl;
+}
+.btn-3xl {
+   @apply text-3xl;
+}
+.btn-4xl {
+   @apply text-4xl;
+}
+.btn-5xl {
+   @apply text-5xl;
+}
+.btn-6xl {
+   @apply text-6xl;
+}
+.btn-7xl {
+   @apply text-7xl;
+}
+.btn-8xl {
+   @apply text-8xl;
+}
+.btn-9xl {
+   @apply text-9xl;
+}
+
+.btn-default {
+   @apply bg-slate-700 hover:bg-sky-700;
 }
 
 .disabled {

@@ -11,5 +11,6 @@ module.exports = {
    },
    env: {
       // Environment variables
+      urlApi: process.env.NEXT_PUBLIC_URL_API,
    },
 }

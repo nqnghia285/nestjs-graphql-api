@@ -1,5 +1,4 @@
 import { ApolloError } from '@apollo/client'
-import '@fortawesome/fontawesome-free/css/all.min.css'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -11,7 +10,7 @@ import IconInputBox from '~/components/IconInputBox'
 import SpinnerButton, { SpinnerButtonMethods } from '~/components/SpinnerButton'
 import { IUserInfo, LSKeys } from '~/interface'
 import styles from '~/styles/pages/login.module.css'
-import { login } from '~/utilities'
+import { generateErrorMessage, login } from '~/utilities'
 
 export const getStaticProps: GetStaticProps = async () => {
    return {
@@ -35,18 +34,6 @@ const Login: NextPage = () => {
 
    if (profile) {
       router.push('/')
-   }
-
-   function generateErrorMessage() {
-      return errorMessage
-         ? errorMessage.clientErrors.length > 0
-            ? `[Client error]: ${errorMessage.clientErrors[0].name}: ${errorMessage.clientErrors[0].message}`
-            : errorMessage.graphQLErrors.length > 0
-            ? `[Graphql error]: ${errorMessage.graphQLErrors[0].name}: ${errorMessage.graphQLErrors[0].message}`
-            : errorMessage.networkError
-            ? `[Networt error]: ${errorMessage.networkError.name}: ${errorMessage.networkError.message}`
-            : `[Error]: ${errorMessage.name}: ${errorMessage.message}`
-         : 'None'
    }
 
    function handleSubmit(ev: FormEvent) {
@@ -131,6 +118,7 @@ const Login: NextPage = () => {
                color='info'
                size='full'
                fontSize='md'
+               padding='md'
                placeholder='Username'
                required
             />
@@ -139,6 +127,10 @@ const Login: NextPage = () => {
                id='password'
                icon='fa-solid fa-key'
                type='password'
+               color='info'
+               size='full'
+               fontSize='md'
+               padding='md'
                placeholder='Password'
                required
             />
@@ -147,14 +139,17 @@ const Login: NextPage = () => {
                   ref={spinnerButtonMethodsRef}
                   type='submit'
                   color='info'
-                  size='half'
+                  size='fit'
+                  fontSize='md'
+                  padding='xl'
                >
                   Login
                </SpinnerButton>
                <span className='flex text-white h-full w-1/2 justify-end self-center'>
                   <Link href={'/'} passHref>
-                     <a className='hover:text-sky-400 active:text-red-500'>
-                        Go home
+                     <a className='flex hover:text-sky-400 active:text-red-500 space-x-1'>
+                        <i className='fa-solid fa-house-chimney'></i>
+                        <i className='fa-solid fa-reply self-center'></i>
                      </a>
                   </Link>
                </span>
@@ -163,7 +158,7 @@ const Login: NextPage = () => {
                ref={alertMethodsRef}
                type='error'
                title='Error'
-               content={generateErrorMessage()}
+               content={generateErrorMessage(errorMessage)}
             />
          </form>
       </div>

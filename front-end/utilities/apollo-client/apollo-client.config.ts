@@ -4,7 +4,7 @@ import { createUploadLink } from 'apollo-upload-client'
 import { DocumentNode } from 'graphql'
 
 const httpOptions: HttpOptions = {
-   uri: 'http://192.168.100.121:5000/graphql',
+   uri: process.env.urlApi,
    credentials: 'include',
 }
 

@@ -24,6 +24,7 @@ export interface IconInputBoxProps {
       | '7xl'
       | '8xl'
       | '9xl'
+   padding?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
    required?: boolean
 }
 
@@ -38,6 +39,7 @@ function IconInputBox(
       color = 'info',
       size = 'fit',
       fontSize = 'md',
+      padding = 'md',
    }: IconInputBoxProps,
    ref: Ref<HTMLInputElement>
 ) {
@@ -71,6 +73,7 @@ function IconInputBox(
                styles[`input-${color}`],
                styles[`input-${size}`],
                styles[`input-${fontSize}`],
+               styles[`input-p-${padding}`],
                { [styles.disabled]: disabled }
             )}
             required={required}

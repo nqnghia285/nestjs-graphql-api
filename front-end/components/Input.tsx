@@ -22,6 +22,7 @@ export interface InputProps {
       | '7xl'
       | '8xl'
       | '9xl'
+   padding?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
    required?: boolean
 }
 
@@ -33,6 +34,7 @@ function Input(
       color = 'info',
       size = 'fit',
       fontSize = 'md',
+      padding = 'md',
       required = false,
    }: InputProps,
    ref: Ref<HTMLInputElement>
@@ -47,6 +49,7 @@ function Input(
             styles[`input-${color}`],
             styles[`input-${size}`],
             styles[`input-${fontSize}`],
+            styles[`input-p-${padding}`],
             { [styles.disabled]: disabled }
          )}
          disabled={disabled}

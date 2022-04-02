@@ -53,6 +53,7 @@ function Search(_props: object, ref: Ref<SearchMethods>) {
                   color='info'
                   fontSize='sm'
                   size='full'
+                  padding='md'
                   placeholder='Laptop model...'
                   aria-autocomplete='both'
                />
