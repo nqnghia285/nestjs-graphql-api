@@ -19,8 +19,11 @@ export const validationSchema = Joi.object().keys({
       .required(),
    URL: Joi.string().uri().required(),
    GRAPHQL_PATH: Joi.string().required(),
+   GRAPHQL_SCHEMA_PATH: Joi.string().required(),
    DATABASE_URL: Joi.string().uri().required(),
    JWT_KEY: Joi.string().required(),
    TOKEN_NAME: Joi.string().required(),
    AUTHOR: Joi.string().required(),
+   REDIS_SERVER_NAME: Joi.string().required(),
+   REDIS_SERVER_PORT: Joi.number().port().default(6379),
 })

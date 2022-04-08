@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { SchemaModule } from './features'
 import {
    CommentModule,
    CustomerModule,
@@ -30,6 +31,7 @@ import { ScalarTypeModule } from './typedefs'
       PurchaseModule,
       UserModule,
       VideoModule,
+      SchemaModule,
    ],
    exports: [
       ScalarTypeModule,
@@ -45,6 +47,7 @@ import { ScalarTypeModule } from './typedefs'
       PurchaseModule,
       UserModule,
       VideoModule,
+      SchemaModule,
    ],
 })
 export class GraphQLModules {}

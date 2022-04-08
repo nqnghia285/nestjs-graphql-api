@@ -1,14 +1,20 @@
-import { ApolloClient, from, HttpOptions, InMemoryCache } from '@apollo/client'
+import { ApolloClient, from, InMemoryCache } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { createUploadLink } from 'apollo-upload-client'
+import { sha256 } from 'crypto-hash'
 import { DocumentNode } from 'graphql'
 
-const httpOptions: HttpOptions = {
+const uploadLink = createUploadLink({
    uri: process.env.urlApi,
    credentials: 'include',
-}
+   useGETForQueries: true,
+})
 
-const uploadLink = createUploadLink(httpOptions)
+const persistedQueryLink = createPersistedQueryLink({
+   sha256,
+   useGETForHashedQueries: true,
+})
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (graphQLErrors)
@@ -23,25 +29,35 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 export const apolloClient = new ApolloClient({
    credentials: 'include',
-   link: from([errorLink, uploadLink]),
+   link: from([errorLink, persistedQueryLink, uploadLink]),
    cache: new InMemoryCache(),
    connectToDevTools: true,
+   defaultOptions: {
+      query: {
+         errorPolicy: 'all',
+         fetchPolicy: 'cache-first',
+      },
+      mutate: {
+         errorPolicy: 'all',
+         fetchPolicy: 'network-only',
+      },
+      watchQuery: {
+         errorPolicy: 'all',
+         fetchPolicy: 'cache-first',
+      },
+   },
 })
 
-export function query(documentNode: DocumentNode, variables: any) {
+export function query<T>(documentNode: DocumentNode, variables: T) {
    return apolloClient.query({
       query: documentNode,
-      errorPolicy: 'all',
-      fetchPolicy: 'network-only',
       variables,
    })
 }
 
-export function mutate(documentNode: DocumentNode, variables: any) {
+export function mutate<T>(documentNode: DocumentNode, variables: T) {
    return apolloClient.mutate({
       mutation: documentNode,
-      errorPolicy: 'all',
-      fetchPolicy: 'network-only',
       variables,
    })
 }

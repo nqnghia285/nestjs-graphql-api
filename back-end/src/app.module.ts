@@ -7,6 +7,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ServeStaticModule } from '@nestjs/serve-static'
+import { ApiModule } from './api'
 import {
    configModuleOptions,
    gqlModuleAsyncOptions,
@@ -21,6 +22,7 @@ import { GraphQLModules } from './graphql'
       ServeStaticModule.forRootAsync(serveStaticModuleOptions),
       GraphQLModule.forRootAsync(gqlModuleAsyncOptions),
       ApiConfigModule,
+      ApiModule,
       AuthModule,
       CaslModule,
       LoggerModule,

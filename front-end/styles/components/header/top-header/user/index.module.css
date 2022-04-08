@@ -1,0 +1,19 @@
+/* CSS is applied for User block in Header component */
+.user {
+   @apply relative basis-3/12 z-50;
+
+   /* Apply for 'Log in' text */
+   & > a {
+      @apply absolute top-0 right-[10px] text-white leading-[3.5rem] px-2;
+
+      font-size: 14px;
+
+      &:hover {
+         @apply text-sky-400;
+      }
+
+      &:active {
+         @apply text-red-500;
+      }
+   }
+}

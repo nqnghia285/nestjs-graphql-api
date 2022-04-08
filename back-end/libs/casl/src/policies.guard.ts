@@ -140,6 +140,7 @@ function throwForbiddenException(
       {
          action,
          model,
+         isSuccess: false,
          error: 'Authorization',
          message: `You are not allowed to ${action} to ${model} or unsatisfactory condition`,
       },

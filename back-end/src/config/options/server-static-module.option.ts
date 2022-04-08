@@ -8,7 +8,11 @@ export const serveStaticModuleOptions: ServeStaticModuleAsyncOptions = {
    useFactory: (config: ApiConfigService) => [
       {
          rootPath: join(process.cwd(), 'public'),
-         exclude: [config.system.graphql_path],
+         exclude: [config.system.graphql_path, '/api*'],
+         serveStaticOptions: {
+            index: false,
+         },
       },
    ],
+   isGlobal: true,
 }

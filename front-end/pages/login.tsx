@@ -154,13 +154,13 @@ const Login: NextPage = () => {
                   </Link>
                </span>
             </div>
-            <Alert
-               ref={alertMethodsRef}
-               type='error'
-               title='Error'
-               content={generateErrorMessage(errorMessage)}
-            />
          </form>
+         <Alert
+            ref={alertMethodsRef}
+            type='error'
+            title='Error'
+            content={generateErrorMessage(errorMessage)}
+         />
       </div>
    )
 }

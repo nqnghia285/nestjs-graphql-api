@@ -17,7 +17,7 @@ export class AuthResolver {
    @Query(() => Response)
    async logIn(
       @Args(new ValidationPipe()) { username, password }: AuthLogInArgs,
-      @Context() { res }: IContext
+      @Context() { req, res }: IContext
    ) {
       const response: Response = {
          action: 'logIn',
@@ -49,9 +49,10 @@ export class AuthResolver {
                })
             }
          })
-         .catch((errors) => response.errors.push(errors))
+         .catch((errors) => response.errors.push({ message: errors }))
 
       if (this.apiConfig.system.node_env !== 'production') {
+         this.logger.log(req.method, `${AuthResolver.name}:logIn`)
          this.logger.log(response, `${AuthResolver.name}:logIn`)
       }
 
@@ -59,7 +60,7 @@ export class AuthResolver {
    }
 
    @Query(() => Response)
-   async logOut(@Context() { res }: IContext) {
+   async logOut(@Context() { req, res }: IContext) {
       const tokenName = this.apiConfig.system.token_name
       const response: Response = {
          action: 'logOut',
@@ -76,6 +77,7 @@ export class AuthResolver {
       })
 
       if (this.apiConfig.system.node_env !== 'production') {
+         this.logger.log(req.method, `${AuthResolver.name}:logOut`)
          this.logger.log(response, `${AuthResolver.name}:logOut`)
       }
 

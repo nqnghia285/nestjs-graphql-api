@@ -1,30 +1,25 @@
-import { login } from '~/utilities'
-import { Response } from '~/interface'
+import { QueryResult, useQuery } from '@apollo/client'
 import { useState } from 'react'
+import { Response } from '~/interface'
+import { LOGIN } from '~/utilities'
 
 export interface UserInput {
    username: string
    password: string
 }
 
-export function useLogin(
-   userInput?: UserInput | (() => UserInput)
-): [Promise<Response> | null, typeof setUserInputState] {
-   const [userInputState, setUserInputState] = useState(userInput)
+export function useLogin(): [
+   QueryResult<Response, UserInput>,
+   typeof setUserInputState,
+   typeof setSkip
+] {
+   const [userInputState, setUserInputState] = useState<UserInput>()
+   const [skip, setSkip] = useState(true)
 
-   const response = userInputState
-      ? login(userInputState.username, userInputState.username)
-           .then((res) => res)
-           .catch(
-              (errors): Response => ({
-                 action: 'logIn',
-                 isSuccess: false,
-                 data: null,
-                 message: 'Failed',
-                 errors: [errors],
-              })
-           )
-      : null
+   const response = useQuery<Response, UserInput>(LOGIN, {
+      variables: userInputState,
+      skip: skip,
+   })
 
-   return [response, setUserInputState]
+   return [response, setUserInputState, setSkip]
 }

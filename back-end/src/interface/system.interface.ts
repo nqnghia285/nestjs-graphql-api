@@ -5,7 +5,10 @@ export interface System {
    origin: string | string[]
    url: string
    graphql_path: string
+   graphql_schema_path: string
    jwt_key: string
    token_name: string
    author: string
+   redis_server_name: string
+   redis_server_port: number
 }

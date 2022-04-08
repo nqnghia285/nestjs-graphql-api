@@ -10,7 +10,7 @@ import {
 import { Server, Socket } from 'socket.io'
 import { wsOptions } from '~/config'
 import { Profile } from '~/decorators'
-import { JwtAuthGuard } from '~/guards'
+import { WebsocketAuthGuard } from '~/guards'
 import { Events, IUserInfo, Payload, Rooms } from '~/interface'
 
 @WebSocketGateway(wsOptions)
@@ -32,7 +32,7 @@ export class ChatGateway {
       client.disconnect(true)
    }
 
-   @UseGuards(JwtAuthGuard)
+   @UseGuards(WebsocketAuthGuard)
    @UsePipes(new ValidationPipe())
    @SubscribeMessage(Events.STAFF_JOINS_SUPPORT_TEAM_ROOM)
    handleStaffJoinsSupportTeamRoom(
@@ -68,7 +68,7 @@ export class ChatGateway {
       )
    }
 
-   @UseGuards(JwtAuthGuard)
+   @UseGuards(WebsocketAuthGuard)
    @UsePipes(new ValidationPipe())
    @SubscribeMessage(Events.CUSTOMER_NEEDS_SUPPORT)
    handleCustomerNeedsSupport(
@@ -81,7 +81,7 @@ export class ChatGateway {
       })
    }
 
-   @UseGuards(JwtAuthGuard)
+   @UseGuards(WebsocketAuthGuard)
    @UsePipes(new ValidationPipe())
    @SubscribeMessage(Events.STAFF_LEAVES_SUPPORT_TEAM_ROOM)
    handleStaffLeavesSupportTeamRoom(
@@ -103,7 +103,7 @@ export class ChatGateway {
       }
    }
 
-   @UseGuards(JwtAuthGuard)
+   @UseGuards(WebsocketAuthGuard)
    @UsePipes(new ValidationPipe())
    @SubscribeMessage(Events.STAFF_RESPONSIBLE_FOR_CUSTOMER_SUPPORT)
    handleStaffResponsibleForCustomerSupport(
@@ -142,7 +142,7 @@ export class ChatGateway {
       }
    }
 
-   @UseGuards(JwtAuthGuard)
+   @UseGuards(WebsocketAuthGuard)
    @UsePipes(new ValidationPipe())
    @SubscribeMessage(Events.MESSAGE)
    handleMessage(

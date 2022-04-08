@@ -1,0 +1,3 @@
+.top-header {
+   @apply w-full h-14 flex flex-row;
+}

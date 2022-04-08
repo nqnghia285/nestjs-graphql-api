@@ -1,8 +1,8 @@
 @host = localhost
-@port = 80
+@port = 5000
 @baseUrl = http://{{host}}:{{port}}
 # @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNjMzNjI3MTk2fQ.aW6qy49yJvStlQ3k230dqyPcbqQKNrz9BJR0vMTGCK8
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQURNSU4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImZ1bGxuYW1lIjoiQWRtaW4iLCJnZW5kZXIiOiJNQUxFIiwiaWQiOiIxOGIwMDMwZC0xNzFjLTRlY2UtYjlkYi04YmZlNjI2YzRjNGYiLCJwaG9uZSI6Iis4NDEyMzQ1Njc4OSIsImlhdCI6MTY0MDAyMjAxNX0.FaSBPf_Yc8Gjfllesds2-Rud77p9zTyTe_5ywQLtJqk
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQURNSU4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImZ1bGxuYW1lIjoiQWRtaW4iLCJnZW5kZXIiOiJNQUxFIiwiaWQiOiJmY2I1MzQ1ZS0xNGY4LTRlZDktYjQ0Yi03NWVhOWUxYmIyYmQiLCJwaG9uZSI6Iis4NDEyMzQ1Njc4OSIsImlhdCI6MTY0OTQxMzYzNH0.7WZf04oXZAV_gJjEVu83gDMOBuHTJ6RojVVvI3RYW1k; Path=/; HttpOnly; SameSite=Lax
 ############################################################
 @username = "admin@gmail.com"
 @password = "123456"
@@ -62,3 +62,18 @@ query {
     rating
   }
 }
+
+############################################################
+GET {{baseUrl}}/graphql HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+X-REQUEST-TYPE: GraphQL
+
+query {
+  getSchema
+}
+
+############################################################
+GET {{baseUrl}}/api/graphql-schema HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}

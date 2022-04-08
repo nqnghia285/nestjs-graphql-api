@@ -35,7 +35,8 @@ export type AppSubjects = InferSubjects<
    | typeof PriceMap
    | typeof Purchase
    | typeof User
-   | typeof Video,
+   | typeof Video
+   | 'Schema',
    true
 >
 
@@ -85,6 +86,8 @@ export class CaslAbilityFactory {
                   'Video',
                ]
             )
+
+            can('FIND_FIRST', 'Schema')
          } else {
             // ? Apply to Staff
             // ? can

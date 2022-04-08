@@ -1,0 +1,4 @@
+.navigation {
+   @apply flex drop-shadow-xl w-8 h-8 tablet:w-8 tablet:h-8 saturate-200 text-white z-50;
+   @apply laptop:w-12 laptop:h-12 desktop:w-12 desktop:h-12;
+}
