@@ -1,7 +1,8 @@
 import clsx from 'clsx'
-import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
-import styles from '~/styles/components/header/top-header/search.module.css'
+import { forwardRef, Ref, useImperativeHandle, useRef } from 'react'
 import Input from '~/components/Input'
+import styles from '~/styles/components/header/top-header/search.module.css'
+import SuggestBox from './SuggestBox'
 
 export interface SearchMethods {
    readonly setOnChange: (callback: (event: Event) => any) => void
@@ -57,6 +58,8 @@ function Search(_props: object, ref: Ref<SearchMethods>) {
                   placeholder='Laptop model...'
                   aria-autocomplete='both'
                />
+
+               <SuggestBox searchText={searchTextRef.current?.value ?? ''} />
             </div>
 
             <button type={'submit'}>
@@ -74,6 +77,4 @@ function Search(_props: object, ref: Ref<SearchMethods>) {
 
 const ForwardRefToSearch = forwardRef(Search)
 
-const MemoOfSearch = memo(ForwardRefToSearch)
-
-export default MemoOfSearch
+export default ForwardRefToSearch

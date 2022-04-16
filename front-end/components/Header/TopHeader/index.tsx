@@ -1,4 +1,4 @@
-import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
+import { forwardRef, Ref, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/header/top-header/index.module.css'
 import Logo, { LogoMethods } from './Logo'
 import Search, { SearchMethods } from './Search'
@@ -41,6 +41,4 @@ function TopHeader({ brandName }: TopHeaderProps, ref: Ref<TopHeaderMethods>) {
 
 const ForwardRefToTopHeader = forwardRef(TopHeader)
 
-const MemoOfTopHeader = memo(ForwardRefToTopHeader)
-
-export default MemoOfTopHeader
+export default ForwardRefToTopHeader

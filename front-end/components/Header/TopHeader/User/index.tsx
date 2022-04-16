@@ -1,7 +1,7 @@
-import { memo, useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import useLocalStorage from 'use-local-storage'
-import Link from '~/components/Link'
 import UserIcon from '~/components/Header/TopHeader/User/UserIcon'
+import Link from '~/components/Link'
 import { IUserInfo, LSKeys } from '~/interface'
 import styles from '~/styles/components/header/top-header/user/index.module.css'
 
@@ -38,6 +38,4 @@ function User({ icon }: UserProps) {
    return <div className={styles.user}>{children}</div>
 }
 
-const MemoOfUser = memo(User)
-
-export default MemoOfUser
+export default User

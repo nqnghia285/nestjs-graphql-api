@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
+import { forwardRef, Ref, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/header/bottom-header/sidebar/sublist.module.css'
 
 export interface SublistProps {
@@ -66,6 +66,4 @@ function Sublist(
 
 const ForwardRefToSublist = forwardRef(Sublist)
 
-const MemoOfSublist = memo(ForwardRefToSublist)
-
-export default MemoOfSublist
+export default ForwardRefToSublist

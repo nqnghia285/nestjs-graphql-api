@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import styles from '~/styles/components/header/bottom-header/sidebar/index.module.css'
 import { theme } from '~/tailwind.config'
 import Menu, { MenuMethods } from './Menu'
@@ -50,6 +50,4 @@ function Sidebar({ menuChildren }: SidebarProps) {
    )
 }
 
-const MemoOfSidebar = memo(Sidebar)
-
-export default MemoOfSidebar
+export default Sidebar

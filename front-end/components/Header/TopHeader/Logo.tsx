@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
+import { forwardRef, Ref, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/header/top-header/logo.module.css'
 
 export interface LogoProps {
@@ -42,6 +42,4 @@ function Logo({ icon, brandName }: LogoProps, ref: Ref<LogoMethods>) {
 
 const ForwardRefToLogo = forwardRef(Logo)
 
-const MemoOfLogo = memo(ForwardRefToLogo)
-
-export default MemoOfLogo
+export default ForwardRefToLogo

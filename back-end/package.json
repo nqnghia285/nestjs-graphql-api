@@ -23,6 +23,8 @@
       "remove:generated": "rm -rf src/generated/",
       "seed": "prisma db seed",
       "generate": "yarn remove:generated && prisma generate",
+      "pull:db": "prisma db pull",
+      "psql": "sudo -u postgres psql",
       "migrate:dev": "prisma migrate dev --skip-generate --name init",
       "migrate:dev:g": "prisma migrate dev --name init --preview-feature",
       "migrate:reset": "prisma migrate reset --skip-generate --preview-feature",

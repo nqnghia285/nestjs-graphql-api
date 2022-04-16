@@ -1,7 +1,6 @@
 import {
    createRef,
    forwardRef,
-   memo,
    Ref,
    RefObject,
    useCallback,
@@ -107,6 +106,4 @@ function Submenu({ children }: SubmenuProps, ref: Ref<SubmenuMethods>) {
 
 const ForwardRefToSubmenu = forwardRef(Submenu)
 
-const MemoOfSubmenu = memo(ForwardRefToSubmenu)
-
-export default MemoOfSubmenu
+export default ForwardRefToSubmenu

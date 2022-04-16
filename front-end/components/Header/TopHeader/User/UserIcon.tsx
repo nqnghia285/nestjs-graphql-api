@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { memo, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import useLocalStorage from 'use-local-storage'
 import Link from '~/components/Link'
 import { IUserInfo, LSKeys } from '~/interface'
@@ -70,6 +70,4 @@ function UserIcon({ icon }: UserIconProps) {
    )
 }
 
-const MemoOfUserIcon = memo(UserIcon)
-
-export default MemoOfUserIcon
+export default UserIcon

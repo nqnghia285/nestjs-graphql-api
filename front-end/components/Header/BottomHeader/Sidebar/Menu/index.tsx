@@ -1,7 +1,6 @@
 import {
    createRef,
    forwardRef,
-   memo,
    Ref,
    RefObject,
    useCallback,
@@ -111,6 +110,4 @@ function Menu({ children }: MenuProps, ref: Ref<MenuMethods>) {
 
 const ForwardRefToMenu = forwardRef(Menu)
 
-const MemoOfMenu = memo(ForwardRefToMenu)
-
-export default MemoOfMenu
+export default ForwardRefToMenu

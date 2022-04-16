@@ -7,7 +7,8 @@ datasource db {
 }
 
 generator client {
-   provider = "prisma-client-js"
+   provider        = "prisma-client-js"
+   previewFeatures = ["fullTextSearch", "extendedIndexes"]
 }
 
 generator nestgraphql {
@@ -89,7 +90,7 @@ model Person {
    phone     String    @unique @db.VarChar(15)
    /// @FieldType('Scalars.GraphQLEmailAddress')
    /// @Validator.MaxLength(30)
-   email     String?   @unique @db.VarChar(30)
+   email     String?   @unique(sort: Asc) @db.VarChar(30)
    /// @Validator.MaxLength(255)
    address   String    @default("None") @db.VarChar(255)
    user      User?
@@ -123,6 +124,8 @@ model User {
 
 model Laptop {
    id                  Int        @id @default(autoincrement())
+   /// @Validator.MaxLength(255)
+   title               String     @default("None") @db.VarChar(255)
    /// @Validator.MaxLength(255)
    brand               String     @default("None") @db.VarChar(255)
    /// @Validator.MaxLength(255)

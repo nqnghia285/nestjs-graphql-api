@@ -1,13 +1,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import {
-   forwardRef,
-   memo,
-   Ref,
-   useEffect,
-   useImperativeHandle,
-   useRef,
-} from 'react'
+import { forwardRef, Ref, useEffect, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/header/bottom-header/sidebar/list.module.css'
 import { theme } from '~/tailwind.config'
 import { SublistProps } from './Sublist'
@@ -165,6 +158,4 @@ function List(
 
 const ForwardRefToList = forwardRef(List)
 
-const MemoOfList = memo(ForwardRefToList)
-
-export default MemoOfList
+export default ForwardRefToList

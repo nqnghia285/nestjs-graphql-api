@@ -1,4 +1,3 @@
-import { memo } from 'react'
 import Breadcrumbs, { BreadcrumbsPath } from '~/components/Breadcrumbs'
 import styles from '~/styles/components/header/bottom-header/index.module.css'
 import Sidebar from './Sidebar'
@@ -18,6 +17,4 @@ function BottomHeader({ menuChildren, breadcrumbsPath }: BottomHeaderProps) {
    )
 }
 
-const MemoOfBottomHeader = memo(BottomHeader)
-
-export default MemoOfBottomHeader
+export default BottomHeader

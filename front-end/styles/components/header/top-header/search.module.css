@@ -3,7 +3,7 @@
    @apply justify-center items-center space-x-1;
 
    & .search-text {
-      @apply basis-8/12 w-40 h-fit rounded-md;
+      @apply relative basis-8/12 flex flex-col w-40 h-fit rounded-md;
    }
 
    & button {

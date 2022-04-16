@@ -1,11 +1,4 @@
-import {
-   forwardRef,
-   memo,
-   Ref,
-   useEffect,
-   useImperativeHandle,
-   useRef,
-} from 'react'
+import { forwardRef, Ref, useEffect, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/header/bottom-header/sidebar/menu-icon.module.css'
 import { theme } from '~/tailwind.config'
 
@@ -75,6 +68,4 @@ function MenuIcon(
 
 const ForwardRefToMenuIcon = forwardRef(MenuIcon)
 
-const MemoOfMenuIcon = memo(ForwardRefToMenuIcon)
-
-export default MemoOfMenuIcon
+export default ForwardRefToMenuIcon

@@ -1,4 +1,4 @@
-import { Fragment, memo } from 'react'
+import { Fragment } from 'react'
 import AngleRight from './AngleRight'
 import Home, { HomeProps } from './Home'
 import Piece, { PieceProps } from './Piece'
@@ -36,6 +36,4 @@ function Breadcrumbs({
    )
 }
 
-const MemoOfBreadcrumbs = memo(Breadcrumbs)
-
-export default MemoOfBreadcrumbs
+export default Breadcrumbs
