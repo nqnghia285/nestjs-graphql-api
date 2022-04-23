@@ -12,6 +12,10 @@ module.exports = {
    env: {
       // Environment variables
       urlApi: process.env.NEXT_PUBLIC_URL_API,
+      author: process.env.NEXT_PUBLIC_AUTHOR,
+      authorEmail: process.env.NEXT_PUBLIC_AUTHOR_EMAIL,
+      authorPhone: process.env.NEXT_PUBLIC_AUTHOR_PHONE,
+      authorGithub: process.env.NEXT_PUBLIC_AUTHOR_GITHUB,
    },
    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
       // Important: return the modified config

@@ -4,6 +4,7 @@ import styles from '~/styles/components/icon-input-box.module.css'
 
 export interface IconInputBoxProps {
    id: string
+   tabIndex?: number
    icon: string | string[]
    placeholder?: string
    disabled?: boolean
@@ -31,6 +32,7 @@ export interface IconInputBoxProps {
 function IconInputBox(
    {
       id,
+      tabIndex,
       placeholder = '',
       disabled = false,
       type = 'text',
@@ -68,6 +70,7 @@ function IconInputBox(
             id={id}
             ref={ref}
             type={type}
+            tabIndex={tabIndex}
             className={clsx(
                styles.input,
                styles[`input-${color}`],

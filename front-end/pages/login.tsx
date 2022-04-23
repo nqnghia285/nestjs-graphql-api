@@ -120,6 +120,7 @@ const Login: NextPage = () => {
                fontSize='md'
                padding='md'
                placeholder='Username'
+               tabIndex={1}
                required
             />
             <IconInputBox
@@ -132,6 +133,7 @@ const Login: NextPage = () => {
                fontSize='md'
                padding='md'
                placeholder='Password'
+               tabIndex={2}
                required
             />
             <div className='flex flex-row w-full h-fit space-x-2'>
@@ -148,7 +150,7 @@ const Login: NextPage = () => {
                <span className='flex text-white h-full w-1/2 justify-end self-center'>
                   <Link href={'/'} passHref>
                      <a className='flex hover:text-sky-400 active:text-red-500 space-x-1'>
-                        <i className='fa-solid fa-house-chimney'></i>
+                        <i className='fa-solid fa-house-chimney self-center'></i>
                         <i className='fa-solid fa-reply self-center'></i>
                      </a>
                   </Link>

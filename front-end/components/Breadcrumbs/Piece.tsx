@@ -11,7 +11,7 @@ export interface PieceProps {
 function Piece({ path, children, className }: PieceProps) {
    return (
       <Link href={path} passHref>
-         <a className={clsx('text-gray-600 hover:underline', className)}>
+         <a className={clsx('text-sky-400 hover:underline', className)}>
             {children}
          </a>
       </Link>

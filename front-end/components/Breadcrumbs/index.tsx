@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import useBreadcrumbsSelector from '~/hooks/use-breadcrumbs.selector'
 import AngleRight from './AngleRight'
 import Home, { HomeProps } from './Home'
 import Piece, { PieceProps } from './Piece'
@@ -9,17 +10,13 @@ export interface BreadcrumbsPath {
    pieces?: PieceProps[]
 }
 
-export interface BreadcrumbsProps {
-   breadcrumbsPath: BreadcrumbsPath
-}
-
-function Breadcrumbs({
-   breadcrumbsPath: {
-      homePiece: { icon, path = '/', className },
+function Breadcrumbs() {
+   const {
+      homePiece: { icon, path, className },
       angleClassName,
       pieces,
-   },
-}: BreadcrumbsProps) {
+   } = useBreadcrumbsSelector()
+
    return (
       <div className='container bg-inherit flex items-center px-4 py-[4px] tablet:px-4 tablet:py-[4px] laptop:px-6 laptop:py-[11px] desktop:px-6 desktop:py-[11px] mx-auto overflow-y-auto whitespace-nowrap'>
          <Home path={path} icon={icon} className={className} />

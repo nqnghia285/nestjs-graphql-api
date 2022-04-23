@@ -1,11 +1,13 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { ImageProps } from 'next/image'
 import { useMemo, useRef } from 'react'
-import CarouselWithAutoSwipe from '~/components/CarouselWithAutoSwipe'
-import CarouselWithThumbsController from '~/components/CarouselWithThumbsController'
-import Header, { HeaderMethods } from '~/components/Header'
+import { setBreadCrumbs } from '~/app/slices/breadcrumbs.slice'
+import { useAppDispatch } from '~/app/store'
+import { BreadcrumbsPath } from '~/components/Breadcrumbs'
+import Card from '~/components/Card'
+import { HeaderMethods } from '~/components/Header'
 import MessageIcon from '~/components/Message/MessageIcon'
+import PageContainer from '~/components/PageContainer'
 
 const Home: NextPage = () => {
    const messageRef = useRef<HTMLElement>(null)
@@ -53,15 +55,28 @@ const Home: NextPage = () => {
       [loginBGPath]
    )
 
-   return (
-      <div className='container flex flex-col justify-center items-center'>
-         <Head>
-            <title>Atom</title>
-            <meta name='description' content='Atom is a shop loptop' />
-            <link rel='icon' href='/favicon.ico' />
-         </Head>
+   const breadcrumbsPath = {
+      homePiece: {
+         icon: 'fa-solid fa-house-chimney',
+         path: '/',
+      },
+   } as BreadcrumbsPath
 
-         <Header ref={headerMethodsRef} />
+   const dispath = useAppDispatch()
+
+   dispath(setBreadCrumbs(breadcrumbsPath))
+
+   return (
+      <PageContainer
+         className=''
+         head={
+            <>
+               <title>Atom</title>
+               <meta name='description' content='Atom is a shop loptop' />
+               <link rel='icon' href='/favicon.ico' />
+            </>
+         }
+      >
          <MessageIcon ref={messageRef} />
          {/* <CarouselWithThumbsController
             slideChildren={slideChildren}
@@ -71,7 +86,20 @@ const Home: NextPage = () => {
             slideChildren={slideChildren}
             className='fixed top-96 left-96 w-[300px] h-fit p-3 bg-white'
          /> */}
-      </div>
+         <Card
+            title='Card name'
+            description='sdffgb gghghghfghhh ghh'
+            imageProps={{
+               src: loginBGPath,
+               alt: '',
+               width: '120px',
+               height: '60px',
+            }}
+            titleClassName='text-lg my-0 mb-0'
+            descriptionClassName='text-sm my-0 mb-0'
+            containerClassName='p-2 m-0'
+         />
+      </PageContainer>
    )
 }
 

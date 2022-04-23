@@ -10,7 +10,7 @@ export interface HomeProps {
 function Home({ path, icon, className }: HomeProps) {
    return (
       <Link href={path} passHref>
-         <a className={clsx('text-gray-600', className)}>
+         <a className={clsx('text-sky-400', className)}>
             <i className={icon}></i>
          </a>
       </Link>

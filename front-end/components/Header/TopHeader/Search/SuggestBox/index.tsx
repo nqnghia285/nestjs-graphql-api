@@ -63,7 +63,7 @@ function SuggestBox({ className, searchText }: SuggestBoxProps) {
    return (
       <div
          className={clsx(
-            'absolute top-[calc(100%+4px)] -left-24 tablet:left-0 z-50 flex flex-col justify-start items-start tablet:flex-row laptop:flex-row desktop:flex-row bg-slate-100 text-slate-800 w-80 tablet:w-[500px] max-h-[500px] rounded-md p-3 tablet:divide-x tablet:divide-solid tablet:divide-slate-500 shadow-xl',
+            'absolute top-[calc(100%+4px)] -left-10 tablet:left-0 z-50 flex flex-col justify-start items-start tablet:flex-row laptop:flex-row desktop:flex-row bg-slate-100 text-slate-800 max-w-[20rem] tablet:max-w-[32rem] max-h-[500px] tablet: rounded-md p-3 tablet:divide-x tablet:divide-solid tablet:divide-slate-500 shadow-xl',
             className
          )}
          style={{

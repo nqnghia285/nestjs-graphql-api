@@ -1,5 +1,5 @@
 .header {
-   @apply fixed top-0 left-0 flex flex-col w-screen h-14 bg-gray-900 invisible;
+   @apply flex flex-col w-full h-fit bg-gray-900 invisible;
 }
 
 .show {

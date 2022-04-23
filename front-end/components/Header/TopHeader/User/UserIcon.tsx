@@ -62,6 +62,10 @@ function UserIcon({ icon }: UserIconProps) {
             <li>
                <Link path='/user/profile'>Profile</Link>
             </li>
+            <li>
+               <Link path='/dashboard'>Dashboard</Link>
+            </li>
+            {/* Send the logout request to the system and redirect to the login form */}
             <li onClick={handleLogout}>
                <Link path='/login'>Log out</Link>
             </li>

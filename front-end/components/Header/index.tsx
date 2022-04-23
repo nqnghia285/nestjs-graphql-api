@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { forwardRef, memo, Ref, useImperativeHandle, useRef } from 'react'
 import styles from '~/styles/components/header/index.module.css'
-import { BreadcrumbsPath } from '../Breadcrumbs'
 import BottomHeader from './BottomHeader'
 import { ListProps } from './BottomHeader/Sidebar/Menu/List'
 import TopHeader, { TopHeaderMethods } from './TopHeader'
@@ -16,7 +15,7 @@ export interface HeaderMethods {
    readonly searchMethods?: SearchMethods | null
 }
 
-function Header(_props: object, ref: Ref<HeaderMethods>) {
+function Header(_props: any, ref: Ref<HeaderMethods>) {
    const brandName = 'Atom'
    const menuChildren: ListProps[] = [
       {
@@ -75,31 +74,6 @@ function Header(_props: object, ref: Ref<HeaderMethods>) {
          children: 'About',
       },
    ]
-   const breadcrumbsPath: BreadcrumbsPath = {
-      homePiece: {
-         icon: 'fa-solid fa-house-chimney text-sky-400',
-         path: '/',
-         className: 'text-gray-900',
-      },
-      angleClassName: 'text-red-400',
-      pieces: [
-         {
-            path: '#',
-            children: 'User',
-            className: 'text-green-600 dark:text-green-200',
-         },
-         {
-            path: '#',
-            children: 'Profile',
-            className: 'text-yellow-400 dark:text-yellow-200',
-         },
-         {
-            path: '#',
-            children: 'Settings',
-            className: 'text-blue-600 dark:text-blue-200',
-         },
-      ],
-   }
 
    const headerRef = useRef<HTMLElement>(null)
    const topHeaderMethodsRef = useRef<TopHeaderMethods>(null)
@@ -128,10 +102,7 @@ function Header(_props: object, ref: Ref<HeaderMethods>) {
    return (
       <header ref={headerRef} className={clsx(styles.header, styles.show)}>
          <TopHeader ref={topHeaderMethodsRef} brandName={brandName} />
-         <BottomHeader
-            breadcrumbsPath={breadcrumbsPath}
-            menuChildren={menuChildren}
-         />
+         <BottomHeader menuChildren={menuChildren} />
       </header>
    )
 }
